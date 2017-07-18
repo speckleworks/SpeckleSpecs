@@ -16,6 +16,8 @@
         <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
           <span aria-hidden="true">×</span>
         </button>
+        <div id="logo">
+          <img src="images/logo.png" title="Speckle API" /> </div>
         <nav id="nav" role="navigation">
           <h5>API Reference</h5>
           <a href="#introduction">Introduction</a>
@@ -126,6 +128,23 @@
           <a href="#definition-DataStream"> DataStream </a>
           <a href="#definition-SpeckleLayer"> SpeckleLayer </a>
           <a href="#definition-SpeckleLayerProperties"> SpeckleLayerProperties </a>
+          <a href="#definition-SpeckleObject"> SpeckleObject </a>
+          <a href="#definition-SpeckleBoolean"> SpeckleBoolean </a>
+          <a href="#definition-SpeckleNumber"> SpeckleNumber </a>
+          <a href="#definition-SpeckleString"> SpeckleString </a>
+          <a href="#definition-SpeckleInterval"> SpeckleInterval </a>
+          <a href="#definition-SpeckleInterval2d"> SpeckleInterval2d </a>
+          <a href="#definition-SpecklePoint"> SpecklePoint </a>
+          <a href="#definition-SpeckleVector"> SpeckleVector </a>
+          <a href="#definition-SpecklePlane"> SpecklePlane </a>
+          <a href="#definition-SpeckleLine"> SpeckleLine </a>
+          <a href="#definition-SpeckleRectangle"> SpeckleRectangle </a>
+          <a href="#definition-SpeckleCircle"> SpeckleCircle </a>
+          <a href="#definition-SpeckleBox"> SpeckleBox </a>
+          <a href="#definition-SpecklePolyline"> SpecklePolyline </a>
+          <a href="#definition-SpeckleCurve"> SpeckleCurve </a>
+          <a href="#definition-SpeckleMesh"> SpeckleMesh </a>
+          <a href="#definition-SpeckleBrep"> SpeckleBrep </a>
           <a href="#definition-PayloadAccountRegister"> PayloadAccountRegister </a>
           <a href="#definition-PayloadAccountLogin"> PayloadAccountLogin </a>
           <a href="#definition-PayloadClientCreate"> PayloadClientCreate </a>
@@ -158,23 +177,6 @@
           <a href="#definition-ResponseObjectWithArrayCreate"> ResponseObjectWithArrayCreate </a>
           <a href="#definition-ResponseObjectWithArrayGet"> ResponseObjectWithArrayGet </a>
           <a href="#definition-ResponseObjectWithArrayUpdate"> ResponseObjectWithArrayUpdate </a>
-          <a href="#definition-SpeckleObject"> SpeckleObject </a>
-          <a href="#definition-SpeckleBoolean"> SpeckleBoolean </a>
-          <a href="#definition-SpeckleNumber"> SpeckleNumber </a>
-          <a href="#definition-SpeckleString"> SpeckleString </a>
-          <a href="#definition-SpeckleInterval"> SpeckleInterval </a>
-          <a href="#definition-SpeckleInterval2d"> SpeckleInterval2d </a>
-          <a href="#definition-SpecklePoint"> SpecklePoint </a>
-          <a href="#definition-SpeckleVector"> SpeckleVector </a>
-          <a href="#definition-SpecklePlane"> SpecklePlane </a>
-          <a href="#definition-SpeckleLine"> SpeckleLine </a>
-          <a href="#definition-SpeckleRectangle"> SpeckleRectangle </a>
-          <a href="#definition-SpeckleCircle"> SpeckleCircle </a>
-          <a href="#definition-SpeckleBox"> SpeckleBox </a>
-          <a href="#definition-SpecklePolyline"> SpecklePolyline </a>
-          <a href="#definition-SpeckleCurve"> SpeckleCurve </a>
-          <a href="#definition-SpeckleMesh"> SpeckleMesh </a>
-          <a href="#definition-SpeckleBrep"> SpeckleBrep </a>
         </nav>
       </div>
       <div id="docs" class="row collapse expanded drawer" data-drawer>
@@ -190,7 +192,18 @@
             <div class="doc-row">
               <div class="doc-copy">
                 <p>Documentation &amp; specifications for the Speckle Server &amp; Speckle Objects.</p>
-                <p>This document is an OpenApi v.2.0 spec sheet of what the Speckle Server can do for you. It does not cover the realtime communication layer (websockets).</p>
+                <p>
+                  <a href="https://speckle.works">https://speckle.works</a>
+                </p>
+                <p>This document is an OpenApi v.2.0 specification for Speckle. It does
+                  <em>not</em> cover the realtime communication layer (websockets).</p>
+                <p>There are two main parts you should look at:</p>
+                <h3 id="1-operations">1. Operations</h3>
+                <p>This section describes all the available <code>operations</code> that the speckle server can perform, revolving around a simple <code>Accounts</code> system, <code>Clients</code> (keeping track of all the receivers and senders), <code>Streams</code> (main data structure) and <code>Objects</code>.</p>
+                <h3 id="2-schema-defintions">2. Schema Defintions</h3>
+                <p>This section describes the basic building blocks that Speckle works with. It also contains an extensive list of <code>Payloads</code> and <code>Responses</code> which are less interesting, but a through look at the <code>SpeckleObject</code> and its children is needed, especially if you&#39;re looking into implementing your own application specific converter. </p>
+                <p>
+                  <em>Important note</em>: the following speckle object types <code>Polyline, Curve, Mesh, Brep</code> are treated server side in a special manner, as they can be unbounded in size.</p>
               </div>
               <div class="doc-examples">
                 <section>
@@ -596,9 +609,9 @@
         {
           <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
           <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
         }
       ],
       <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -641,9 +654,9 @@
         {
           <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
           <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
         }
       ],
       <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -1636,9 +1649,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -1835,9 +1848,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -1998,9 +2011,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ],
   <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -2420,9 +2433,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -3288,9 +3301,9 @@
   <span class="hljs-attr">&quot;object&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   }
 }
 </code></pre> </div>
@@ -3461,9 +3474,9 @@
   <span class="hljs-attr">&quot;speckleObject&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   },
   <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
@@ -3547,9 +3560,9 @@
   <span class="hljs-attr">&quot;object&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   }
 }
 </code></pre> </div>
@@ -3753,9 +3766,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ]
 }
@@ -3851,9 +3864,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ]
 }
@@ -4181,9 +4194,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ],
   <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -4417,6 +4430,1437 @@
   <span class="hljs-attr">&quot;smooth&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
   <span class="hljs-attr">&quot;showEdges&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
   <span class="hljs-attr">&quot;wireframe&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleObject" class="definition panel" data-traverse-target="definition-SpeckleObject">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleObject"></a>SpeckleObject:
+              <span class="json-property-type">
+                <span class="json-property-type">object</span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Minimal representation of a SpeckleObject. Contains other values depending on specific class. See the .net docs for more info.</p>
+                </section>
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="type">
+                      <span class="json-property-name">type:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-enum" title="Possible values">, x &isin; {
+                        <span class="json-property-enum-item">Boolean</span> ,
+                        <span class="json-property-enum-item">Number</span> ,
+                        <span class="json-property-enum-item">String</span> ,
+                        <span class="json-property-enum-item">Interval</span> ,
+                        <span class="json-property-enum-item">Interval2d</span> ,
+                        <span class="json-property-enum-item">Point</span> ,
+                        <span class="json-property-enum-item">Vector</span> ,
+                        <span class="json-property-enum-item">Plane</span> ,
+                        <span class="json-property-enum-item">Line</span> ,
+                        <span class="json-property-enum-item">Rectangle</span> ,
+                        <span class="json-property-enum-item">Circle</span> ,
+                        <span class="json-property-enum-item">Box</span> ,
+                        <span class="json-property-enum-item">Polyline</span> ,
+                        <span class="json-property-enum-item">Curve</span> ,
+                        <span class="json-property-enum-item">Mesh</span> ,
+                        <span class="json-property-enum-item">Brep</span> ,
+                        <span class="json-property-enum-item">Null</span> } </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                      <span class="json-property-discriminator"></span>
+                    </dt>
+                    <dd>
+                      <p>object&#39;s type</p>
+                    </dd>
+                    <dt data-property-name="hash">
+                      <span class="json-property-name">hash:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Object&#39;s unique hash. It&#39;s generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.</p>
+                    </dd>
+                    <dt data-property-name="geometryHash">
+                      <span class="json-property-name">geometryHash:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>If the object contains &#39;heavy&#39; geometry, it should have a geometry hash.</p>
+                    </dd>
+                    <dt data-property-name="applicationId">
+                      <span class="json-property-name">applicationId:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>If this object is not an ephemeral object, (ie coming from Grasshopper or Dynamo), and has a unique, persistent and consistent application id, this is where to store said guid.</p>
+                    </dd>
+                    <dt data-property-name="properties">
+                      <span class="json-property-name">properties:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>Anything goes in here, including other (speckle) objects.</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleBoolean" class="definition panel" data-traverse-target="definition-SpeckleBoolean">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleBoolean"></a>SpeckleBoolean:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Boolean</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">boolean</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleNumber" class="definition panel" data-traverse-target="definition-SpeckleNumber">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleNumber"></a>SpeckleNumber:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Number</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">number</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>A number. Can be float, double, etc.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleString" class="definition panel" data-traverse-target="definition-SpeckleString">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleString"></a>SpeckleString:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">String</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>A string.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleInterval" class="definition panel" data-traverse-target="definition-SpeckleInterval">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleInterval"></a>SpeckleInterval:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Interval</span>
+                        </dt>
+                        <dt data-property-name="start">
+                          <span class="json-property-name">start:</span>
+                          <span class="json-property-type">number</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="end">
+                          <span class="json-property-name">end:</span>
+                          <span class="json-property-type">number</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+  <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleInterval2d" class="definition panel" data-traverse-target="definition-SpeckleInterval2d">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleInterval2d"></a>SpeckleInterval2d:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="U">
+                          <span class="json-property-name">U:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleInterval">SpeckleInterval</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>U interval.</p>
+                        </dd>
+                        <dt data-property-name="V">
+                          <span class="json-property-name">V:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleInterval">SpeckleInterval</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>V interval.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;U&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;V&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpecklePoint" class="definition panel" data-traverse-target="definition-SpecklePoint">
+            <h2 class="panel-title">
+              <a name="/definitions/SpecklePoint"></a>SpecklePoint:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Point</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>An array containing the X, Y and Z coords of the point.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleVector" class="definition panel" data-traverse-target="definition-SpeckleVector">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleVector"></a>SpeckleVector:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Vector</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>An array containing the X, Y and Z coords of the vector.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpecklePlane" class="definition panel" data-traverse-target="definition-SpecklePlane">
+            <h2 class="panel-title">
+              <a name="/definitions/SpecklePlane"></a>SpecklePlane:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Plane</span>
+                        </dt>
+                        <dt data-property-name="Origin">
+                          <span class="json-property-name">Origin:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The origin of the plane.</p>
+                        </dd>
+                        <dt data-property-name="Normal">
+                          <span class="json-property-name">Normal:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleVector">SpeckleVector</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The normal of the plane.</p>
+                        </dd>
+                        <dt data-property-name="Xdir">
+                          <span class="json-property-name">Xdir:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleVector">SpeckleVector</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The X axis of the plane.</p>
+                        </dd>
+                        <dt data-property-name="Ydir">
+                          <span class="json-property-name">Ydir:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleVector">SpeckleVector</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The Y axis of the plane.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;Origin&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;Normal&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;Xdir&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;Ydir&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleLine" class="definition panel" data-traverse-target="definition-SpeckleLine">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleLine"></a>SpeckleLine:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Line</span>
+                        </dt>
+                        <dt data-property-name="start">
+                          <span class="json-property-name">start:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>Line&#39;s start point.</p>
+                        </dd>
+                        <dt data-property-name="end">
+                          <span class="json-property-name">end:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>Line&#39;s end point.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;start&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;end&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleRectangle" class="definition panel" data-traverse-target="definition-SpeckleRectangle">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleRectangle"></a>SpeckleRectangle:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Contains the four corner points of the rectangle. They should be coplanar.</p>
+                </section>
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Rectangle</span>
+                        </dt>
+                        <dt data-property-name="A">
+                          <span class="json-property-name">A:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="B">
+                          <span class="json-property-name">B:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="C">
+                          <span class="json-property-name">C:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="D">
+                          <span class="json-property-name">D:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;A&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;B&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;C&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;D&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleCircle" class="definition panel" data-traverse-target="definition-SpeckleCircle">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleCircle"></a>SpeckleCircle:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Circle</span>
+                        </dt>
+                        <dt data-property-name="radius">
+                          <span class="json-property-name">radius:</span>
+                          <span class="json-property-type">number</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="center">
+                          <span class="json-property-name">center:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePoint">SpecklePoint</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="normal">
+                          <span class="json-property-name">normal:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleVector">SpeckleVector</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;radius&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+  <span class="hljs-attr">&quot;center&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;normal&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleBox" class="definition panel" data-traverse-target="definition-SpeckleBox">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleBox"></a>SpeckleBox:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Box</span>
+                        </dt>
+                        <dt data-property-name="basePlane">
+                          <span class="json-property-name">basePlane:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePlane">SpecklePlane</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="xSize">
+                          <span class="json-property-name">xSize:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleInterval">SpeckleInterval</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="ySize">
+                          <span class="json-property-name">ySize:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleInterval">SpeckleInterval</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dt data-property-name="zSize">
+                          <span class="json-property-name">zSize:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleInterval">SpeckleInterval</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;basePlane&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;Origin&quot;</span>: {
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;value&quot;</span>: [
+        <span class="hljs-string">&quot;number&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+    },
+    <span class="hljs-attr">&quot;Normal&quot;</span>: {
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;value&quot;</span>: [
+        <span class="hljs-string">&quot;number&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+    },
+    <span class="hljs-attr">&quot;Xdir&quot;</span>: {
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;value&quot;</span>: [
+        <span class="hljs-string">&quot;number&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+    },
+    <span class="hljs-attr">&quot;Ydir&quot;</span>: {
+      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;value&quot;</span>: [
+        <span class="hljs-string">&quot;number&quot;</span>
+      ],
+      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+    },
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;xSize&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;ySize&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;zSize&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpecklePolyline" class="definition panel" data-traverse-target="definition-SpecklePolyline">
+            <h2 class="panel-title">
+              <a name="/definitions/SpecklePolyline"></a>SpecklePolyline:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Polyline</span>
+                        </dt>
+                        <dt data-property-name="value">
+                          <span class="json-property-name">value:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;value&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleCurve" class="definition panel" data-traverse-target="definition-SpeckleCurve">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleCurve"></a>SpeckleCurve:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Curve</span>
+                        </dt>
+                        <dt data-property-name="base64">
+                          <span class="json-property-name">base64:</span>
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>See SpeckleBrep.</p>
+                        </dd>
+                        <dt data-property-name="provenance">
+                          <span class="json-property-name">provenance:</span>
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>See SpeckleBrep.</p>
+                        </dd>
+                        <dt data-property-name="displayValue">
+                          <span class="json-property-name">displayValue:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpecklePolyline">SpecklePolyline</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>Contains a speckle polyline representation of this curve.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;base64&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;provenance&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;displayValue&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;value&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleMesh" class="definition panel" data-traverse-target="definition-SpeckleMesh">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleMesh"></a>SpeckleMesh:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Mesh</span>
+                        </dt>
+                        <dt data-property-name="vertices">
+                          <span class="json-property-name">vertices:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The mesh&#39;s vertices array, in a flat array (ie, <code>x1, y1, z1, x2, y2, ...</code>)</p>
+                        </dd>
+                        <dt data-property-name="faces">
+                          <span class="json-property-name">faces:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>The faces array.</p>
+                        </dd>
+                        <dt data-property-name="colors">
+                          <span class="json-property-name">colors:</span>
+                          <span class="json-property-type">number[]</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>If any, the colours per vertex.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;vertices&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;faces&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;colors&quot;</span>: [
+    <span class="hljs-string">&quot;number&quot;</span>
+  ],
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-SpeckleBrep" class="definition panel" data-traverse-target="definition-SpeckleBrep">
+            <h2 class="panel-title">
+              <a name="/definitions/SpeckleBrep"></a>SpeckleBrep:
+              <span class="json-property-type">
+                <span class="json-property-type"></span>
+                <span class="json-property-range" title="Value limits"></span>
+              </span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-allOf">
+                  <section class="json-schema-allOf-inherited">
+                    <ul>
+                      <span class="">
+                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
+                      </span>
+                    </ul>
+                  </section>
+                  <section class="json-schema-allOf-additional">
+                    <section class="json-schema-properties">
+                      <dl>
+                        <dt data-property-name="type">
+                          <span class="json-property-name">type:</span>
+                          <span class="json-property-type">object</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                          <span class="json-property-default-value">Brep</span>
+                        </dt>
+                        <dt data-property-name="base64">
+                          <span class="json-property-name">base64:</span>
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>A base64 encoded string of the raw byte array of the object. Do not worry base64 encoding making strings 1.5x bigger, gzip essentially neutralises this - both in transit and in the db.</p>
+                        </dd>
+                        <dt data-property-name="provenance">
+                          <span class="json-property-name">provenance:</span>
+                          <span class="json-property-type">string</span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>A short prefix of where the base64 comes from. For example, Rhino objects get ON aka Open Nurbs. Later down the road this should be a strict enum.</p>
+                        </dd>
+                        <dt data-property-name="displayValue">
+                          <span class="json-property-name">displayValue:</span>
+                          <span class="json-property-type">
+                            <span class="">
+                              <a class="json-schema-ref" href="#/definitions/SpeckleMesh">SpeckleMesh</a>
+                            </span>
+                          </span>
+                          <span class="json-property-range" title="Value limits"></span>
+                        </dt>
+                        <dd>
+                          <p>Contains a speckle mesh representation of this brep.</p>
+                        </dd>
+                      </dl>
+                    </section>
+                  </section>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <div class="hljs"><pre><code class="lang-json">{
+  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;base64&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;provenance&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;displayValue&quot;</span>: {
+    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;vertices&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;faces&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;colors&quot;</span>: [
+      <span class="hljs-string">&quot;number&quot;</span>
+    ],
+    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
+  },
+  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
 }
 </code></pre> </div>
                 </section>
@@ -4657,9 +6101,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ],
   <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -4868,9 +6312,9 @@
   <span class="hljs-attr">&quot;object&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   }
 }
 </code></pre> </div>
@@ -4910,9 +6354,9 @@
   <span class="hljs-attr">&quot;object&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   }
 }
 </code></pre> </div>
@@ -4949,9 +6393,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ]
 }
@@ -5172,9 +6616,9 @@
         {
           <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
           <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
         }
       ],
       <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -5217,9 +6661,9 @@
         {
           <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
           <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+          <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+          <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+          <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
         }
       ],
       <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -5525,9 +6969,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -5615,9 +7059,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -5708,9 +7152,9 @@
       {
         <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
         <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+        <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+        <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+        <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
       }
     ],
     <span class="hljs-attr">&quot;layers&quot;</span>: [
@@ -6026,9 +7470,9 @@
   <span class="hljs-attr">&quot;speckleObject&quot;</span>: {
     <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
     <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
   },
   <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
@@ -6143,9 +7587,9 @@
     {
       <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
       <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
+      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Type.hash&quot;</span>,
+      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;GUID&quot;</span>,
+      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;object&quot;</span>
     }
   ],
   <span class="hljs-attr">&quot;success&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
@@ -6181,1309 +7625,6 @@
                 <section>
                   <h5>Example</h5>
                   <div class="hljs"><pre><code class="lang-json"><span class="hljs-string">&quot;object&quot;</span>
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleObject" class="definition panel" data-traverse-target="definition-SpeckleObject">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleObject"></a>SpeckleObject:
-              <span class="json-property-type">
-                <span class="json-property-type">object</span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-description">
-                  <p>Minimal representation of a SpeckleObject. Contains other values depending on specific class. See the .net docs for more info.</p>
-                </section>
-                <section class="json-schema-properties">
-                  <dl>
-                    <dt data-property-name="type">
-                      <span class="json-property-name">type:</span>
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-enum" title="Possible values">, x &isin; {
-                        <span class="json-property-enum-item">Boolean</span> ,
-                        <span class="json-property-enum-item">Number</span> ,
-                        <span class="json-property-enum-item">String</span> ,
-                        <span class="json-property-enum-item">Interval</span> ,
-                        <span class="json-property-enum-item">Interval2d</span> ,
-                        <span class="json-property-enum-item">Point</span> ,
-                        <span class="json-property-enum-item">Vector</span> ,
-                        <span class="json-property-enum-item">Plane</span> ,
-                        <span class="json-property-enum-item">Line</span> ,
-                        <span class="json-property-enum-item">Rectangle</span> ,
-                        <span class="json-property-enum-item">Circle</span> ,
-                        <span class="json-property-enum-item">Box</span> ,
-                        <span class="json-property-enum-item">Polyline</span> ,
-                        <span class="json-property-enum-item">Curve</span> ,
-                        <span class="json-property-enum-item">Mesh</span> ,
-                        <span class="json-property-enum-item">Brep</span> ,
-                        <span class="json-property-enum-item">Null</span> } </span>
-                      <span class="json-property-range" title="Value limits"></span>
-                      <span class="json-property-required"></span>
-                      <span class="json-property-discriminator"></span>
-                    </dt>
-                    <dd>
-                      <p>object&#39;s type</p>
-                    </dd>
-                    <dt data-property-name="hash">
-                      <span class="json-property-name">hash:</span>
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-range" title="Value limits"></span>
-                    </dt>
-                    <dd>
-                      <p>Object&#39;s unique hash. It&#39;s generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.</p>
-                    </dd>
-                    <dt data-property-name="geometryHash">
-                      <span class="json-property-name">geometryHash:</span>
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-range" title="Value limits"></span>
-                    </dt>
-                    <dd>
-                      <p>It the object contains geometry, it should have a geometry hash.</p>
-                    </dd>
-                    <dt data-property-name="applicationId">
-                      <span class="json-property-name">applicationId:</span>
-                      <span class="json-property-type">string</span>
-                      <span class="json-property-range" title="Value limits"></span>
-                    </dt>
-                    <dd>
-                      <p>If this object is not an ephemeral object, (ie coming from Grasshopper or Dynamo), and has a unique, persistent and consistent application id, this is where to store said guid.</p>
-                    </dd>
-                    <dt data-property-name="properties">
-                      <span class="json-property-name">properties:</span>
-                      <span class="json-property-type">object</span>
-                      <span class="json-property-range" title="Value limits"></span>
-                    </dt>
-                    <dd>
-                      <p>Anything goes in here, including other objects.</p>
-                    </dd>
-                  </dl>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleBoolean" class="definition panel" data-traverse-target="definition-SpeckleBoolean">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleBoolean"></a>SpeckleBoolean:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Boolean</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">boolean</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;boolean&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleNumber" class="definition panel" data-traverse-target="definition-SpeckleNumber">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleNumber"></a>SpeckleNumber:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Number</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">number</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleString" class="definition panel" data-traverse-target="definition-SpeckleString">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleString"></a>SpeckleString:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">String</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">string</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleInterval" class="definition panel" data-traverse-target="definition-SpeckleInterval">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleInterval"></a>SpeckleInterval:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Interval</span>
-                        </dt>
-                        <dt data-property-name="start">
-                          <span class="json-property-name">start:</span>
-                          <span class="json-property-type">number</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="end">
-                          <span class="json-property-name">end:</span>
-                          <span class="json-property-type">number</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-  <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleInterval2d" class="definition panel" data-traverse-target="definition-SpeckleInterval2d">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleInterval2d"></a>SpeckleInterval2d:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="U">
-                          <span class="json-property-name">U:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="V">
-                          <span class="json-property-name">V:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;U&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;V&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpecklePoint" class="definition panel" data-traverse-target="definition-SpecklePoint">
-            <h2 class="panel-title">
-              <a name="/definitions/SpecklePoint"></a>SpecklePoint:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Point</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>An array containing the XYZ coords of the point.</p>
-                        </dd>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleVector" class="definition panel" data-traverse-target="definition-SpeckleVector">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleVector"></a>SpeckleVector:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Vector</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>An array containing the XYZ coords of the vector.</p>
-                        </dd>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpecklePlane" class="definition panel" data-traverse-target="definition-SpecklePlane">
-            <h2 class="panel-title">
-              <a name="/definitions/SpecklePlane"></a>SpecklePlane:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Plane</span>
-                        </dt>
-                        <dt data-property-name="Origin">
-                          <span class="json-property-name">Origin:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="Normal">
-                          <span class="json-property-name">Normal:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="Xdir">
-                          <span class="json-property-name">Xdir:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="Ydir">
-                          <span class="json-property-name">Ydir:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;Origin&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;Normal&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;Xdir&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;Ydir&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleLine" class="definition panel" data-traverse-target="definition-SpeckleLine">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleLine"></a>SpeckleLine:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Line</span>
-                        </dt>
-                        <dt data-property-name="start">
-                          <span class="json-property-name">start:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="end">
-                          <span class="json-property-name">end:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;start&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;end&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleRectangle" class="definition panel" data-traverse-target="definition-SpeckleRectangle">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleRectangle"></a>SpeckleRectangle:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Rectangle</span>
-                        </dt>
-                        <dt data-property-name="A">
-                          <span class="json-property-name">A:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="B">
-                          <span class="json-property-name">B:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="C">
-                          <span class="json-property-name">C:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="D">
-                          <span class="json-property-name">D:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;A&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;B&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;C&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;D&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleCircle" class="definition panel" data-traverse-target="definition-SpeckleCircle">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleCircle"></a>SpeckleCircle:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Circle</span>
-                        </dt>
-                        <dt data-property-name="radius">
-                          <span class="json-property-name">radius:</span>
-                          <span class="json-property-type">number</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="center">
-                          <span class="json-property-name">center:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="normal">
-                          <span class="json-property-name">normal:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;radius&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-  <span class="hljs-attr">&quot;center&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;normal&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleBox" class="definition panel" data-traverse-target="definition-SpeckleBox">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleBox"></a>SpeckleBox:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Box</span>
-                        </dt>
-                        <dt data-property-name="basePlane">
-                          <span class="json-property-name">basePlane:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="xSize">
-                          <span class="json-property-name">xSize:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="ySize">
-                          <span class="json-property-name">ySize:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="zSize">
-                          <span class="json-property-name">zSize:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;basePlane&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;Origin&quot;</span>: {
-      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;value&quot;</span>: [
-        <span class="hljs-string">&quot;number&quot;</span>
-      ],
-      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-    },
-    <span class="hljs-attr">&quot;Normal&quot;</span>: {
-      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;value&quot;</span>: [
-        <span class="hljs-string">&quot;number&quot;</span>
-      ],
-      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-    },
-    <span class="hljs-attr">&quot;Xdir&quot;</span>: {
-      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;value&quot;</span>: [
-        <span class="hljs-string">&quot;number&quot;</span>
-      ],
-      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-    },
-    <span class="hljs-attr">&quot;Ydir&quot;</span>: {
-      <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;value&quot;</span>: [
-        <span class="hljs-string">&quot;number&quot;</span>
-      ],
-      <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-      <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-      <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-    },
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;xSize&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;ySize&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;zSize&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;start&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;end&quot;</span>: <span class="hljs-string">&quot;number&quot;</span>,
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpecklePolyline" class="definition panel" data-traverse-target="definition-SpecklePolyline">
-            <h2 class="panel-title">
-              <a name="/definitions/SpecklePolyline"></a>SpecklePolyline:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Polyline</span>
-                        </dt>
-                        <dt data-property-name="value">
-                          <span class="json-property-name">value:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;value&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleCurve" class="definition panel" data-traverse-target="definition-SpeckleCurve">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleCurve"></a>SpeckleCurve:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Curve</span>
-                        </dt>
-                        <dt data-property-name="base64">
-                          <span class="json-property-name">base64:</span>
-                          <span class="json-property-type">string</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>See SpeckleBrep.</p>
-                        </dd>
-                        <dt data-property-name="provenance">
-                          <span class="json-property-name">provenance:</span>
-                          <span class="json-property-type">string</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>See SpeckleBrep.</p>
-                        </dd>
-                        <dt data-property-name="displayValue">
-                          <span class="json-property-name">displayValue:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;base64&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;provenance&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;displayValue&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;value&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleMesh" class="definition panel" data-traverse-target="definition-SpeckleMesh">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleMesh"></a>SpeckleMesh:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Mesh</span>
-                        </dt>
-                        <dt data-property-name="vertices">
-                          <span class="json-property-name">vertices:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="faces">
-                          <span class="json-property-name">faces:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dt data-property-name="colors">
-                          <span class="json-property-name">colors:</span>
-                          <span class="json-property-type">number[]</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;vertices&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;faces&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;colors&quot;</span>: [
-    <span class="hljs-string">&quot;number&quot;</span>
-  ],
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-SpeckleBrep" class="definition panel" data-traverse-target="definition-SpeckleBrep">
-            <h2 class="panel-title">
-              <a name="/definitions/SpeckleBrep"></a>SpeckleBrep:
-              <span class="json-property-type">
-                <span class="json-property-type"></span>
-                <span class="json-property-range" title="Value limits"></span>
-              </span>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-allOf">
-                  <section class="json-schema-allOf-inherited">
-                    <ul>
-                      <span class="">
-                        <a class="json-schema-ref" href="#/definitions/SpeckleObject">SpeckleObject</a>
-                      </span>
-                    </ul>
-                  </section>
-                  <section class="json-schema-allOf-additional">
-                    <section class="json-schema-properties">
-                      <dl>
-                        <dt data-property-name="type">
-                          <span class="json-property-name">type:</span>
-                          <span class="json-property-type">object</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                          <span class="json-property-default-value">Brep</span>
-                        </dt>
-                        <dt data-property-name="base64">
-                          <span class="json-property-name">base64:</span>
-                          <span class="json-property-type">string</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>A base64 encoded string of the raw byte array of the object. Do not worry base64 encoding making strings 1.5x bigger, gzip essentially neutralises this - both in transit and in the db.</p>
-                        </dd>
-                        <dt data-property-name="provenance">
-                          <span class="json-property-name">provenance:</span>
-                          <span class="json-property-type">string</span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                        <dd>
-                          <p>A short prefix of where the base64 comes from. For example, Rhino objects get ON aka Open Nurbs. Later down the road this should be a strict enum.</p>
-                        </dd>
-                        <dt data-property-name="displayValue">
-                          <span class="json-property-name">displayValue:</span>
-                          <span class="json-property-type"></span>
-                          <span class="json-property-range" title="Value limits"></span>
-                        </dt>
-                      </dl>
-                    </section>
-                  </section>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;base64&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;provenance&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;displayValue&quot;</span>: {
-    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;vertices&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;faces&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;colors&quot;</span>: [
-      <span class="hljs-string">&quot;number&quot;</span>
-    ],
-    <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-    <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-    <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-  },
-  <span class="hljs-attr">&quot;hash&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;geometryHash&quot;</span>: <span class="hljs-string">&quot;Polyline.b8cabb148761a918b22128c8f05b1d47&quot;</span>,
-  <span class="hljs-attr">&quot;applicationId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;properties&quot;</span>: <span class="hljs-string">&quot;{ objectIsSad: false, bimLevel: \&quot;infinity\&quot;, nestedTurtle: { ... }}&quot;</span>
-}
 </code></pre> </div>
                 </section>
               </div>

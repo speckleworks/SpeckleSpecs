@@ -12,6 +12,272 @@ SpeckleLayer:
 SpeckleLayerProperties:
   $ref: ./SpeckleLayerProperties.yaml
 
+
+# Objects
+SpeckleObject:
+  type: object
+  description: |-
+    Base class that is inherited by all other Speckle objects. The only required value is its `type`.
+
+    Important note: the following types: `[ Polyline, Curve, Mesh, Brep ]` are treated server side in a special manner, as they can be unbounded in size.
+  required:
+    - type
+  discriminator: type
+  properties:
+    type:
+      type: string
+      description: object's type
+      enum:
+        - Boolean
+        - Number
+        - String
+        - Interval
+        - Interval2d
+        - Point
+        - Vector
+        - Plane
+        - Line
+        - Rectangle
+        - Circle
+        - Box
+        - Polyline
+        - Curve
+        - Mesh
+        - Brep
+        - 'Null'
+    hash:
+      type: string
+      description: Object's unique hash. It's generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.
+      examle: hash
+    geometryHash:
+      type: string
+      description: If the object contains 'heavy' geometry, it should have a geometry hash.
+      example: Type.hash
+    applicationId:
+      type: string
+      example: GUID
+      description: 'If this object is not an ephemeral object, (ie coming from Grasshopper or Dynamo), and has a unique, persistent and consistent application id, this is where to store said guid.'
+    properties:
+      type: object
+      description: 'Anything goes in here, including other (speckle) objects.'
+  description: Minimal representation of a SpeckleObject. Contains other values depending on specific class. See the .net docs for more info.
+SpeckleBoolean:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Boolean
+        value:
+          type: boolean
+SpeckleNumber:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Number
+        value:
+          type: number         
+          description: A number. Can be float, double, etc.
+SpeckleString:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: String
+        value:
+          type: string
+          description: A string.
+SpeckleInterval: 
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Interval
+        start:
+          type: number
+        end: 
+          type: number
+SpeckleInterval2d: 
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        U:
+          $ref: '#/definitions/SpeckleInterval'
+          description: U interval.
+        V:
+          $ref: '#/definitions/SpeckleInterval'
+          description: V interval.
+SpecklePoint:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Point
+        value:
+          description: An array containing the X, Y and Z coords of the point.
+          type: array
+          items:
+            type: number
+SpeckleVector: 
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type: 
+          default: Vector
+        value:
+          description: An array containing the X, Y and Z coords of the vector.
+          type: array
+          items: 
+            type: number
+SpecklePlane:
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type: 
+          default: Plane
+        Origin: 
+          $ref: '#/definitions/SpecklePoint'
+          description: The origin of the plane.
+        Normal:
+          $ref: '#/definitions/SpeckleVector'
+          description: The normal of the plane.
+        Xdir:
+          $ref: '#/definitions/SpeckleVector'
+          description: The X axis of the plane.
+        Ydir:
+          $ref: '#/definitions/SpeckleVector'
+          description: The Y axis of the plane.
+SpeckleLine: 
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type: 
+          default: Line 
+        start: 
+          $ref: '#/definitions/SpecklePoint'
+          description: Line's start point.
+        end: 
+          $ref: '#/definitions/SpecklePoint'
+          description: Line's end point.
+SpeckleRectangle:
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Rectangle
+        A:
+          $ref: '#/definitions/SpecklePoint' 
+        B:
+          $ref: '#/definitions/SpecklePoint' 
+        C:
+          $ref: '#/definitions/SpecklePoint' 
+        D:
+          $ref: '#/definitions/SpecklePoint' 
+  description: Contains the four corner points of the rectangle. They should be coplanar.
+SpeckleCircle: 
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Circle
+        radius:
+          type: number
+        center:
+          $ref: '#/definitions/SpecklePoint'
+        normal:
+          $ref: '#/definitions/SpeckleVector'
+SpeckleBox:
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Box
+        basePlane:
+          $ref: '#/definitions/SpecklePlane'
+        xSize:
+          $ref: '#/definitions/SpeckleInterval'
+        ySize:
+          $ref: '#/definitions/SpeckleInterval'
+        zSize:
+          $ref: '#/definitions/SpeckleInterval'
+SpecklePolyline:
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Polyline
+        value:
+          type: array
+          items: 
+            type: number
+SpeckleCurve:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Curve
+        base64:
+          type: string
+          description: See SpeckleBrep.
+        provenance:
+          type: string
+          description: See SpeckleBrep.
+        displayValue:
+          $ref: '#/definitions/SpecklePolyline'
+          description: Contains a speckle polyline representation of this curve.
+SpeckleMesh:
+  allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type: 
+          default: Mesh
+        vertices:
+          type: array
+          items:
+            type: number
+          description: The mesh's vertices array, in a flat array (ie, `x1, y1, z1, x2, y2, ...`)
+        faces:
+          type: array
+          items:
+            type: number
+          description: The faces array.
+        colors:
+          type: array
+          items:
+            type: number
+          description: If any, the colours per vertex.
+SpeckleBrep:
+  allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Brep
+        base64: 
+          type: string
+          description: A base64 encoded string of the raw byte array of the object. Do not worry base64 encoding making strings 1.5x bigger, gzip essentially neutralises this - both in transit and in the db.
+        provenance:
+          type: string
+          description: A short prefix of where the base64 comes from. For example, Rhino objects get ON aka Open Nurbs. Later down the road this should be a strict enum.
+        displayValue:
+          $ref: '#/definitions/SpeckleMesh'
+          description: Contains a speckle mesh representation of this brep.
+
 # Payloads
 PayloadAccountRegister:
   $ref: ./payloads/PayloadAccountRegister.yaml
@@ -46,7 +312,6 @@ ResponseBase:
     message: 
       type: string
       description: Either an error or a confirmation.
-
 # Responses Accounts
 ResponseAccountRegister: 
   $ref: ./responses/ResponseAccountRegister.yaml
@@ -64,7 +329,7 @@ ResponseClientCreate:
   $ref: ./responses/ResponseClientCreate.yaml
 ResponseClientGet:
   $ref: ./responses/ResponseClientGet.yaml
-  
+
 # Responses Streams
 ResponseStreamCreate:
   $ref: ./responses/ResponseStreamCreate.yaml
@@ -96,267 +361,3 @@ ResponseObjectWithArrayGet:
   $ref: ./responses/ResponseObjectWithArrayGet.yaml 
 ResponseObjectWithArrayUpdate:
   $ref: ./responses/ResponseObjectWithArrayUpdate.yaml 
-
-# Objects
-SpeckleObject:
-  type: object
-  required:
-    - type
-  discriminator: type
-  properties:
-    type:
-      type: string
-      description: object's type
-      enum:
-        - Boolean
-        - Number
-        - String
-        - Interval
-        - Interval2d
-        - Point
-        - Vector
-        - Plane
-        - Line
-        - Rectangle
-        - Circle
-        - Box
-        - Polyline
-        - Curve
-        - Mesh
-        - Brep
-        - 'Null'
-    hash:
-      type: string
-      description: Object's unique hash. It's generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.
-    geometryHash:
-      type: string
-      description: 'It the object contains geometry, it should have a geometry hash.'
-      example: Polyline.b8cabb148761a918b22128c8f05b1d47
-    applicationId:
-      type: string
-      description: 'If this object is not an ephemeral object, (ie coming from Grasshopper or Dynamo), and has a unique, persistent and consistent application id, this is where to store said guid.'
-    properties:
-      type: object
-      description: 'Anything goes in here, including other objects.'
-      example: '{ objectIsSad: false, bimLevel: "infinity", nestedTurtle: { ... }}'
-  description: Minimal representation of a SpeckleObject. Contains other values depending on specific class. See the .net docs for more info.
-SpeckleBoolean:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Boolean
-        value:
-          type: boolean
-SpeckleNumber:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Number
-        value:
-          type: number         
-SpeckleString:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: String
-        value:
-          type: string
-SpeckleInterval: 
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Interval
-        start:
-          type: number
-        end: 
-          type: number
-SpeckleInterval2d: 
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        U:
-          allOf: 
-            - $ref: '#/definitions/SpeckleInterval'
-        V:
-          allOf: 
-            - $ref: '#/definitions/SpeckleInterval'
-SpecklePoint:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Point
-        value:
-          description: An array containing the XYZ coords of the point.
-          type: array
-          items:
-            type: number
-SpeckleVector: 
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type: 
-          default: Vector
-        value:
-          description: An array containing the XYZ coords of the vector.
-          type: array
-          items: 
-            type: number
-SpecklePlane:
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties: 
-        type: 
-          default: Plane
-        Origin: 
-          allOf:
-            - $ref: '#/definitions/SpecklePoint'
-        Normal:
-          allOf:
-            - $ref: '#/definitions/SpeckleVector'
-        Xdir:
-          allOf:
-            - $ref: '#/definitions/SpeckleVector'
-        Ydir:
-          allOf:
-            - $ref: '#/definitions/SpeckleVector'
-SpeckleLine: 
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type: 
-          default: Line 
-        start: 
-          allOf:
-            - $ref: '#/definitions/SpecklePoint'
-        end: 
-          allOf:
-            - $ref: '#/definitions/SpecklePoint'
-SpeckleRectangle:
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Rectangle
-        A:
-          allOf:
-            - $ref: '#/definitions/SpecklePoint' 
-        B:
-          allOf:
-            - $ref: '#/definitions/SpecklePoint' 
-        C:
-          allOf:
-            - $ref: '#/definitions/SpecklePoint' 
-        D:
-          allOf:
-            - $ref: '#/definitions/SpecklePoint' 
-SpeckleCircle: 
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties: 
-        type:
-          default: Circle
-        radius:
-          type: number
-        center:
-          allOf:
-            - $ref: '#/definitions/SpecklePoint'
-        normal:
-          allOf:
-            - $ref: '#/definitions/SpeckleVector'
-SpeckleBox:
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties: 
-        type:
-          default: Box
-        basePlane:
-          allOf:
-            - $ref: '#/definitions/SpecklePlane'
-        xSize:
-          allOf:
-            - $ref: '#/definitions/SpeckleInterval'
-        ySize:
-          allOf:
-            - $ref: '#/definitions/SpeckleInterval'
-        zSize:
-          allOf:
-            - $ref: '#/definitions/SpeckleInterval'
-SpecklePolyline:
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties: 
-        type:
-          default: Polyline
-        value:
-          type: array
-          items: 
-            type: number
-SpeckleCurve:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type:
-          default: Curve
-        base64:
-          type: string
-          description: See SpeckleBrep.
-        provenance:
-          type: string
-          description: See SpeckleBrep.
-        displayValue:
-          allOf:
-            - $ref: '#/definitions/SpecklePolyline'
-SpeckleMesh:
-  allOf:
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties:
-        type: 
-          default: Mesh
-        vertices:
-          type: array
-          items:
-            type: number
-        faces:
-          type: array
-          items:
-            type: number
-        colors:
-          type: array
-          items:
-            type: number
-SpeckleBrep:
-  allOf: 
-    - $ref: '#/definitions/SpeckleObject'
-    - type: object
-      properties: 
-        type:
-          default: Brep
-        base64: 
-          type: string
-          description: A base64 encoded string of the raw byte array of the object. Do not worry base64 encoding making strings 1.5x bigger, gzip essentially neutralises this - both in transit and in the db.
-        provenance:
-          type: string
-          description: A short prefix of where the base64 comes from. For example, Rhino objects get ON aka Open Nurbs. Later down the road this should be a strict enum.
-        displayValue:
-          allOf:
-            - $ref: '#/definitions/SpeckleMesh'
