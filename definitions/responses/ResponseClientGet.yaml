@@ -1,0 +1,6 @@
+allOf:
+  - $ref: '#/definitions/ResponseBase'
+  - type: object
+    properties:
+      client:
+        $ref: '#/definitions/SpeckleClient'

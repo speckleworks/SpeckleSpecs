@@ -1,0 +1,14 @@
+allOf:
+  - $ref: '#/definitions/ResponseBase'
+  - type: object
+    properties:
+      ownedStreams:
+        type: array
+        items: 
+          $ref: '#/definitions/DataStream'
+        description: The user's streams.
+      sharedWithStreams:
+        type: array
+        items:
+          $ref: '#/definitions/DataStream'
+        description: The streams that are shared with the user.

@@ -1,0 +1,33 @@
+get:
+  tags:
+    - Streams
+  summary: StreamGetName
+  operationId: StreamGetName
+  parameters: []
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamNameGet'
+put:
+  tags:
+    - Streams
+  summary: StreamUpdateName
+  operationId: StreamUpdateName
+  consumes: []
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadStreamNameUpdate'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string

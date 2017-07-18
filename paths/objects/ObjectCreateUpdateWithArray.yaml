@@ -1,0 +1,76 @@
+post:
+  tags:
+    - Objects
+  summary: ObjectCreateArray
+  description: |-
+    Creates and stores in the database a SpeckleObject.
+
+    It will recursively look through the object's properties and store any "heavy" geometries (Brep, Mesh, Curve and Polyline) in the Geometries database. All other geometries are stored within the object itself.
+
+    Response will contain the `objects` and `geometries` arrays of the saved documents.
+  operationId: ObjectCreateArray
+  consumes:
+    - application/json
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadObjectCreateWithArray'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseObjectWithArrayCreate'
+      examples:
+        application/json: |-
+          {
+            "success": true,
+            "objects": [
+              "59575428e3290e5c9c1b3122",
+              "59575428e3290e5c9c1b3123",
+              "59575428e3290e5c9c1b3124"
+            ],
+            "geometries": [
+              "Mesh.2c3176b21893ac1cb0b69d83f49fa1f6",
+              "Polyline.b8cabb148761a918b22128c8f05b1d47"
+            ]
+          }
+put:
+  tags:
+    - Objects
+  summary: ObjectUpdateArray
+  description: |-
+    Updates a list of SpeckleObjects.
+
+    It will recursively look through the object's properties and store any "heavy" geometries (Brep, Mesh, Curve and Polyline) in the Geometries database. All other geometries are stored within the object itself.
+
+    Response will contain the `objects` and `geometries` arrays of the saved documents.
+  operationId: ObjectUpdateArray
+  consumes:
+    - application/json
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadObjectCreateWithArray'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseObjectWithArrayCreate'
+      examples:
+        application/json: |-
+          {
+            "success": true,
+            "objects": [
+              "59575428e3290e5c9c1b3122",
+              "59575428e3290e5c9c1b3123",
+              "59575428e3290e5c9c1b3124"
+            ],
+            "geometries": [
+              "Mesh.2c3176b21893ac1cb0b69d83f49fa1f6",
+              "Polyline.b8cabb148761a918b22128c8f05b1d47"
+            ]
+          } 

@@ -1,0 +1,14 @@
+version: 0.0.3
+title: SpeckleCore
+description: |-
+  Documentation & specifications for the Speckle Server & Speckle Objects.
+
+  This document is an OpenApi v.2.0 spec sheet of what the Speckle Server can do for you. It does not cover the realtime communication layer (websockets).
+version: v0.0.3
+title: Speckle API
+contact:
+  name: Dimitrie @idid
+  url: 'https://speckle.works'
+  email: didimitrie@gmail.com
+license:
+  name: ''

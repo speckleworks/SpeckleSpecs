@@ -1,0 +1,8 @@
+allOf:
+  - $ref: '#/definitions/ResponseBase'
+  - type: object
+    properties:
+      speckleObjects:
+        type: array
+        items:
+          $ref: '#/definitions/SpeckleObject'

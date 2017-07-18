@@ -1,0 +1,13 @@
+type: object
+properties:
+  objects:
+    type: array
+    items:
+      $ref: '#/definitions/SpeckleObject'
+  layers:
+    type: array
+    items:
+      $ref: '#/definitions/SpeckleLayer'
+  name:
+    type: string
+description: model payload for stream update.

@@ -1,0 +1,8 @@
+type: object
+required:
+  - objects
+properties:
+  objects:
+    type: array
+    items:
+      $ref: '#/definitions/SpeckleObject'

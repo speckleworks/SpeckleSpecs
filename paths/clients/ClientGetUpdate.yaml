@@ -1,0 +1,44 @@
+get:
+  tags: 
+    - Clients
+  summary: ClientGet
+  description: Gets a client.
+  operationId: ClientGet
+  produces: 
+    - application/json
+  responses:
+    '200':
+      description: Client got.
+      schema:
+        $ref: '#/definitions/ResponseClientGet'
+put:
+  tags: 
+    - Clients
+  summary: ClientUpdate
+  description: Updates a client.
+  operationId: ClientUpdate
+  produces:
+    - application/json
+  consumes:
+    - application/json
+  parameters: 
+    - name: body
+      in: body
+      required: true
+      schema: 
+        $ref: '#/definitions/PayloadClientUpdate'
+  responses:
+    '200':
+      description: All good.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+parameters:
+  - name: clientId
+    in: path
+    required: true
+    type: string
+    description: the client's id.

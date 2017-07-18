@@ -1,0 +1,25 @@
+get:
+  tags:
+    - Accounts
+  summary: UserClientsGet
+  description: 'Gets all the clients for a user (identified via the authorization token, so if that is s not present, it will not work).'
+  operationId: UserClientsGet
+  produces:
+    - application/json
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseAccountClients'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []

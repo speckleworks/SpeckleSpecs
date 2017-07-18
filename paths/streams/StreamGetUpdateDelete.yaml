@@ -1,0 +1,101 @@
+get:
+  tags:
+    - Streams
+  summary: StreamGet
+  description: |-
+    Will return the specified stream. If no `Authorization` header is provided and the stream is private you will get a 401. It populates the `objects` array fully. If you want a light version of the stream, query `/api/streams/{streamId}/meta`.
+  operationId: StreamGet
+  produces:
+    - application/json
+  parameters:
+    - name: Authorization
+      in: header
+      required: false
+      type: string
+      x-example: JWT ETC
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamGet'
+    '401':
+      description: 'Returned when the stream is private, and the Authorization header is not present, or it the user described by it is not either the owner or in the `sharedWith` array.'
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '404':
+      description: Stream not found.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+put:
+  tags:
+    - Streams
+  summary: StreamUpdate
+  description: |
+    Updates a specific stream:
+    - it disassebmles the objects into they geometry components, and saves both in the database
+    - it overwrites the objects array (if present)
+    - it **merges** the layers array (if present)
+    - it overwrites the name (if present)
+  operationId: StreamUpdate
+  consumes:
+    - application/json
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT ETC
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadStreamUpdate'
+  responses:
+    '200':
+      description: On success
+      schema:
+        $ref: '#/definitions/ResponseStreamUpdate'
+    '401':
+      description: Status 401
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '404':
+      description: Status 404
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+delete:
+  tags:
+    - Streams
+  summary: StreamDelete
+  description: TODO
+  operationId: StreamDelete
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT ETC
+  responses:
+    '200':
+      description: Status 200
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Meerps.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Whoops.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string
+    description: The stream's id.
+    x-example: 'SyLPkGgNW'

@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Clients
+  summary: ClientCreate
+  description: Creates a new client..
+  operationId: ClientCreate
+  produces:
+    - application/json
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT ETC
+  responses:
+    '200':
+      description: Successfully creates a new client.
+      schema:
+        $ref: '#/definitions/ResponseClientCreate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []

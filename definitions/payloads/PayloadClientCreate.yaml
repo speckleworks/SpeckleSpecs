@@ -1,0 +1,4 @@
+type: object
+properties:
+  client:
+    $ref: '#/definitions/SpeckleClient'

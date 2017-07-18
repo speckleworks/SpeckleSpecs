@@ -1,0 +1,6 @@
+type: object
+required:
+  - object
+properties:
+  object:
+    $ref: '#/definitions/SpeckleObject'

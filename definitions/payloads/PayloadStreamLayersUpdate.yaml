@@ -1,0 +1,8 @@
+type: object
+required:
+  - layers
+properties:
+  layers:
+    type: array
+    items:
+      $ref: '#/definitions/SpeckleLayer'

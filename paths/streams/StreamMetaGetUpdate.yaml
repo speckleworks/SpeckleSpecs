@@ -1,0 +1,40 @@
+get:
+  tags:
+    - Streams
+  summary: StreamGetMeta
+  description: Retrieves the stream without populating the objects array.
+  operationId: StreamGetMeta
+  parameters:
+    - name: Authorization
+      in: header
+      required: false
+      type: string
+      x-example: JWT ETC
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamMetaGet'
+put:
+  tags:
+    - Streams
+  summary: StreamUpdateMeta
+  description: Updates stream name and layers.
+  operationId: StreamUpdateMeta
+  consumes: []
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadStreamMetaUpdate'
+  responses:
+    '200':
+      description: Status 200
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string

@@ -1,0 +1,23 @@
+type: object
+description: A representation of the manifestation of a Speckle Client. Whenever an instance of a client is born in any software, it should get its matching identity on the server. When deserialising itself, it should call back to the database and set itself as online. Its uuid sould server as sessionId for the websocket client.
+properties:
+  _id: 
+    type: string
+    description: Database uuid.
+  role:
+    type: string
+    description: Sender, Receiver, Mixed (for both), Parametric Sender if it can operate on parameters inside a defintion, or whatever else we can think of. 
+  documentGuid:
+    type: string
+  documentName:
+    type: string
+  documentType:
+    type: string
+  streamId:
+    type: string
+    description: The streamId that this clients 'listens to'. 
+  owner: 
+    type: string
+  online:
+    type: boolean
+    description: Is it accessible from the server or not? 

@@ -1,0 +1,23 @@
+swagger: '2.0'
+info:
+  $ref: ./info/_index.yaml
+host: 'localhost:8080'
+basePath: '/api'
+schemes:
+  - http
+  - https
+consumes: 
+  - application/json
+produces:
+  - application/json
+security: 
+  - JWT Token Auth: []
+securityDefinitions:
+  JWT Token Auth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  $ref: ./paths/_index.yaml
+definitions:
+  $ref: ./definitions/_index.yaml

@@ -1,0 +1,53 @@
+get:
+  tags:
+    - Objects
+  summary: ObjectGet
+  description: |+
+    Gets a SpeckleObject from the database. It will automatically populate geometry fields for "heavy types", that is `'Mesh' || 'Brep' || 'Curve' ||  'Polyline'`.
+  operationId: ObjectGet
+  parameters:
+    - name: Authorization
+      in: header
+      required: false
+      type: string
+      x-example: JWT ETC
+  responses:
+    '200':
+      description: Object found
+      schema:
+        $ref: '#/definitions/ResponseObjectGet'
+    '404':
+      description: Status 404
+put:
+  tags:
+    - Objects
+  summary: ObjectUpdate
+  description: Updates an object by its id.
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema: 
+        $ref: '#/definitions/PayloadObjectUpdate'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+delete:
+  tags:
+    - Objects
+  summary: ObjectDelete
+  description: 'TODO // Deletes an object.'
+  responses:
+    '200':
+      description: Done deal.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+parameters:
+  - name: objectId
+    in: path
+    required: true
+    type: string

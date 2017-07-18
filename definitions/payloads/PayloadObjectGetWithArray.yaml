@@ -1,0 +1,9 @@
+type: object
+required:
+  - objects
+properties:
+  objects:
+    type: array
+    items:
+      type: string
+    description: An array of object ids to retrieve from the database.

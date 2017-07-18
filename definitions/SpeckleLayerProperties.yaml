@@ -1,0 +1,36 @@
+type: object
+properties:
+  color:
+    type: object
+    properties:
+      a:
+        type: number
+        description: alpha value
+        default: 1
+      hex:
+        type: string
+        description: hex color value
+        default: '#d4d4d4'
+        example: '#d4d4d4'
+  visible:
+    type: boolean
+    description: toggles layer visibility.
+  pointsize:
+    type: number
+    description: defines point size in threejs
+  linewidth:
+    type: number
+    description: defines line thickness in threejs
+  shininess:
+    type: number
+    description: says it all. speckle is superficial.
+  smooth:
+    type: boolean
+    description: smooth shading toggle
+  showEdges:
+    type: boolean
+    description: display edges or not yo.
+  wireframe:
+    type: boolean
+    description: i'm bored.
+description: 'Holds stream layer properties, mostly for displaying purposes. This object will be filled up with garbage from threejs and others, but below is a minimal schema.'

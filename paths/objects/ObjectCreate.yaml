@@ -1,0 +1,20 @@
+post:
+  tags:
+    - Objects
+  summary: ObjectCreate
+  description: Creates an object.
+  operationId: ObjectCreate
+  consumes: []
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadCreateObject'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseObjectCreate'
+  security:
+    - JWT Token Auth: []

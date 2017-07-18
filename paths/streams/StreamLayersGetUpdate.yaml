@@ -1,0 +1,45 @@
+get:
+  tags:
+    - Streams
+  summary: StreamsGetLayers
+  description: Retrieves the stream's layers
+  operationId: StreamsGetLayers
+  parameters: []
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamLayersGet'
+    '400':
+      description: whoopsie dupsie.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+put:
+  tags:
+    - Streams
+  summary: StreamsUpdateLayers
+  description: Updates stream layers.
+  operationId: StreamsUpdateLayers
+  consumes: []
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadStreamLayersUpdate'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string

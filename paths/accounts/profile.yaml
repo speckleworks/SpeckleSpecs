@@ -1,0 +1,46 @@
+get:
+  tags:
+    - Accounts
+  summary: UserGetProfile
+  description: Gets the user's profile.
+  operationId: UserGetProfile
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseAccountProfile'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+put:
+  tags:
+    - Accounts
+  summary: UserUpdate
+  description: TODO. Should update user profile with new information.
+  operationId: UserUpdate
+  parameters:
+    - name: Authorization
+      in: header
+      required: true
+      type: string
+      x-example: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4
+  responses:
+    '200':
+      description: All good.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []

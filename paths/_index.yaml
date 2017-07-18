@@ -1,0 +1,42 @@
+# Accounts
+/accounts/register:
+  $ref: ./accounts/register.yaml
+/accounts/login:
+  $ref: ./accounts/login.yaml
+/accounts/streams:
+  $ref: ./accounts/streams.yaml
+/accounts/clients:
+  $ref: ./accounts/clients.yaml
+/accounts/profile:
+  $ref: ./accounts/profile.yaml
+
+# Clients
+/clients:
+  $ref: ./clients/ClientCreate.yaml
+'/clients/{clientId}':
+  $ref: ./clients/ClientGetUpdate.yaml
+
+
+# Streams
+/streams:
+  $ref: ./streams/StreamCreate.yaml 
+'/streams/{streamId}':
+  $ref: ./streams/StreamGetUpdateDelete.yaml
+'/streams/{streamId}/meta':
+  $ref: ./streams/StreamMetaGetUpdate.yaml
+'/streams/{streamId}/layers':
+  $ref: ./streams/StreamLayersGetUpdate.yaml
+'/streams/{streamId}/name':
+  $ref: ./streams/StreamNameGetUpdate.yaml
+'/streams/{streamId}/duplicate':
+  $ref: ./streams/StreamDuplicate.yaml
+
+# Objects
+/objects:
+  $ref: ./objects/ObjectCreate.yaml
+'/objects/{objectId}':
+  $ref: ./objects/ObjectGetUpdateDelete.yaml
+/objects/witharray:
+  $ref: ./objects/ObjectCreateUpdateWithArray.yaml
+# '/geometry/{geometryHash}':
+#   $ref: ...
