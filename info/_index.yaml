@@ -16,7 +16,11 @@ description: |-
 
   *Important note*: the following speckle object types `Polyline, Curve, Mesh, Brep` are treated server side in a special manner, as they can be unbounded in size.
   
-
+  ### Client code generation
+  To generate api clients, you can either use `swagger-codegen` or, alternatively, open up `index.json` (https://raw.githubusercontent.com/didimitrie/SpeckleOpenApi/master/index.json) in the swagger editor (https://editor.swagger.io).
+  
+  ### Contribute
+  If you want to add another type of speckle object, or simply improve the schema, feel free to fork & pr over on github.
 
 version: v0.0.3
 title: Speckle API
