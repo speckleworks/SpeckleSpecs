@@ -137,15 +137,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT ETC"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -184,15 +175,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -222,15 +204,6 @@
         "summary": "UserGetProfile",
         "description": "Gets the user's profile.",
         "operationId": "UserGetProfile",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -260,11 +233,12 @@
         "operationId": "UserUpdate",
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "x-example": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4"
+            "schema": {
+              "$ref": "#/definitions/PayloadAccountUpdate"
+            }
           }
         ],
         "responses": {
@@ -301,11 +275,12 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "x-example": "JWT ETC"
+            "schema": {
+              "$ref": "#/definitions/PayloadClientCreate"
+            }
           }
         ],
         "responses": {
@@ -414,15 +389,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT HashHashHash"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successfully creates a new stream.",
@@ -448,15 +414,6 @@
         "operationId": "StreamGet",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "x-example": "JWT ETC"
-          }
         ],
         "responses": {
           "200": {
@@ -490,13 +447,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT ETC"
-          },
           {
             "name": "body",
             "in": "body",
@@ -539,15 +489,6 @@
         "summary": "StreamDelete",
         "description": "TODO",
         "operationId": "StreamDelete",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string",
-            "x-example": "JWT ETC"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -593,15 +534,6 @@
         "summary": "StreamGetMeta",
         "description": "Retrieves the stream without populating the objects array.",
         "operationId": "StreamGetMeta",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "x-example": "JWT ETC"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -780,15 +712,6 @@
         "summary": "StreamDuplicate",
         "description": "Duplicate the `streamId` and saves it in a database. The clone will automatically have it's parent field set to the original stream's `_id`. \nFurthermore, the clone's `_id` will be pushed into the parent's children array.",
         "operationId": "StreamDuplicate",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "x-example": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Status 200",
@@ -856,15 +779,6 @@
         "summary": "ObjectGet",
         "description": "Gets a SpeckleObject from the database. It will automatically populate geometry fields for \"heavy types\", that is `'Mesh' || 'Brep' || 'Curve' ||  'Polyline'`.\n",
         "operationId": "ObjectGet",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "type": "string",
-            "x-example": "JWT ETC"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Object found",
@@ -897,7 +811,7 @@
           "200": {
             "description": "Status 200",
             "schema": {
-              "$ref": "#/definitions/ResponseBase"
+              "$ref": "#/definitions/ResponseObjectUpdate"
             }
           }
         },
@@ -1247,7 +1161,7 @@
         "hash": {
           "type": "string",
           "description": "Object's unique hash. It's generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.",
-          "examle": "hash"
+          "example": "hash"
         },
         "geometryHash": {
           "type": "string",
@@ -1691,11 +1605,46 @@
       },
       "description": "User login payload."
     },
+    "PayloadAccountUpdate": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        }
+      },
+      "description": "User login payload."
+    },
     "PayloadClientCreate": {
       "type": "object",
       "properties": {
         "client": {
-          "$ref": "#/definitions/SpeckleClient"
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "documentGuid": {
+              "type": "string"
+            },
+            "documentName": {
+              "type": "string"
+            },
+            "documentType": {
+              "type": "string"
+            },
+            "streamId": {
+              "type": "string"
+            }
+          }
         }
       }
     },

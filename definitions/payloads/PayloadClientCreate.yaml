@@ -1,4 +1,15 @@
 type: object
 properties:
   client:
-    $ref: '#/definitions/SpeckleClient'
+    type: object
+    properties:
+      role:
+        type: string
+      documentGuid:
+        type: string
+      documentName:
+        type: string
+      documentType:
+        type: string
+      streamId:
+        type: string

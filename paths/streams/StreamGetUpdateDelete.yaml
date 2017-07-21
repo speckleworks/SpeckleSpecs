@@ -7,12 +7,6 @@ get:
   operationId: StreamGet
   produces:
     - application/json
-  parameters:
-    - name: Authorization
-      in: header
-      required: false
-      type: string
-      x-example: JWT ETC
   responses:
     '200':
       description: Status 200
@@ -40,11 +34,6 @@ put:
   consumes:
     - application/json
   parameters:
-    - name: Authorization
-      in: header
-      required: true
-      type: string
-      x-example: JWT ETC
     - name: body
       in: body
       required: true
@@ -71,12 +60,6 @@ delete:
   summary: StreamDelete
   description: TODO
   operationId: StreamDelete
-  parameters:
-    - name: Authorization
-      in: header
-      required: true
-      type: string
-      x-example: JWT ETC
   responses:
     '200':
       description: Status 200

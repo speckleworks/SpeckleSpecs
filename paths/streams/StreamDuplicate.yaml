@@ -6,12 +6,6 @@ post:
     Duplicate the `streamId` and saves it in a database. The clone will automatically have it's parent field set to the original stream's `_id`. 
     Furthermore, the clone's `_id` will be pushed into the parent's children array.
   operationId: StreamDuplicate
-  parameters:
-    - name: Authorization
-      in: header
-      required: false
-      type: string
-      x-example: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTUyOGFkNDE3NDFkZDU0MmViYjZlZmMiLCJuYW1lIjoiQW5vbnltb3VzIiwiaWF0IjoxNDk4NTgxNzE2LCJleHAiOjE1NjE2OTY5MTZ9.Py9Fwbuj-eiWJDBqZVRv8-uWsTChakhbrLcgKoMS0a4
   responses:
     '200':
       description: Status 200

@@ -1,0 +1,11 @@
+type: object
+properties:
+  email:
+    type: string
+  name:
+    type: string
+  surname:
+    type: string
+  company:
+    type: string
+description: User login payload.

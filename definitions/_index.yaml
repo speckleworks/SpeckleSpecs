@@ -48,7 +48,7 @@ SpeckleObject:
     hash:
       type: string
       description: Object's unique hash. It's generated server-side from JSON.stringify( obj.properties ) + obj.geometryHash using a murmurhash3 128bit function.
-      examle: hash
+      example: hash
     geometryHash:
       type: string
       description: If the object contains 'heavy' geometry, it should have a geometry hash.
@@ -283,6 +283,8 @@ PayloadAccountRegister:
   $ref: ./payloads/PayloadAccountRegister.yaml
 PayloadAccountLogin: 
   $ref: ./payloads/PayloadAccountLogin.yaml
+PayloadAccountUpdate:
+  $ref: ./payloads/PayloadAccountUpdate.yaml
 PayloadClientCreate:
   $ref: ./payloads/PayloadClientCreate.yaml
 PayloadClientUpdate:

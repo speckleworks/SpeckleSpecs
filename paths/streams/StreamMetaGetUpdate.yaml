@@ -4,12 +4,6 @@ get:
   summary: StreamGetMeta
   description: Retrieves the stream without populating the objects array.
   operationId: StreamGetMeta
-  parameters:
-    - name: Authorization
-      in: header
-      required: false
-      type: string
-      x-example: JWT ETC
   responses:
     '200':
       description: Status 200

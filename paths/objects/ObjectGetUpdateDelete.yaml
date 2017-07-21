@@ -5,12 +5,6 @@ get:
   description: |+
     Gets a SpeckleObject from the database. It will automatically populate geometry fields for "heavy types", that is `'Mesh' || 'Brep' || 'Curve' ||  'Polyline'`.
   operationId: ObjectGet
-  parameters:
-    - name: Authorization
-      in: header
-      required: false
-      type: string
-      x-example: JWT ETC
   responses:
     '200':
       description: Object found
@@ -33,7 +27,7 @@ put:
     '200':
       description: Status 200
       schema:
-        $ref: '#/definitions/ResponseBase'
+        $ref: '#/definitions/ResponseObjectUpdate'
   security:
     - JWT Token Auth: []
 delete:
