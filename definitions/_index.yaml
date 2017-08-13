@@ -303,6 +303,8 @@ PayloadObjectUpdate:
   $ref: ./payloads/PayloadObjectUpdate.yaml
 PayloadObjectCreateWithArray:
   $ref: ./payloads/PayloadObjectCreateWithArray.yaml
+PayloadObjectGetWithArray:
+  $ref: ./payloads/PayloadObjectGetWithArray.yaml
 
 # Responses TODO: Unify on server too
 ResponseBase:
@@ -360,6 +362,4 @@ ResponseObjectUpdate:
 ResponseObjectWithArrayCreate:
   $ref: ./responses/ResponseObjectWithArrayCreate.yaml 
 ResponseObjectWithArrayGet:
-  $ref: ./responses/ResponseObjectWithArrayGet.yaml 
-ResponseObjectWithArrayUpdate:
-  $ref: ./responses/ResponseObjectWithArrayUpdate.yaml 
+  $ref: ./responses/ResponseObjectWithArrayGet.yaml

@@ -11,6 +11,14 @@ get:
       description: Client got.
       schema:
         $ref: '#/definitions/ResponseClientGet'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
 put:
   tags: 
     - Clients
@@ -35,6 +43,35 @@ put:
     '400':
       description: Fail whale.
       schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+delete:
+  tags:
+    - Clients
+  summary: ClientDelete 
+  description: Marks a client for deletion.
+  operationId: ClientDelete
+  consumes:
+    - application/json
+  responses: 
+    '200':
+      description: Computer is benevolent.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Computer says you're not authorised.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400': 
+      description: Computer is confused.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '404':
+      description: Computer can't find shit.
+      schema:
         $ref: '#/definitions/ResponseBase'
 parameters:
   - name: clientId

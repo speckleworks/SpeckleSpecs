@@ -23,5 +23,8 @@ properties:
     type: array
     description: an array storing each time the user logged in.
     items:
-      type: string
+      type: object
+      properties:
+        date:
+          type: string
       description: it's a timestamp XD

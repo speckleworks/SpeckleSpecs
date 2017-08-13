@@ -11,5 +11,13 @@ post:
       description: Successfully creates a new stream.
       schema:
         $ref: '#/definitions/ResponseStreamCreate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
   security:
     - JWT Token Auth: []

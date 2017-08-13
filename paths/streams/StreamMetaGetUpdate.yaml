@@ -9,6 +9,14 @@ get:
       description: Status 200
       schema:
         $ref: '#/definitions/ResponseStreamMetaGet'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
 put:
   tags:
     - Streams

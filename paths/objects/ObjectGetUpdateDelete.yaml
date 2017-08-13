@@ -12,11 +12,20 @@ get:
         $ref: '#/definitions/ResponseObjectGet'
     '404':
       description: Status 404
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
 put:
   tags:
     - Objects
   summary: ObjectUpdate
   description: Updates an object by its id.
+  operationId: ObjectUpdate
   parameters:
     - name: body
       in: body
@@ -28,6 +37,14 @@ put:
       description: Status 200
       schema:
         $ref: '#/definitions/ResponseObjectUpdate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
   security:
     - JWT Token Auth: []
 delete:
@@ -35,10 +52,19 @@ delete:
     - Objects
   summary: ObjectDelete
   description: 'TODO // Deletes an object.'
+  operationId: ObjectDelete
   responses:
     '200':
       description: Done deal.
       schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
         $ref: '#/definitions/ResponseBase'
 parameters:
   - name: objectId

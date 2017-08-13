@@ -1,0 +1,9 @@
+type: object
+required:
+  - objects
+properties:
+  objects:
+    description: An array of ids of the objects to get.
+    type: array
+    items:
+      type: string

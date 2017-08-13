@@ -1,0 +1,60 @@
+post:
+  tags:
+    - Objects
+  summary: ObjectCreateWithArray
+  description: |-
+    Creates and stores in the database a SpeckleObject.
+
+    It will recursively look through the object's properties and store any "heavy" geometries (Brep, Mesh, Curve and Polyline) in the Geometries database. All other geometries are stored within the object itself.
+
+    Response will contain the `objects` and `geometries` arrays of the saved documents.
+  operationId: ObjectCreateWithArray
+  consumes:
+    - application/json
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadObjectCreateWithArray'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseObjectWithArrayCreate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+put:
+  tags:
+    - Objects
+  summary: ObjectGetWithArray
+  description: |-
+    **GETS** an array of objects. This is a fucking hack because http methods suck big time.
+  operationId: ObjectGetWithArray
+  consumes:
+    - application/json
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PayloadObjectGetWithArray'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseObjectWithArrayCreate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'

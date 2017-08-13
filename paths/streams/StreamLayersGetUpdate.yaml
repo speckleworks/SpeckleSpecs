@@ -11,8 +11,12 @@ get:
       schema:
         $ref: '#/definitions/ResponseStreamLayersGet'
     '400':
-      description: whoopsie dupsie.
-      schema:
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
         $ref: '#/definitions/ResponseBase'
 put:
   tags:
@@ -34,7 +38,11 @@ put:
         $ref: '#/definitions/ResponseBase'
     '400':
       description: Fail whale.
-      schema:
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
         $ref: '#/definitions/ResponseBase'
   security:
     - JWT Token Auth: []

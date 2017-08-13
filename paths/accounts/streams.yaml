@@ -16,7 +16,7 @@ get:
       schema: 
         $ref: '#/definitions/ResponseBase'
     '401':
-      description: Fail whale.
+      description: Unautorised whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
   security:

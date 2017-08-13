@@ -13,6 +13,10 @@ get:
       description: Fail whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
   security:
     - JWT Token Auth: []
 put:

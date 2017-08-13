@@ -151,7 +151,7 @@
             }
           },
           "401": {
-            "description": "Fail whale.",
+            "description": "Unautorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -187,6 +187,12 @@
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         },
         "security": [
@@ -213,6 +219,12 @@
           },
           "400": {
             "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -297,7 +309,7 @@
             }
           },
           "401": {
-            "description": "Fail whale.",
+            "description": "Unauthorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -326,6 +338,18 @@
             "description": "Client got.",
             "schema": {
               "$ref": "#/definitions/ResponseClientGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
             }
           }
         }
@@ -365,6 +389,49 @@
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "ClientDelete",
+        "description": "Marks a client for deletion.",
+        "operationId": "ClientDelete",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Computer is benevolent.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Computer is confused.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Computer says you're not authorised.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Computer can't find shit.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         }
       },
@@ -394,6 +461,18 @@
             "description": "Successfully creates a new stream.",
             "schema": {
               "$ref": "#/definitions/ResponseStreamCreate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
             }
           }
         },
@@ -540,6 +619,18 @@
             "schema": {
               "$ref": "#/definitions/ResponseStreamMetaGet"
             }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         }
       },
@@ -598,7 +689,13 @@
             }
           },
           "400": {
-            "description": "whoopsie dupsie.",
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -635,6 +732,12 @@
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         },
         "security": [
@@ -666,6 +769,18 @@
             "schema": {
               "$ref": "#/definitions/ResponseStreamNameGet"
             }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         }
       },
@@ -689,6 +804,18 @@
         "responses": {
           "200": {
             "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -717,6 +844,18 @@
             "description": "Status 200",
             "schema": {
               "$ref": "#/definitions/ResponseStreamDuplicate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
             }
           }
         },
@@ -762,6 +901,18 @@
             "schema": {
               "$ref": "#/definitions/ResponseObjectCreate"
             }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         },
         "security": [
@@ -786,6 +937,18 @@
               "$ref": "#/definitions/ResponseObjectGet"
             }
           },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
           "404": {
             "description": "Status 404"
           }
@@ -797,6 +960,7 @@
         ],
         "summary": "ObjectUpdate",
         "description": "Updates an object by its id.",
+        "operationId": "ObjectUpdate",
         "parameters": [
           {
             "name": "body",
@@ -813,6 +977,18 @@
             "schema": {
               "$ref": "#/definitions/ResponseObjectUpdate"
             }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
           }
         },
         "security": [
@@ -827,9 +1003,22 @@
         ],
         "summary": "ObjectDelete",
         "description": "TODO // Deletes an object.",
+        "operationId": "ObjectDelete",
         "responses": {
           "200": {
             "description": "Done deal.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
             "schema": {
               "$ref": "#/definitions/ResponseBase"
             }
@@ -845,14 +1034,14 @@
         }
       ]
     },
-    "/objects/witharray": {
+    "/witharray/objects": {
       "post": {
         "tags": [
           "Objects"
         ],
-        "summary": "ObjectCreateArray",
+        "summary": "ObjectCreateWithArray",
         "description": "Creates and stores in the database a SpeckleObject.\n\nIt will recursively look through the object's properties and store any \"heavy\" geometries (Brep, Mesh, Curve and Polyline) in the Geometries database. All other geometries are stored within the object itself.\n\nResponse will contain the `objects` and `geometries` arrays of the saved documents.",
-        "operationId": "ObjectCreateArray",
+        "operationId": "ObjectCreateWithArray",
         "consumes": [
           "application/json"
         ],
@@ -871,9 +1060,18 @@
             "description": "Status 200",
             "schema": {
               "$ref": "#/definitions/ResponseObjectWithArrayCreate"
-            },
-            "examples": {
-              "application/json": "{\n  \"success\": true,\n  \"objects\": [\n    \"59575428e3290e5c9c1b3122\",\n    \"59575428e3290e5c9c1b3123\",\n    \"59575428e3290e5c9c1b3124\"\n  ],\n  \"geometries\": [\n    \"Mesh.2c3176b21893ac1cb0b69d83f49fa1f6\",\n    \"Polyline.b8cabb148761a918b22128c8f05b1d47\"\n  ]\n}"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
             }
           }
         }
@@ -882,9 +1080,9 @@
         "tags": [
           "Objects"
         ],
-        "summary": "ObjectUpdateArray",
-        "description": "Updates a list of SpeckleObjects.\n\nIt will recursively look through the object's properties and store any \"heavy\" geometries (Brep, Mesh, Curve and Polyline) in the Geometries database. All other geometries are stored within the object itself.\n\nResponse will contain the `objects` and `geometries` arrays of the saved documents.",
-        "operationId": "ObjectUpdateArray",
+        "summary": "ObjectGetWithArray",
+        "description": "**GETS** an array of objects. This is a fucking hack because http methods suck big time.",
+        "operationId": "ObjectGetWithArray",
         "consumes": [
           "application/json"
         ],
@@ -894,7 +1092,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PayloadObjectCreateWithArray"
+              "$ref": "#/definitions/PayloadObjectGetWithArray"
             }
           }
         ],
@@ -903,13 +1101,63 @@
             "description": "Status 200",
             "schema": {
               "$ref": "#/definitions/ResponseObjectWithArrayCreate"
-            },
-            "examples": {
-              "application/json": "{\n  \"success\": true,\n  \"objects\": [\n    \"59575428e3290e5c9c1b3122\",\n    \"59575428e3290e5c9c1b3123\",\n    \"59575428e3290e5c9c1b3124\"\n  ],\n  \"geometries\": [\n    \"Mesh.2c3176b21893ac1cb0b69d83f49fa1f6\",\n    \"Polyline.b8cabb148761a918b22128c8f05b1d47\"\n  ]\n} "
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
             }
           }
         }
       }
+    },
+    "/geometry/{geometryHash}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "GeometryGet",
+        "description": "Returns a geometry object via its geometry hash.",
+        "operationId": "GeometryGet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Computer says yes.",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamGet"
+            }
+          },
+          "401": {
+            "description": "Computer says no.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Meep.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "geometryHash",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
     }
   },
   "definitions": {
@@ -945,7 +1193,12 @@
           "type": "array",
           "description": "an array storing each time the user logged in.",
           "items": {
-            "type": "string",
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              }
+            },
             "description": "it's a timestamp XD"
           }
         }
@@ -1750,6 +2003,21 @@
         }
       }
     },
+    "PayloadObjectGetWithArray": {
+      "type": "object",
+      "required": [
+        "objects"
+      ],
+      "properties": {
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of object ids to retrieve from the database."
+        }
+      }
+    },
     "ResponseBase": {
       "type": "object",
       "properties": {
@@ -2074,16 +2342,6 @@
               }
             }
           }
-        }
-      ]
-    },
-    "ResponseObjectWithArrayUpdate": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ResponseBase"
-        },
-        {
-          "type": "object"
         }
       ]
     }

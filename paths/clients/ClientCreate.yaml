@@ -22,7 +22,7 @@ post:
       schema: 
         $ref: '#/definitions/ResponseBase'
     '401':
-      description: Fail whale.
+      description: Unauthorised whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
   security:

@@ -36,7 +36,7 @@
   $ref: ./objects/ObjectCreate.yaml
 '/objects/{objectId}':
   $ref: ./objects/ObjectGetUpdateDelete.yaml
-/objects/witharray:
-  $ref: ./objects/ObjectCreateUpdateWithArray.yaml
-# '/geometry/{geometryHash}':
-#   $ref: ...
+/witharray/objects:
+  $ref: ./objects/ObjectCreateGetWithArray.yaml
+'/geometry/{geometryHash}':
+  $ref: ./objects/Geometry.yaml

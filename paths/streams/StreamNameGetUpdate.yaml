@@ -9,6 +9,14 @@ get:
       description: Status 200
       schema:
         $ref: '#/definitions/ResponseStreamNameGet'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
 put:
   tags:
     - Streams
@@ -25,6 +33,14 @@ put:
     '200':
       description: Status 200
       schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
         $ref: '#/definitions/ResponseBase'
 parameters:
   - name: streamId

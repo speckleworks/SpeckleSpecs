@@ -16,5 +16,13 @@ post:
       description: Status 200
       schema:
         $ref: '#/definitions/ResponseObjectCreate'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
   security:
     - JWT Token Auth: []
