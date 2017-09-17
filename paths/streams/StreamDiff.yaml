@@ -1,16 +1,14 @@
-post:
+get:
   tags:
-    - Streams
-  summary: StreamDuplicate
-  description: |-
-    Duplicate the `streamId` and saves it in a database. The clone will automatically have it's parent field set to the original stream's `_id`. 
-    Furthermore, the clone's `_id` will be pushed into the parent's children array.
-  operationId: StreamDuplicate
+    - Special Ops
+  summary: StreamDiff
+  description: Diffs two streams, by objects and layers.
+  operationId: StreamDiff
   responses:
     '200':
       description: Status 200
       schema:
-        $ref: '#/definitions/ResponseStreamDuplicate'
+        $ref: '#/definitions/ResponseStreamDiff'
     '400':
       description: Fail whale.
       schema: 
@@ -27,4 +25,8 @@ parameters:
     required: true
     type: string
     description: The stream's id.
-    default: BJG6Qe-V-
+  - name: otherId
+    in: path
+    required: true
+    type: string
+    description: The stream you want to diff against.

@@ -1,0 +1,116 @@
+get:
+  tags:
+    - Stream Layer
+  description: Retrieves a stream layer.
+  summary: GetSingleLayer 
+  operationId: GetSingleLayer
+  responses:
+    '200':
+      description: Successful whale.
+      schema: 
+        $ref: '#/definitions/ResponseSingleLayer'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+put:
+  tags:
+    - Stream Layer
+  description: Overwrites a stream layer.
+  summary: ReplaceSingleLayer
+  operationId: ReplaceSingleLayer
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - layer
+        properties:
+          layer:
+            $ref: '#/definitions/SpeckleLayer'
+  responses:
+    '200':
+      description: Successful whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+patch:
+  tags:
+    - Stream Layer
+  description: Updates a stream layer (merges keys).
+  summary: UpdateSingleLayer
+  operationId: UpdateSingleLayer
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - layer
+        properties:
+          layer:
+            $ref: '#/definitions/SpeckleLayer'
+  responses:
+    '200':
+      description: Successful whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+delete:
+  tags:
+    - Stream Layer
+  description: Deletes a stream layer.
+  summary: DeleteSingleLayer
+  operationId: DeleteSingleLayer
+  responses:
+    '200':
+      description: Successful whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema:
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string
+  - name: layerId
+    in: path
+    required: true
+    type: string
+    description: Layer guid or name. In case of name, the first layer of that name is selected.

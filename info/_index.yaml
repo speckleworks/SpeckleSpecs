@@ -5,28 +5,18 @@ description: |-
   
   https://speckle.works
 
-  This document is an OpenApi v.2.0 specification for Speckle. It does *not* cover the realtime communication layer (websockets).
+  This OAS doc for Speckle. It does *not* cover the realtime communication layer (websockets).
 
   There are two main parts you should look at:
   ### 1. Operations
-  This section describes all the available `operations` that the speckle server can perform, revolving around a simple `Accounts` system, `Clients` (keeping track of all the receivers and senders), `Streams` (main data structure) and `Objects`.
+  This section describes all the available `operations` that the speckle server can perform, revolving around a simple `Accounts` system, `Clients` (keeping track of all the receivers and senders), `Streams`, `Stream Layers`, `Stream Objects` and `Objects`.
 
   ### 2. Schema Defintions
   This section describes the basic building blocks that Speckle works with. It also contains an extensive list of `Payloads` and `Responses` which are less interesting, but a through look at the `SpeckleObject` and its children is needed, especially if you're looking into implementing your own application specific converter. 
 
-  *Important note*: the following speckle object types `Polyline, Curve, Mesh, Brep` are treated server side in a special manner, as they can be unbounded in size.
-  
-  ### Client code generation
-  To generate api clients, you can either use `swagger-codegen` or, alternatively, open up `index.json` (https://raw.githubusercontent.com/didimitrie/SpeckleOpenApi/master/index.json) in the swagger editor (https://editor.swagger.io).
-  
-  ### Contribute
-  If you want to add another type of speckle object, or simply improve the schema, feel free to fork & pr over on github.
-
-version: v0.0.3
-title: Speckle API
 contact:
-  name: Dimitrie @idid
+  name: SpeckleWorks
   url: 'https://speckle.works'
   email: didimitrie@gmail.com
 license:
-  name: ''
+  name: MIT

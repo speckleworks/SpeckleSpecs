@@ -1,26 +1,28 @@
 post:
   tags:
     - Objects
-  summary: ObjectCreate
-  description: Creates an object.
-  operationId: ObjectCreate
-  consumes: []
+  summary: ObjectCreateBulk
+  description: |-
+    Creates and stores in the database a SpeckleObject.
+  operationId: ObjectCreateBulk
+  consumes:
+    - application/json
   parameters:
     - name: body
       in: body
       required: true
       schema:
         type: object
-        required:
-          - object
         properties:
-          object:
-            $ref: '#/definitions/SpeckleObject'
+          objects:
+            type: array
+            items: 
+              $ref: '#/definitions/SpeckleObject'
   responses:
     '200':
       description: Status 200
       schema:
-        $ref: '#/definitions/ResponseObjectCreate'
+        $ref: '#/definitions/ResponsePostObjects'
     '400':
       description: Fail whale.
       schema: 
@@ -29,5 +31,3 @@ post:
       description: Unauthorised whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
-  security:
-    - JWT Token Auth: []

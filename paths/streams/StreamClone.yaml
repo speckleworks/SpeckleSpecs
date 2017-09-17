@@ -1,0 +1,38 @@
+post:
+  tags:
+    - Special Ops
+  summary: StreamClone
+  description: |-
+    Clones the current stream, saving the clone to the children array of the parent, and saving the parent to the parent field of the clone. This operation exists to enable various versioning/history operations for design variants. 
+
+
+    For example, you can use it to save the current state as an option, similar to the traditional `Save As > 0087QPT-FacadeVersionXX.3dm`. 
+
+
+    Alternatively, you can use it to branch off from the current state, by switching all future updates to the clone's stream.
+
+
+    Sky & UI's the limit.
+  operationId: StreamClone
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamClone'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string
+    description: The stream's id.
+    default: BJG6Qe-V-

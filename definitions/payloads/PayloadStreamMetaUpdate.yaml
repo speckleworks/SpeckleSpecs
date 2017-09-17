@@ -1,8 +1,0 @@
-type: object
-properties:
-  layers:
-    type: array
-    items:
-      $ref: '#/definitions/SpeckleLayer'
-  name:
-    type: string

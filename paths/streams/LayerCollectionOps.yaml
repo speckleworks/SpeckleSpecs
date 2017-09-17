@@ -1,0 +1,149 @@
+get:
+  tags:
+    - Stream Layers Collection 
+  summary: GetLayers
+  description: Retrieves the stream's layers.
+  operationId: GetLayers
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseStreamLayersGet'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+post:
+  tags:
+    - Stream Layers Collection 
+  summary: AddLayers
+  description: Adds the provided layers to the stream.
+  operationId: AddLayers
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - layers
+        properties:
+          layers:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+put:
+  tags:
+    - Stream Layers Collection 
+  summary: ReplaceLayers
+  description: Updates stream layers.
+  operationId: ReplaceLayers
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - layers
+        properties:
+          layers:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+patch:
+  tags:
+    - Stream Layers Collection 
+  summary: MergeLayers
+  description: Merges the stream layers. Gently. And with lots of tender care.
+  operationId: MergeLayers
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        required:
+          - layers
+        properties:
+          layers:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+delete:
+  tags:
+    - Stream Layers Collection 
+  summary: DeleteLayers
+  description: Purges the stream's layer list.
+  operationId: DeleteLayers
+  responses:
+    '200':
+      description: Status 200
+      schema:
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorised whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string

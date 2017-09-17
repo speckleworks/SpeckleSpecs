@@ -1,15 +1,13 @@
 get:
   tags:
     - Streams
-  summary: StreamsGetLayers
-  description: Retrieves the stream's layers
-  operationId: StreamsGetLayers
-  parameters: []
+  summary: StreamGetName
+  operationId: StreamGetName
   responses:
     '200':
       description: Status 200
       schema:
-        $ref: '#/definitions/ResponseStreamLayersGet'
+        $ref: '#/definitions/ResponseStreamNameGet'
     '400':
       description: Fail whale.
       schema: 
@@ -21,16 +19,15 @@ get:
 put:
   tags:
     - Streams
-  summary: StreamsUpdateLayers
-  description: Updates stream layers.
-  operationId: StreamsUpdateLayers
+  summary: StreamUpdateName
+  operationId: StreamUpdateName
   consumes: []
   parameters:
     - name: body
       in: body
       required: true
       schema:
-        $ref: '#/definitions/PayloadStreamLayersUpdate'
+        $ref: '#/definitions/PayloadStreamNameUpdate'
   responses:
     '200':
       description: Status 200
@@ -44,8 +41,6 @@ put:
       description: Unauthorised whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
-  security:
-    - JWT Token Auth: []
 parameters:
   - name: streamId
     in: path

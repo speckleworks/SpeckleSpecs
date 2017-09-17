@@ -1,6 +1,6 @@
 # [Speckle.Works](http://spekcle.works) OpenApi Documentation
 
-### Generate the spec:
+### Generate the spec from all the files:
 Install `multi-file-swagger`:
 
 ```javascript
@@ -12,8 +12,6 @@ Run the command like so:
 ```javascript
   multi-file-swagger index.yaml > index.json
 ```
-
-This will resolve every json pointer ($ref) externally or internally and then save it in a json file. Which can then be used for code generation and so on.
 
 ### Visualise the spec:
 

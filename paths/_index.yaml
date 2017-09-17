@@ -17,26 +17,39 @@
   $ref: ./clients/ClientGetUpdate.yaml
 
 
-# Streams
+# # Streams Core
 /streams:
   $ref: ./streams/StreamCreate.yaml 
+
 '/streams/{streamId}':
-  $ref: ./streams/StreamGetUpdateDelete.yaml
-'/streams/{streamId}/meta':
-  $ref: ./streams/StreamMetaGetUpdate.yaml
-'/streams/{streamId}/layers':
-  $ref: ./streams/StreamLayersGetUpdate.yaml
+  $ref: ./streams/StreamCore.yaml
+
 '/streams/{streamId}/name':
-  $ref: ./streams/StreamNameGetUpdate.yaml
-'/streams/{streamId}/duplicate':
-  $ref: ./streams/StreamDuplicate.yaml
+  $ref: ./streams/StreamName.yaml
+
+'/streams/{streamId}/layers':
+  $ref: ./streams/LayerCollectionOps.yaml
+'/streams/{streamId}/layers/{layerId}':
+  $ref: ./streams/LayerIndividualOps.yaml  
+'/streams/{streamId}/layers/{layerId}/objects':
+  $ref: ./streams/LayerObjectsOps.yaml
+
+# Stream Object Collection ops
+'/streams/{streamId}/objects':
+  $ref: ./streams/ObjectCollectionOps.yaml
+'/streams/{streamId}/objects/{objectId}':
+  $ref: ./streams/ObjectOps.yaml
+
+# Special stuff
+'/streams/{streamId}/clone':
+  $ref: ./streams/StreamClone.yaml
+'/streams/{streamId}/diff/{otherId}':
+  $ref: ./streams/StreamDiff.yaml
 
 # Objects
 /objects:
   $ref: ./objects/ObjectCreate.yaml
 '/objects/{objectId}':
   $ref: ./objects/ObjectGetUpdateDelete.yaml
-/witharray/objects:
-  $ref: ./objects/ObjectCreateGetWithArray.yaml
-'/geometry/{geometryHash}':
-  $ref: ./objects/Geometry.yaml
+/objects/bulk:
+  $ref: ./objects/ObjectsBulk.yaml

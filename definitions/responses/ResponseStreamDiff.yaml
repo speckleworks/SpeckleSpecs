@@ -1,0 +1,34 @@
+allOf:
+  - $ref: '#/definitions/ResponseBase'
+  - type: object
+    properties:
+      objects: 
+        type: object
+        properties: 
+          common:
+            type: array
+            items:
+              type: string
+          inA:
+            type: array
+            items:
+              type: string
+          inB:
+            type: array
+            items:
+              type: string
+      layers: 
+        type: object
+        properties:
+          common: 
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+          inA:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+          inB:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'

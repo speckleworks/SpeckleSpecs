@@ -2,7 +2,7 @@ post:
   tags:
     - Clients
   summary: ClientCreate
-  description: Creates a new client..
+  description: Creates a new client and returns your `clientId`. If not authorised, you get a temporary `clientId`. 
   operationId: ClientCreate
   produces:
     - application/json

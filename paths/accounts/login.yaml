@@ -19,23 +19,6 @@ post:
       description: Status 200
       schema:
         $ref: '#/definitions/ResponseAccountLogin'
-      examples:
-        application/json: |-
-          {
-            "success": true,
-            "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTYwODQ5YjQwNzU3MmVmYTg4YTU0NzAiLCJuYW1lIjoiRGltaXRyaWUiLCJpYXQiOjE0OTk0OTc2OTMsImV4cCI6MTQ5OTU4NDA5M30.BsM4du4R0MIjn_JBRst4Jq3xoyNBS6-Y8NmpUuemvlE",
-            "user": {
-              "name": "Dimitrie",
-              "surname": "Doe",
-              "email": "johndoe57@apple.com",
-              "logins": [
-                {
-                  "date": 1499497693389
-                }
-              ],
-              "apiToken": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTYwODQ5YjQwNzU3MmVmYTg4YTU0NzAiLCJpYXQiOjE0OTk0OTc2MjcsImV4cCI6MTU2MjYxMjgyN30.xdXflg0nc4OWknaSiUKOevwhk4PLXhiKku8SkVdpUwA"
-            }
-          }
     '400':
       description: Fail whale.
       schema: 

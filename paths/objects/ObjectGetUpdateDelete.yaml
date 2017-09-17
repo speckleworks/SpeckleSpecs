@@ -3,8 +3,13 @@ get:
     - Objects
   summary: ObjectGet
   description: |+
-    Gets a SpeckleObject from the database. It will automatically populate geometry fields for "heavy types", that is `'Mesh' || 'Brep' || 'Curve' ||  'Polyline'`.
+    Gets a SpeckleObject from the database.
   operationId: ObjectGet
+  parameters:
+    - name: query
+      in: query
+      type: string
+      description: Specify which fields to retrieve or omit.
   responses:
     '200':
       description: Object found
@@ -31,7 +36,10 @@ put:
       in: body
       required: true
       schema: 
-        $ref: '#/definitions/PayloadObjectUpdate'
+        type: object
+        properties:
+          object:
+            $ref: '#/definitions/SpeckleObject'
   responses:
     '200':
       description: Status 200
@@ -51,11 +59,11 @@ delete:
   tags:
     - Objects
   summary: ObjectDelete
-  description: 'TODO // Deletes an object.'
+  description: Flags an object for deletion. 
   operationId: ObjectDelete
   responses:
     '200':
-      description: Done deal.
+      description: Done deal yo!
       schema:
         $ref: '#/definitions/ResponseBase'
     '400':

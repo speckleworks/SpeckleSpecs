@@ -1,0 +1,134 @@
+# individual ops
+get:
+  tags:
+    - Layer Objects Collection
+  description: Gets the objects from a stream's layer.
+  summary: GetLayerObjects
+  operationId: GetLayerObjects
+  security:
+    - JWT Token Auth: []
+  parameters:
+    - name: query
+      in: query
+      type: string
+      description: Filter by field values, get or omit specific fields & sort.
+  responses:
+    '200':
+      description: Success whale.
+      schema: 
+        $ref: '#/definitions/ResponseGetObjects'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+post:
+  tags:
+    - Layer Objects Collection
+  description: Adds objects to a stream's layer. Manages the layer collection's indexes (startIndex, objectCount).
+  summary: AddLayerObjects
+  operationId: AddLayerObjects
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        properties:
+          objects:
+            type: array
+            items: 
+              $ref: '#/definitions/SpeckleObject'
+  responses:
+    '200':
+      description: Success whale.
+      schema: 
+        $ref: '#/definitions/ResponsePostObjects' 
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+put:
+  tags:
+    - Layer Objects Collection
+  description: Replaces the layer's objects.
+  summary: ReplaceLayerObjects
+  operationId: ReplaceLayerObjects
+  parameters:
+    - name: body
+      in: body
+      required: true
+      schema:
+        type: object
+        properties:
+          objects:
+            type: array
+            items: 
+              $ref: '#/definitions/SpeckleObject'
+  responses:
+    '200':
+      description: Success whale.
+      schema: 
+        $ref: '#/definitions/ResponsePostObjects' 
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+delete:
+  tags:
+    - Layer Objects Collection
+  description: Deletes the layer's objects. If you provide a list of ids, it will delete just those.
+  summary: DeleteLayerObjects
+  operationId: DeleteLayerObjects
+  parameters:
+    - name: body
+      in: body
+      required: false
+      schema: 
+        type: object
+        properties:
+          objects:
+            type: array
+            items:
+              type: string
+            description: An array of objectIds to remove. Must be part of the layer's subset. Or else. 
+  responses:
+    '200':
+      description: Success whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '400':
+      description: Fail whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+    '401':
+      description: Unauthorized whale.
+      schema: 
+        $ref: '#/definitions/ResponseBase'
+  security:
+    - JWT Token Auth: []
+parameters:
+  - name: streamId
+    in: path
+    required: true
+    type: string
+  - name: layerId
+    in: path
+    required: true
+    type: string
+    description: Layer guid or name. In case of name, the first layer of that name is selected.

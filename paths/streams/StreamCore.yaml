@@ -9,11 +9,11 @@ get:
     - application/json
   responses:
     '200':
-      description: Status 200
+      description: Success whale.
       schema:
         $ref: '#/definitions/ResponseStreamGet'
     '401':
-      description: 'Returned when the stream is private, and the Authorization header is not present, or it the user described by it is not either the owner or in the `sharedWith` array.'
+      description: Fail whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
     '404':
@@ -24,12 +24,7 @@ put:
   tags:
     - Streams
   summary: StreamUpdate
-  description: |
-    Updates a specific stream:
-    - it disassebmles the objects into they geometry components, and saves both in the database
-    - it overwrites the objects array (if present)
-    - it **merges** the layers array (if present)
-    - it overwrites the name (if present)
+  description: Updates the stream. 
   operationId: StreamUpdate
   consumes:
     - application/json
@@ -58,19 +53,19 @@ delete:
   tags:
     - Streams
   summary: StreamDelete
-  description: TODO
+  description: Flags stream for deletion.
   operationId: StreamDelete
   responses:
     '200':
-      description: Status 200
+      description: Success whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
     '400':
-      description: Meerps.
+      description: Fail whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
     '401':
-      description: Whoops.
+      description: Fail whale.
       schema: 
         $ref: '#/definitions/ResponseBase'
   security:

@@ -8,7 +8,7 @@ post:
     - application/json
   responses:
     '200':
-      description: Successfully creates a new stream.
+      description: Initialises a stream in the db. You get back the 'streamId'.
       schema:
         $ref: '#/definitions/ResponseStreamCreate'
     '400':

@@ -1,0 +1,2099 @@
+swagger: '2.0'
+info:
+  version: 0.0.3
+  title: SpeckleCore
+  description: >-
+    Documentation & specifications for the Speckle Server & Speckle Objects.
+
+
+    https://speckle.works
+
+
+    This OAS doc for Speckle. It does *not* cover the realtime communication
+    layer (websockets).
+
+
+    There are two main parts you should look at:
+
+    ### 1. Operations
+
+    This section describes all the available `operations` that the speckle
+    server can perform, revolving around a simple `Accounts` system, `Clients`
+    (keeping track of all the receivers and senders), `Streams`, `Stream
+    Layers`, `Stream Objects` and `Objects`.
+
+
+    ### 2. Schema Defintions
+
+    This section describes the basic building blocks that Speckle works with. It
+    also contains an extensive list of `Payloads` and `Responses` which are less
+    interesting, but a through look at the `SpeckleObject` and its children is
+    needed, especially if you're looking into implementing your own application
+    specific converter. 
+  contact:
+    name: SpeckleWorks
+    url: 'https://speckle.works'
+    email: didimitrie@gmail.com
+  license:
+    name: MIT
+host: 'localhost:8080'
+basePath: /api
+tags:
+  - name: Accounts
+    description: 'Register, Login and Get/Set user profiles.'
+  - name: Clients
+    description: >-
+      Create, get and update application clients. Without one you can't
+      send/receive/broadcast websocket messages.
+  - name: Streams
+    description: 'Create, get and update streams.'
+  - name: Stream Layers Collection
+    description: Modify the stream's layer collection.
+  - name: Stream Layer
+    description: Modify a stream's specific layer.
+  - name: Layer Objects Collection
+    description: 'Add, remove objects to a specific layer in the stream.'
+  - name: Stream Objects Collection
+    description: Directly operate on the objects in the stream.
+  - name: Objects
+    description: >-
+      Directly CRUD objects in the database. They are not part of streams, and,
+      as such, kindof suck.
+  - name: Special Ops
+    description: Extra lvl 5 magic spells.
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - JWT Token Auth: []
+securityDefinitions:
+  JWT Token Auth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /accounts/register:
+    post:
+      tags:
+        - Accounts
+      summary: UserRegister
+      description: Registers a new user.
+      operationId: UserRegister
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadAccountRegister'
+      responses:
+        '200':
+          description: New user successfully registered.
+          schema:
+            $ref: '#/definitions/ResponseAccountRegister'
+          examples:
+            application/json: |-
+              {
+                "success": true,
+                "message": "User saved. Redirect to login.",
+                "apitoken": "JWT ABC",
+                "token": "JWT XYZ"
+              }
+        '400':
+          description: Failed to register a new user.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security: []
+  /accounts/login:
+    post:
+      tags:
+        - Accounts
+      summary: UserLogin
+      description: Login and get jwt token.
+      operationId: UserLogin
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadAccountLogin'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseAccountLogin'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security: []
+  /accounts/streams:
+    get:
+      tags:
+        - Accounts
+      summary: UserStreamsGet
+      description: >-
+        Gets all the streams for a user (identified via the authorization token,
+        so if that is s not present, it will not work).
+      operationId: UserStreamsGet
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseAccountStreams'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unautorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  /accounts/clients:
+    get:
+      tags:
+        - Accounts
+      summary: UserClientsGet
+      description: >-
+        Gets all the clients for a user (identified via the authorization token,
+        so if that is s not present, it will not work).
+      operationId: UserClientsGet
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseAccountClients'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  /accounts/profile:
+    get:
+      tags:
+        - Accounts
+      summary: UserGetProfile
+      description: Gets the user's profile.
+      operationId: UserGetProfile
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseAccountProfile'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    put:
+      tags:
+        - Accounts
+      summary: UserUpdate
+      description: TODO. Should update user profile with new information.
+      operationId: UserUpdate
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadAccountUpdate'
+      responses:
+        '200':
+          description: All good.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  /clients:
+    post:
+      tags:
+        - Clients
+      summary: ClientCreate
+      description: >-
+        Creates a new client and returns your `clientId`. If not authorised, you
+        get a temporary `clientId`.
+      operationId: ClientCreate
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadClientCreate'
+      responses:
+        '200':
+          description: Successfully creates a new client.
+          schema:
+            $ref: '#/definitions/ResponseClientCreate'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  '/clients/{clientId}':
+    get:
+      tags:
+        - Clients
+      summary: ClientGet
+      description: Gets a client.
+      operationId: ClientGet
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Client got.
+          schema:
+            $ref: '#/definitions/ResponseClientGet'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    put:
+      tags:
+        - Clients
+      summary: ClientUpdate
+      description: Updates a client.
+      operationId: ClientUpdate
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadClientUpdate'
+      responses:
+        '200':
+          description: All good.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    delete:
+      tags:
+        - Clients
+      summary: ClientDelete
+      description: Marks a client for deletion.
+      operationId: ClientDelete
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Computer is benevolent.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Computer is confused.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Computer says you're not authorised.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '404':
+          description: Computer can't find shit.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        type: string
+        description: the client's id.
+  /streams:
+    post:
+      tags:
+        - Streams
+      summary: StreamCreate
+      description: Creates a new stream.
+      operationId: StreamCreate
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Initialises a stream in the db. You get back the 'streamId'.
+          schema:
+            $ref: '#/definitions/ResponseStreamCreate'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  '/streams/{streamId}':
+    get:
+      tags:
+        - Streams
+      summary: StreamGet
+      description: >-
+        Will return the specified stream. If no `Authorization` header is
+        provided and the stream is private you will get a 401. It populates the
+        `objects` array fully. If you want a light version of the stream, query
+        `/api/streams/{streamId}/meta`.
+      operationId: StreamGet
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponseStreamGet'
+        '401':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '404':
+          description: Stream not found.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    put:
+      tags:
+        - Streams
+      summary: StreamUpdate
+      description: Updates the stream.
+      operationId: StreamUpdate
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadStreamUpdate'
+      responses:
+        '200':
+          description: On success
+          schema:
+            $ref: '#/definitions/ResponseStreamUpdate'
+        '401':
+          description: Status 401
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '404':
+          description: Status 404
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Streams
+      summary: StreamDelete
+      description: Flags stream for deletion.
+      operationId: StreamDelete
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+        description: The stream's id.
+        x-example: SyLPkGgNW
+  '/streams/{streamId}/name':
+    get:
+      tags:
+        - Streams
+      summary: StreamGetName
+      operationId: StreamGetName
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseStreamNameGet'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    put:
+      tags:
+        - Streams
+      summary: StreamUpdateName
+      operationId: StreamUpdateName
+      consumes: []
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PayloadStreamNameUpdate'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+  '/streams/{streamId}/layers':
+    get:
+      tags:
+        - Stream Layers Collection
+      summary: GetLayers
+      description: Retrieves the stream's layers.
+      operationId: GetLayers
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseStreamLayersGet'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    post:
+      tags:
+        - Stream Layers Collection
+      summary: AddLayers
+      description: Adds the provided layers to the stream.
+      operationId: AddLayers
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - layers
+            properties:
+              layers:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    put:
+      tags:
+        - Stream Layers Collection
+      summary: ReplaceLayers
+      description: Updates stream layers.
+      operationId: ReplaceLayers
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - layers
+            properties:
+              layers:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    patch:
+      tags:
+        - Stream Layers Collection
+      summary: MergeLayers
+      description: Merges the stream layers. Gently. And with lots of tender care.
+      operationId: MergeLayers
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - layers
+            properties:
+              layers:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Stream Layers Collection
+      summary: DeleteLayers
+      description: Purges the stream's layer list.
+      operationId: DeleteLayers
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+  '/streams/{streamId}/layers/{layerId}':
+    get:
+      tags:
+        - Stream Layer
+      description: Retrieves a stream layer.
+      summary: GetSingleLayer
+      operationId: GetSingleLayer
+      responses:
+        '200':
+          description: Successful whale.
+          schema:
+            $ref: '#/definitions/ResponseSingleLayer'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    put:
+      tags:
+        - Stream Layer
+      description: Overwrites a stream layer.
+      summary: ReplaceSingleLayer
+      operationId: ReplaceSingleLayer
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - layer
+            properties:
+              layer:
+                $ref: '#/definitions/SpeckleLayer'
+      responses:
+        '200':
+          description: Successful whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    patch:
+      tags:
+        - Stream Layer
+      description: Updates a stream layer (merges keys).
+      summary: UpdateSingleLayer
+      operationId: UpdateSingleLayer
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - layer
+            properties:
+              layer:
+                $ref: '#/definitions/SpeckleLayer'
+      responses:
+        '200':
+          description: Successful whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Stream Layer
+      description: Deletes a stream layer.
+      summary: DeleteSingleLayer
+      operationId: DeleteSingleLayer
+      responses:
+        '200':
+          description: Successful whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+      - name: layerId
+        in: path
+        required: true
+        type: string
+        description: >-
+          Layer guid or name. In case of name, the first layer of that name is
+          selected.
+  '/streams/{streamId}/layers/{layerId}/objects':
+    get:
+      tags:
+        - Layer Objects Collection
+      description: Gets the objects from a stream's layer.
+      summary: GetLayerObjects
+      operationId: GetLayerObjects
+      security:
+        - JWT Token Auth: []
+      parameters:
+        - name: query
+          in: query
+          type: string
+          description: 'Filter by field values, get or omit specific fields & sort.'
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponseGetObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    post:
+      tags:
+        - Layer Objects Collection
+      description: >-
+        Adds objects to a stream's layer. Manages the layer collection's indexes
+        (startIndex, objectCount).
+      summary: AddLayerObjects
+      operationId: AddLayerObjects
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              objects:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponsePostObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    put:
+      tags:
+        - Layer Objects Collection
+      description: Replaces the layer's objects.
+      summary: ReplaceLayerObjects
+      operationId: ReplaceLayerObjects
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              objects:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponsePostObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Layer Objects Collection
+      description: >-
+        Deletes the layer's objects. If you provide a list of ids, it will
+        delete just those.
+      summary: DeleteLayerObjects
+      operationId: DeleteLayerObjects
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            type: object
+            properties:
+              objects:
+                type: array
+                items:
+                  type: string
+                description: >-
+                  An array of objectIds to remove. Must be part of the layer's
+                  subset. Or else.
+      responses:
+        '200':
+          description: Success whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorized whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+      - name: layerId
+        in: path
+        required: true
+        type: string
+        description: >-
+          Layer guid or name. In case of name, the first layer of that name is
+          selected.
+  '/streams/{streamId}/objects':
+    get:
+      tags:
+        - Stream Objects Collection
+      summary: GetObjects
+      description: Retrieves the stream's objects.
+      operationId: GetObjects
+      parameters:
+        - name: query
+          in: query
+          type: string
+          description: 'Filter by field values, get or omit specific fields & sort.'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseStreamLayersGet'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    post:
+      tags:
+        - Stream Objects Collection
+      summary: AddObjects
+      description: Adds the provided objects to the stream.
+      operationId: AddObjects
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - objects
+            properties:
+              objects:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponsePostObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    put:
+      tags:
+        - Stream Objects Collection
+      summary: ReplaceObjects
+      description: Updates stream layers.
+      operationId: ReplaceObjects
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - objects
+            properties:
+              objects:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponsePostObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Stream Objects Collection
+      summary: DeleteObjects
+      description: Purges the stream's object list.
+      operationId: DeleteObjects
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+  '/streams/{streamId}/objects/{objectId}':
+    delete:
+      tags:
+        - Stream Objects Collection
+      summary: ObjectDeleteFromStream
+      description: Deletes the specified object from the stream's object list.
+      operationId: ObjectDeleteFromStream
+      responses:
+        '200':
+          description: Woot! Operation succeeded!
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+      - name: objectId
+        in: path
+        required: true
+        type: string
+        description: The `objectId` that you want to remove.
+  '/streams/{streamId}/clone':
+    post:
+      tags:
+        - Special Ops
+      summary: StreamClone
+      description: >-
+        Clones the current stream, saving the clone to the children array of the
+        parent, and saving the parent to the parent field of the clone. This
+        operation exists to enable various versioning/history operations for
+        design variants. 
+
+
+
+        For example, you can use it to save the current state as an option,
+        similar to the traditional `Save As > 0087QPT-FacadeVersionXX.3dm`. 
+
+
+
+        Alternatively, you can use it to branch off from the current state, by
+        switching all future updates to the clone's stream.
+
+
+
+        Sky & UI's the limit.
+      operationId: StreamClone
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseStreamClone'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+        description: The stream's id.
+        default: BJG6Qe-V-
+  '/streams/{streamId}/diff/{otherId}':
+    get:
+      tags:
+        - Special Ops
+      summary: StreamDiff
+      description: 'Diffs two streams, by objects and layers.'
+      operationId: StreamDiff
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseStreamDiff'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    parameters:
+      - name: streamId
+        in: path
+        required: true
+        type: string
+        description: The stream's id.
+      - name: otherId
+        in: path
+        required: true
+        type: string
+        description: The stream you want to diff against.
+  /objects:
+    post:
+      tags:
+        - Objects
+      summary: ObjectCreate
+      description: Creates an object.
+      operationId: ObjectCreate
+      consumes: []
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - object
+            properties:
+              object:
+                $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseObjectCreate'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+  '/objects/{objectId}':
+    get:
+      tags:
+        - Objects
+      summary: ObjectGet
+      description: |
+        Gets a SpeckleObject from the database.
+      operationId: ObjectGet
+      parameters:
+        - name: query
+          in: query
+          type: string
+          description: Specify which fields to retrieve or omit.
+      responses:
+        '200':
+          description: Object found
+          schema:
+            $ref: '#/definitions/ResponseObjectGet'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '404':
+          description: Status 404
+    put:
+      tags:
+        - Objects
+      summary: ObjectUpdate
+      description: Updates an object by its id.
+      operationId: ObjectUpdate
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              object:
+                $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponseObjectUpdate'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+      security:
+        - JWT Token Auth: []
+    delete:
+      tags:
+        - Objects
+      summary: ObjectDelete
+      description: Flags an object for deletion.
+      operationId: ObjectDelete
+      responses:
+        '200':
+          description: Done deal yo!
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    parameters:
+      - name: objectId
+        in: path
+        required: true
+        type: string
+  /objects/bulk:
+    post:
+      tags:
+        - Objects
+      summary: ObjectCreateBulk
+      description: Creates and stores in the database a SpeckleObject.
+      operationId: ObjectCreateBulk
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              objects:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: Status 200
+          schema:
+            $ref: '#/definitions/ResponsePostObjects'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+        '401':
+          description: Unauthorised whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+definitions:
+  User:
+    type: object
+    description: Describes a user.
+    properties:
+      _id:
+        type: string
+        description: Database uuid.
+      apitoken:
+        type: string
+        description: a signed jwt token that expires in 1 year.
+      email:
+        type: string
+        description: user's email
+      name:
+        type: string
+        description: User's given name
+      surname:
+        type: string
+        description: User's family name
+      company:
+        type: string
+        description: Users's company
+      logins:
+        type: array
+        description: an array storing each time the user logged in.
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+          description: it's a timestamp XD
+  SpeckleClient:
+    type: object
+    description: >-
+      A representation of the manifestation of a Speckle Client. Whenever an
+      instance of a client is born in any software, it should get its matching
+      identity on the server. When deserialising itself, it should call back to
+      the database and set itself as online. Its uuid sould server as sessionId
+      for the websocket client.
+    properties:
+      _id:
+        type: string
+        description: Database uuid.
+      role:
+        type: string
+        description: >-
+          Sender, Receiver, Mixed (for both), Parametric Sender if it can
+          operate on parameters inside a defintion, or whatever else we can
+          think of.
+      documentGuid:
+        type: string
+      documentName:
+        type: string
+      documentType:
+        type: string
+      streamId:
+        type: string
+        description: The streamId that this clients 'listens to'.
+      owner:
+        type: string
+      online:
+        type: boolean
+        description: Is it accessible from the server or not?
+  DataStream:
+    type: object
+    description: >-
+      Describes a data stream. The data stream's `streamId` will define the
+      channel on which real-time updates will be distributed on the websocket
+      server.
+    required:
+      - streamId
+      - name
+      - objects
+      - layers
+    properties:
+      _id:
+        type: string
+        description: Database uuid.
+      streamId:
+        type: string
+        description: The stream's short id.
+      owner:
+        type: string
+        description: The owner's user id.
+      private:
+        type: boolean
+        default: false
+      name:
+        type: string
+        description: The data stream's name
+        default: Anonymous Stream
+      objects:
+        type: array
+        description: An array of SpeckleObject ids.
+        items:
+          $ref: '#/definitions/SpeckleObject'
+      layers:
+        type: array
+        description: An array of speckle layers.
+        items:
+          $ref: '#/definitions/SpeckleLayer'
+      parent:
+        type: string
+        description: 'Parent stream''s id, if any. If null, this is a `root` stream.'
+      children:
+        type: array
+        description: >-
+          Any offspring that this stream might have (created with
+          `/duplicate/{streamId}`
+        items:
+          type: string
+  SpeckleLayer:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Layer's name
+      guid:
+        type: string
+        description: Layer's guid (must be unique)
+      orderIndex:
+        type: integer
+        description: Describes this layer's position in the list of layers.
+      startIndex:
+        type: number
+        description: The index of the first object relative to the stream's objects array
+      objectCount:
+        type: number
+        description: How many objects does this layer have.
+      topology:
+        type: string
+        description: String describing the nested tree structure (Gh centric).
+        example: 0;0;0;0-2 0;0;0;1-2
+      properties:
+        $ref: '#/definitions/SpeckleLayerProperties'
+    description: >-
+      Describes a speckle layer. To assign objects to a speckle layer, you'll
+      need to start at `objects[ layer.startIndex ]` and finish at `objects[
+      layer.startIndex + layer.objectCount ]`.
+  SpeckleLayerProperties:
+    type: object
+    properties:
+      color:
+        type: object
+        properties:
+          a:
+            type: number
+            description: alpha value
+            default: 1
+          hex:
+            type: string
+            description: hex color value
+            default: '#d4d4d4'
+            example: '#d4d4d4'
+      visible:
+        type: boolean
+        description: toggles layer visibility.
+      pointsize:
+        type: number
+        description: defines point size in threejs
+      linewidth:
+        type: number
+        description: defines line thickness in threejs
+      shininess:
+        type: number
+        description: says it all. speckle is superficial.
+      smooth:
+        type: boolean
+        description: smooth shading toggle
+      showEdges:
+        type: boolean
+        description: display edges or not yo.
+      wireframe:
+        type: boolean
+        description: i'm bored.
+    description: >-
+      Holds stream layer properties, mostly for displaying purposes. This object
+      will be filled up with garbage from threejs and others, but below is a
+      minimal schema.
+  SpeckleObject:
+    type: object
+    description: >-
+      Base class that is inherited by all other Speckle objects. The only
+      required value is its `type`.
+
+
+      Important note: the following types: `[ Polyline, Curve, Mesh, Brep ]` are
+      treated server side in a special manner, as they can be unbounded in size.
+    required:
+      - type
+    discriminator: type
+    properties:
+      type:
+        type: string
+        description: object's type
+        enum:
+          - Boolean
+          - Number
+          - String
+          - Interval
+          - Interval2d
+          - Point
+          - Vector
+          - Plane
+          - Line
+          - Rectangle
+          - Circle
+          - Box
+          - Polyline
+          - Curve
+          - Mesh
+          - Brep
+          - 'Null'
+      hash:
+        type: string
+        description: >-
+          Object's unique hash. It's generated server-side from JSON.stringify(
+          obj.properties ) + obj.geometryHash using a murmurhash3 128bit
+          function.
+        example: hash
+      geometryHash:
+        type: string
+        description: >-
+          If the object contains 'heavy' geometry, it should have a geometry
+          hash.
+        example: Type.hash
+      applicationId:
+        type: string
+        example: GUID
+        description: >-
+          If this object is not an ephemeral object, (ie coming from Grasshopper
+          or Dynamo), and has a unique, persistent and consistent application
+          id, this is where to store said guid.
+      properties:
+        type: object
+        description: 'Anything goes in here, including other (speckle) objects.'
+  SpeckleBoolean:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Boolean
+          value:
+            type: boolean
+  SpeckleNumber:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Number
+          value:
+            type: number
+            description: 'A number. Can be float, double, etc.'
+  SpeckleString:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: String
+          value:
+            type: string
+            description: A string.
+  SpeckleInterval:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Interval
+          start:
+            type: number
+          end:
+            type: number
+  SpeckleInterval2d:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          U:
+            $ref: '#/definitions/SpeckleInterval'
+            description: U interval.
+          V:
+            $ref: '#/definitions/SpeckleInterval'
+            description: V interval.
+  SpecklePoint:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Point
+          value:
+            description: 'An array containing the X, Y and Z coords of the point.'
+            type: array
+            items:
+              type: number
+  SpeckleVector:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Vector
+          value:
+            description: 'An array containing the X, Y and Z coords of the vector.'
+            type: array
+            items:
+              type: number
+  SpecklePlane:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Plane
+          Origin:
+            $ref: '#/definitions/SpecklePoint'
+            description: The origin of the plane.
+          Normal:
+            $ref: '#/definitions/SpeckleVector'
+            description: The normal of the plane.
+          Xdir:
+            $ref: '#/definitions/SpeckleVector'
+            description: The X axis of the plane.
+          Ydir:
+            $ref: '#/definitions/SpeckleVector'
+            description: The Y axis of the plane.
+  SpeckleLine:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Line
+          start:
+            $ref: '#/definitions/SpecklePoint'
+            description: Line's start point.
+          end:
+            $ref: '#/definitions/SpecklePoint'
+            description: Line's end point.
+  SpeckleRectangle:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Rectangle
+          A:
+            $ref: '#/definitions/SpecklePoint'
+          B:
+            $ref: '#/definitions/SpecklePoint'
+          C:
+            $ref: '#/definitions/SpecklePoint'
+          D:
+            $ref: '#/definitions/SpecklePoint'
+    description: Contains the four corner points of the rectangle. They should be coplanar.
+  SpeckleCircle:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Circle
+          radius:
+            type: number
+          center:
+            $ref: '#/definitions/SpecklePoint'
+          normal:
+            $ref: '#/definitions/SpeckleVector'
+  SpeckleBox:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Box
+          basePlane:
+            $ref: '#/definitions/SpecklePlane'
+          xSize:
+            $ref: '#/definitions/SpeckleInterval'
+          ySize:
+            $ref: '#/definitions/SpeckleInterval'
+          zSize:
+            $ref: '#/definitions/SpeckleInterval'
+  SpecklePolyline:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Polyline
+          value:
+            type: array
+            items:
+              type: number
+  SpeckleCurve:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Curve
+          base64:
+            type: string
+            description: See SpeckleBrep.
+          provenance:
+            type: string
+            description: See SpeckleBrep.
+          displayValue:
+            $ref: '#/definitions/SpecklePolyline'
+            description: Contains a speckle polyline representation of this curve.
+  SpeckleMesh:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Mesh
+          vertices:
+            type: array
+            items:
+              type: number
+            description: >-
+              The mesh's vertices array, in a flat array (ie, `x1, y1, z1, x2,
+              y2, ...`)
+          faces:
+            type: array
+            items:
+              type: number
+            description: The faces array.
+          colors:
+            type: array
+            items:
+              type: number
+            description: 'If any, the colours per vertex.'
+  SpeckleBrep:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Brep
+          base64:
+            type: string
+            description: >-
+              A base64 encoded string of the raw byte array of the object. Do
+              not worry base64 encoding making strings 1.5x bigger, gzip
+              essentially neutralises this - both in transit and in the db.
+          provenance:
+            type: string
+            description: >-
+              A short prefix of where the base64 comes from. For example, Rhino
+              objects get ON aka Open Nurbs. Later down the road this should be
+              a strict enum.
+          displayValue:
+            $ref: '#/definitions/SpeckleMesh'
+            description: Contains a speckle mesh representation of this brep.
+  PayloadAccountRegister:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      name:
+        type: string
+      surname:
+        type: string
+      company:
+        type: string
+    description: User registration payload.
+  PayloadAccountLogin:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    description: User login payload.
+  PayloadAccountUpdate:
+    type: object
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      surname:
+        type: string
+      company:
+        type: string
+    description: User login payload.
+  PayloadClientCreate:
+    type: object
+    properties:
+      client:
+        type: object
+        properties:
+          role:
+            type: string
+          documentGuid:
+            type: string
+          documentName:
+            type: string
+          documentType:
+            type: string
+          streamId:
+            type: string
+  PayloadClientUpdate:
+    type: object
+    properties:
+      client:
+        $ref: '#/definitions/SpeckleClient'
+    description: model payload for Client update.
+  PayloadStreamUpdate:
+    type: object
+    properties:
+      objects:
+        type: array
+        items:
+          $ref: '#/definitions/SpeckleObject'
+      layers:
+        type: array
+        items:
+          $ref: '#/definitions/SpeckleLayer'
+      name:
+        type: string
+    description: model payload for stream update.
+  PayloadStreamNameUpdate:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  PayloadCreateObject:
+    type: object
+    properties:
+      object:
+        $ref: '#/definitions/SpeckleObject'
+  PayloadObjectUpdate:
+    type: object
+    required:
+      - object
+    properties:
+      object:
+        $ref: '#/definitions/SpeckleObject'
+  PayloadObjectCreateWithArray:
+    type: object
+    required:
+      - objects
+    properties:
+      objects:
+        type: array
+        items:
+          $ref: '#/definitions/SpeckleObject'
+  PayloadObjectGetWithArray:
+    type: object
+    required:
+      - objects
+    properties:
+      objects:
+        type: array
+        items:
+          type: string
+        description: An array of object ids to retrieve from the database.
+  ResponseBase:
+    type: object
+    properties:
+      success:
+        type: boolean
+        description: >-
+          Besides the http status code, this tells you whether the call
+          succeeded or not.
+      message:
+        type: string
+        description: Either an error or a confirmation.
+  ResponseAccountRegister:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          token:
+            type: string
+            description: 'Session token, expires in 1 day.'
+          apiToken:
+            type: string
+            description: 'API token, expires in 1 year.'
+  ResponseAccountLogin:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          token:
+            type: string
+            description: 'Session token, expires in 1 day.'
+          apiToken:
+            type: string
+            description: 'API token, expires in 1 year.'
+  ResponseAccountStreams:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          streams:
+            type: array
+            items:
+              $ref: '#/definitions/DataStream'
+            description: The user's streams.
+          sharedStreams:
+            type: array
+            items:
+              $ref: '#/definitions/DataStream'
+            description: The streams that are shared with the user.
+  ResponseAccountClients:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          clients:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleClient'
+              description: The user's streams.
+  ResponseAccountProfile:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          user:
+            $ref: '#/definitions/User'
+  ResponseClientCreate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          clientId:
+            type: string
+            description: the client's uuid. save & serialise this!
+  ResponseClientGet:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          client:
+            $ref: '#/definitions/SpeckleClient'
+  ResponseStreamCreate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          stream:
+            $ref: '#/definitions/DataStream'
+  ResponseStreamGet:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          stream:
+            $ref: '#/definitions/DataStream'
+  ResponseStreamLayersGet:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          layers:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleLayer'
+  ResponseStreamNameGet:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          name:
+            type: string
+  ResponseStreamUpdate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          objects:
+            type: array
+            items:
+              type: string
+            description: Ordered array of the objects databaseId (_id).
+  ResponseStreamClone:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          clone:
+            type: object
+            properties:
+              _id:
+                type: string
+                description: the cloned data stream's new id.
+              streamId:
+                type: string
+                description: the cloned data stream's new streamId.
+          parent:
+            type: object
+            properties:
+              _id:
+                type: string
+              streamId:
+                type: string
+              children:
+                type: array
+                items:
+                  type: string
+                description: the children of the original stream.
+  ResponseStreamDiff:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          objects:
+            type: object
+            properties:
+              common:
+                type: array
+                items:
+                  type: string
+              inA:
+                type: array
+                items:
+                  type: string
+              inB:
+                type: array
+                items:
+                  type: string
+          layers:
+            type: object
+            properties:
+              common:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+              inA:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+              inB:
+                type: array
+                items:
+                  $ref: '#/definitions/SpeckleLayer'
+  ResponseSingleLayer:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          layer:
+            $ref: '#/definitions/SpeckleLayer'
+  ResponseObjectCreate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+  ResponseObjectGet:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          speckleObject:
+            $ref: '#/definitions/SpeckleObject'
+  ResponseObjectUpdate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+  ResponseObjectWithArrayCreate:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+  ResponseGetObjects:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          objects:
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleObject'
+  ResponsePostObjects:
+    allOf:
+      - $ref: '#/definitions/ResponseBase'
+      - type: object
+        properties:
+          objects:
+            type: array
+            items:
+              type: string
+            description: Ordered array of the objects databaseId (_id).
+

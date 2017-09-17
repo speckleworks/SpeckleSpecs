@@ -60,7 +60,6 @@ SpeckleObject:
     properties:
       type: object
       description: 'Anything goes in here, including other (speckle) objects.'
-  description: Minimal representation of a SpeckleObject. Contains other values depending on specific class. See the .net docs for more info.
 SpeckleBoolean:
   allOf: 
     - $ref: '#/definitions/SpeckleObject'
@@ -291,10 +290,6 @@ PayloadClientUpdate:
   $ref: ./payloads/PayloadClientUpdate.yaml
 PayloadStreamUpdate:
   $ref: ./payloads/PayloadStreamUpdate.yaml
-PayloadStreamMetaUpdate:
-  $ref: ./payloads/PayloadStreamMetaUpdate.yaml
-PayloadStreamLayersUpdate:
-  $ref: ./payloads/PayloadStreamLayersUpdate.yaml
 PayloadStreamNameUpdate:
   $ref: ./payloads/PayloadStreamNameUpdate.yaml
 PayloadCreateObject:
@@ -316,7 +311,7 @@ ResponseBase:
     message: 
       type: string
       description: Either an error or a confirmation.
-# Responses Accounts
+# Responses Accounts
 ResponseAccountRegister: 
   $ref: ./responses/ResponseAccountRegister.yaml
 ResponseAccountLogin: 
@@ -334,23 +329,29 @@ ResponseClientCreate:
 ResponseClientGet:
   $ref: ./responses/ResponseClientGet.yaml
 
-# Responses Streams
+# Responses Streams
 ResponseStreamCreate:
   $ref: ./responses/ResponseStreamCreate.yaml
 ResponseStreamGet:
   $ref: ./responses/ResponseStreamGet.yaml
-ResponseStreamMetaGet:
-  $ref: ./responses/ResponseStreamMetaGet.yaml
 ResponseStreamLayersGet:
   $ref: ./responses/ResponseStreamLayersGet.yaml
 ResponseStreamNameGet:
   $ref: ./responses/ResponseStreamNameGet.yaml
 ResponseStreamUpdate:
   $ref: ./responses/ResponseStreamUpdate.yaml
-ResponseStreamUpdate:
-  $ref: ./responses/ResponseStreamUpdate.yaml
-ResponseStreamDuplicate:
-  $ref: ./responses/ResponseStreamDuplicate.yaml
+ResponseStreamClone:
+  $ref: ./responses/ResponseStreamClone.yaml
+ResponseStreamDiff:
+  $ref: ./responses/ResponseStreamDiff.yaml
+# Responses layers
+ResponseSingleLayer: 
+  allOf:
+    - $ref: '#/definitions/ResponseBase'
+    - type: object
+      properties:
+        layer: 
+          $ref: '#/definitions/SpeckleLayer'
 
 # Responses Objects
 ResponseObjectCreate:
@@ -361,5 +362,19 @@ ResponseObjectUpdate:
   $ref: ./responses/ResponseObjectUpdate.yaml 
 ResponseObjectWithArrayCreate:
   $ref: ./responses/ResponseObjectWithArrayCreate.yaml 
-ResponseObjectWithArrayGet:
-  $ref: ./responses/ResponseObjectWithArrayGet.yaml
+
+ResponseGetObjects:
+  $ref: ./responses/ResponseGetObjects.yaml
+  
+ResponsePostObjects:
+  allOf:
+    - $ref: '#/definitions/ResponseBase'
+    - type: object
+      properties:
+        objects: 
+          type: array
+          items:
+            type: string
+          description: Ordered array of the objects databaseId (_id).
+
+
