@@ -3,18 +3,56 @@
   "info": {
     "version": "0.0.3",
     "title": "SpeckleCore",
-    "description": "Documentation & specifications for the Speckle Server & Speckle Objects.\n\nhttps://speckle.works\n\nThis document is an OpenApi v.2.0 specification for Speckle. It does *not* cover the realtime communication layer (websockets).\n\nThere are two main parts you should look at:\n### 1. Operations\nThis section describes all the available `operations` that the speckle server can perform, revolving around a simple `Accounts` system, `Clients` (keeping track of all the receivers and senders), `Streams` (main data structure) and `Objects`.\n\n### 2. Schema Defintions\nThis section describes the basic building blocks that Speckle works with. It also contains an extensive list of `Payloads` and `Responses` which are less interesting, but a through look at the `SpeckleObject` and its children is needed, especially if you're looking into implementing your own application specific converter. \n\n*Important note*: the following speckle object types `Polyline, Curve, Mesh, Brep` are treated server side in a special manner, as they can be unbounded in size.\n\n### Client code generation\nTo generate api clients, you can either use `swagger-codegen` or, alternatively, open up `index.json` (https://raw.githubusercontent.com/didimitrie/SpeckleOpenApi/master/index.json) in the swagger editor (https://editor.swagger.io).\n\n### Contribute\nIf you want to add another type of speckle object, or simply improve the schema, feel free to fork & pr over on github.",
+    "description": "Documentation & specifications for the Speckle Server & Speckle Objects.\n\nhttps://speckle.works\n\nThis OAS doc for Speckle. It does *not* cover the realtime communication layer (websockets).\n\nThere are two main parts you should look at:\n### 1. Operations\nThis section describes all the available `operations` that the speckle server can perform, revolving around a simple `Accounts` system, `Clients` (keeping track of all the receivers and senders), `Streams`, `Stream Layers`, `Stream Objects` and `Objects`.\n\n### 2. Schema Defintions\nThis section describes the basic building blocks that Speckle works with. It also contains an extensive list of `Payloads` and `Responses` which are less interesting, but a through look at the `SpeckleObject` and its children is needed, especially if you're looking into implementing your own application specific converter. ",
     "contact": {
-      "name": "Dimitrie @idid",
+      "name": "SpeckleWorks",
       "url": "https://speckle.works",
       "email": "didimitrie@gmail.com"
     },
     "license": {
-      "name": ""
+      "name": "MIT"
     }
   },
   "host": "localhost:8080",
   "basePath": "/api",
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "Register, Login and Get/Set user profiles."
+    },
+    {
+      "name": "Clients",
+      "description": "Create, get and update application clients. Without one you can't send/receive/broadcast websocket messages."
+    },
+    {
+      "name": "Streams",
+      "description": "Create, get and update streams."
+    },
+    {
+      "name": "Stream Layers Collection",
+      "description": "Modify the stream's layer collection."
+    },
+    {
+      "name": "Stream Layer",
+      "description": "Modify a stream's specific layer."
+    },
+    {
+      "name": "Layer Objects Collection",
+      "description": "Add, remove objects to a specific layer in the stream."
+    },
+    {
+      "name": "Stream Objects Collection",
+      "description": "Directly operate on the objects in the stream."
+    },
+    {
+      "name": "Objects",
+      "description": "Directly CRUD objects in the database. They are not part of streams, and, as such, kindof suck."
+    },
+    {
+      "name": "Special Ops",
+      "description": "Extra lvl 5 magic spells."
+    }
+  ],
   "schemes": [
     "http",
     "https"
@@ -38,8 +76,1847 @@
     }
   },
   "paths": {
+    "/accounts/register": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserRegister",
+        "description": "Registers a new user.",
+        "operationId": "UserRegister",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadAccountRegister"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user successfully registered.",
+            "schema": {
+              "$ref": "#/definitions/ResponseAccountRegister"
+            },
+            "examples": {
+              "application/json": "{\n  \"success\": true,\n  \"message\": \"User saved. Redirect to login.\",\n  \"apitoken\": \"JWT ABC\",\n  \"token\": \"JWT XYZ\"\n}"
+            }
+          },
+          "400": {
+            "description": "Failed to register a new user.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/accounts/login": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserLogin",
+        "description": "Login and get jwt token.",
+        "operationId": "UserLogin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadAccountLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseAccountLogin"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/accounts/streams": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserStreamsGet",
+        "description": "Gets all the streams for a user (identified via the authorization token, so if that is s not present, it will not work).",
+        "operationId": "UserStreamsGet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseAccountStreams"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unautorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/accounts/clients": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserClientsGet",
+        "description": "Gets all the clients for a user (identified via the authorization token, so if that is s not present, it will not work).",
+        "operationId": "UserClientsGet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseAccountClients"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/accounts/profile": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserGetProfile",
+        "description": "Gets the user's profile.",
+        "operationId": "UserGetProfile",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseAccountProfile"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "UserUpdate",
+        "description": "TODO. Should update user profile with new information.",
+        "operationId": "UserUpdate",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadAccountUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All good.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/clients": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "ClientCreate",
+        "description": "Creates a new client and returns your `clientId`. If not authorised, you get a temporary `clientId`.",
+        "operationId": "ClientCreate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadClientCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully creates a new client.",
+            "schema": {
+              "$ref": "#/definitions/ResponseClientCreate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/clients/{clientId}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "ClientGet",
+        "description": "Gets a client.",
+        "operationId": "ClientGet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Client got.",
+            "schema": {
+              "$ref": "#/definitions/ResponseClientGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "ClientUpdate",
+        "description": "Updates a client.",
+        "operationId": "ClientUpdate",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadClientUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All good.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "ClientDelete",
+        "description": "Marks a client for deletion.",
+        "operationId": "ClientDelete",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Computer is benevolent.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Computer is confused.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Computer says you're not authorised.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Computer can't find shit.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "clientId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "the client's id."
+        }
+      ]
+    },
+    "/streams": {
+      "post": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamCreate",
+        "description": "Creates a new stream.",
+        "operationId": "StreamCreate",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Initialises a stream in the db. You get back the 'streamId'.",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamCreate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/streams/{streamId}": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamGet",
+        "description": "Will return the specified stream. If no `Authorization` header is provided and the stream is private you will get a 401. It populates the `objects` array fully. If you want a light version of the stream, query `/api/streams/{streamId}/meta`.",
+        "operationId": "StreamGet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamGet"
+            }
+          },
+          "401": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Stream not found.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamUpdate",
+        "description": "Updates the stream.",
+        "operationId": "StreamUpdate",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadStreamUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "On success",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamUpdate"
+            }
+          },
+          "401": {
+            "description": "Status 401",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Status 404",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamDelete",
+        "description": "Flags stream for deletion.",
+        "operationId": "StreamDelete",
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "The stream's id.",
+          "x-example": "SyLPkGgNW"
+        }
+      ]
+    },
+    "/streams/{streamId}/name": {
+      "get": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamGetName",
+        "operationId": "StreamGetName",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamNameGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Streams"
+        ],
+        "summary": "StreamUpdateName",
+        "operationId": "StreamUpdateName",
+        "consumes": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayloadStreamNameUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/streams/{streamId}/layers": {
+      "get": {
+        "tags": [
+          "Stream Layers Collection"
+        ],
+        "summary": "GetLayers",
+        "description": "Retrieves the stream's layers.",
+        "operationId": "GetLayers",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamLayersGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Stream Layers Collection"
+        ],
+        "summary": "AddLayers",
+        "description": "Adds the provided layers to the stream.",
+        "operationId": "AddLayers",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "layers"
+              ],
+              "properties": {
+                "layers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Stream Layers Collection"
+        ],
+        "summary": "ReplaceLayers",
+        "description": "Updates stream layers.",
+        "operationId": "ReplaceLayers",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "layers"
+              ],
+              "properties": {
+                "layers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Stream Layers Collection"
+        ],
+        "summary": "MergeLayers",
+        "description": "Merges the stream layers. Gently. And with lots of tender care.",
+        "operationId": "MergeLayers",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "layers"
+              ],
+              "properties": {
+                "layers": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Stream Layers Collection"
+        ],
+        "summary": "DeleteLayers",
+        "description": "Purges the stream's layer list.",
+        "operationId": "DeleteLayers",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/streams/{streamId}/layers/{layerId}": {
+      "get": {
+        "tags": [
+          "Stream Layer"
+        ],
+        "description": "Retrieves a stream layer.",
+        "summary": "GetSingleLayer",
+        "operationId": "GetSingleLayer",
+        "responses": {
+          "200": {
+            "description": "Successful whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseSingleLayer"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Stream Layer"
+        ],
+        "description": "Overwrites a stream layer.",
+        "summary": "ReplaceSingleLayer",
+        "operationId": "ReplaceSingleLayer",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "layer"
+              ],
+              "properties": {
+                "layer": {
+                  "$ref": "#/definitions/SpeckleLayer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Stream Layer"
+        ],
+        "description": "Updates a stream layer (merges keys).",
+        "summary": "UpdateSingleLayer",
+        "operationId": "UpdateSingleLayer",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "layer"
+              ],
+              "properties": {
+                "layer": {
+                  "$ref": "#/definitions/SpeckleLayer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Stream Layer"
+        ],
+        "description": "Deletes a stream layer.",
+        "summary": "DeleteSingleLayer",
+        "operationId": "DeleteSingleLayer",
+        "responses": {
+          "200": {
+            "description": "Successful whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "layerId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "Layer guid or name. In case of name, the first layer of that name is selected."
+        }
+      ]
+    },
     "/streams/{streamId}/layers/{layerId}/objects": {
-      "$ref": "./streams/LayerObjectsOps.yaml"
+      "get": {
+        "tags": [
+          "Layer Objects Collection"
+        ],
+        "description": "Gets the objects from a stream's layer.",
+        "summary": "GetLayerObjects",
+        "operationId": "GetLayerObjects",
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string",
+            "description": "Filter by field values, get or omit specific fields & sort."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseGetObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Layer Objects Collection"
+        ],
+        "description": "Adds objects to a stream's layer. Manages the layer collection's indexes (startIndex, objectCount).",
+        "summary": "AddLayerObjects",
+        "operationId": "AddLayerObjects",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleObject"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponsePostObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Layer Objects Collection"
+        ],
+        "description": "Replaces the layer's objects.",
+        "summary": "ReplaceLayerObjects",
+        "operationId": "ReplaceLayerObjects",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleObject"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponsePostObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Layer Objects Collection"
+        ],
+        "description": "Deletes the layer's objects. If you provide a list of ids, it will delete just those.",
+        "summary": "DeleteLayerObjects",
+        "operationId": "DeleteLayerObjects",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An array of objectIds to remove. Must be part of the layer's subset. Or else."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorized whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "layerId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "Layer guid or name. In case of name, the first layer of that name is selected."
+        }
+      ]
+    },
+    "/streams/{streamId}/objects": {
+      "get": {
+        "tags": [
+          "Stream Objects Collection"
+        ],
+        "summary": "GetObjects",
+        "description": "Retrieves the stream's objects.",
+        "operationId": "GetObjects",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string",
+            "description": "Filter by field values, get or omit specific fields & sort."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamLayersGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Stream Objects Collection"
+        ],
+        "summary": "AddObjects",
+        "description": "Adds the provided objects to the stream.",
+        "operationId": "AddObjects",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "objects"
+              ],
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleObject"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponsePostObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Stream Objects Collection"
+        ],
+        "summary": "ReplaceObjects",
+        "description": "Updates stream layers.",
+        "operationId": "ReplaceObjects",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "objects"
+              ],
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleObject"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponsePostObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Stream Objects Collection"
+        ],
+        "summary": "DeleteObjects",
+        "description": "Purges the stream's object list.",
+        "operationId": "DeleteObjects",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/streams/{streamId}/objects/{objectId}": {
+      "delete": {
+        "tags": [
+          "Stream Objects Collection"
+        ],
+        "summary": "ObjectDeleteFromStream",
+        "description": "Deletes the specified object from the stream's object list.",
+        "operationId": "ObjectDeleteFromStream",
+        "responses": {
+          "200": {
+            "description": "Woot! Operation succeeded!",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "objectId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "The `objectId` that you want to remove."
+        }
+      ]
+    },
+    "/streams/{streamId}/clone": {
+      "post": {
+        "tags": [
+          "Special Ops"
+        ],
+        "summary": "StreamClone",
+        "description": "Clones the current stream, saving the clone to the children array of the parent, and saving the parent to the parent field of the clone. This operation exists to enable various versioning/history operations for design variants. \n\n\nFor example, you can use it to save the current state as an option, similar to the traditional `Save As > 0087QPT-FacadeVersionXX.3dm`. \n\n\nAlternatively, you can use it to branch off from the current state, by switching all future updates to the clone's stream.\n\n\nSky & UI's the limit.",
+        "operationId": "StreamClone",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamClone"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "The stream's id.",
+          "default": "BJG6Qe-V-"
+        }
+      ]
+    },
+    "/streams/{streamId}/diff/{otherId}": {
+      "get": {
+        "tags": [
+          "Special Ops"
+        ],
+        "summary": "StreamDiff",
+        "description": "Diffs two streams, by objects and layers.",
+        "operationId": "StreamDiff",
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseStreamDiff"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "streamId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "The stream's id."
+        },
+        {
+          "name": "otherId",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "description": "The stream you want to diff against."
+        }
+      ]
+    },
+    "/objects": {
+      "post": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "ObjectCreate",
+        "description": "Creates an object.",
+        "operationId": "ObjectCreate",
+        "consumes": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "object"
+              ],
+              "properties": {
+                "object": {
+                  "$ref": "#/definitions/SpeckleObject"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseObjectCreate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      }
+    },
+    "/objects/{objectId}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "ObjectGet",
+        "description": "Gets a SpeckleObject from the database.\n",
+        "operationId": "ObjectGet",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string",
+            "description": "Specify which fields to retrieve or omit."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Object found",
+            "schema": {
+              "$ref": "#/definitions/ResponseObjectGet"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "404": {
+            "description": "Status 404"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "ObjectUpdate",
+        "description": "Updates an object by its id.",
+        "operationId": "ObjectUpdate",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "object": {
+                  "$ref": "#/definitions/SpeckleObject"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponseObjectUpdate"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT Token Auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "ObjectDelete",
+        "description": "Flags an object for deletion.",
+        "operationId": "ObjectDelete",
+        "responses": {
+          "200": {
+            "description": "Done deal yo!",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "objectId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/objects/bulk": {
+      "post": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "ObjectCreateBulk",
+        "description": "Creates and stores in the database a SpeckleObject.",
+        "operationId": "ObjectCreateBulk",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleObject"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status 200",
+            "schema": {
+              "$ref": "#/definitions/ResponsePostObjects"
+            }
+          },
+          "400": {
+            "description": "Fail whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          },
+          "401": {
+            "description": "Unauthorised whale.",
+            "schema": {
+              "$ref": "#/definitions/ResponseBase"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1083,10 +2960,22 @@
       "allOf": [
         {
           "$ref": "#/definitions/ResponseBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Ordered array of the objects databaseId (_id)."
+            }
+          }
         }
       ]
     },
-    "ResponseStreamDuplicate": {
+    "ResponseStreamClone": {
       "allOf": [
         {
           "$ref": "#/definitions/ResponseBase"
@@ -1122,6 +3011,64 @@
                     "type": "string"
                   },
                   "description": "the children of the original stream."
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ResponseStreamDiff": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResponseBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "objects": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "inA": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "inB": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "layers": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
+                },
+                "inA": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
+                },
+                "inB": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/SpeckleLayer"
+                  }
                 }
               }
             }
@@ -1180,7 +3127,7 @@
         }
       ]
     },
-    "ResponseObjectWithArrayGet": {
+    "ResponseGetObjects": {
       "allOf": [
         {
           "$ref": "#/definitions/ResponseBase"
@@ -1188,11 +3135,30 @@
         {
           "type": "object",
           "properties": {
-            "speckleObjects": {
+            "objects": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/SpeckleObject"
               }
+            }
+          }
+        }
+      ]
+    },
+    "ResponsePostObjects": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ResponseBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Ordered array of the objects databaseId (_id)."
             }
           }
         }
