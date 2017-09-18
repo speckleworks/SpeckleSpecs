@@ -7414,6 +7414,181 @@ To perform this operation, you must be authenticated by means of one of the foll
 apiKey
 </aside>
 
+## ObjectGetBulk
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST http://localhost:8080/api/objects/getbulk \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+```
+
+```http
+POST http://localhost:8080/api/objects/getbulk HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+Accept: application/json
+
+```
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+};
+
+$.ajax({
+  url: 'http://localhost:8080/api/objects/getbulk',
+  method: 'post',
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "objects": [
+    "string"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+};
+
+fetch('http://localhost:8080/api/objects/getbulk',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+result = RestClient.post 'http://localhost:8080/api/objects/getbulk',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+r = requests.post('http://localhost:8080/api/objects/getbulk', params={
+
+}, headers = headers)
+
+print r.json()
+```
+
+```java
+URL obj = new URL("http://localhost:8080/api/objects/getbulk");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+```
+
+`POST /objects/getbulk`
+
+*ObjectGetBulk*
+
+Gets a load of SpeckleObjects.
+
+> Body parameter
+
+```json
+{
+  "objects": [
+    "string"
+  ]
+}
+```
+### Parameters
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+body|body|object|true|No description
+» objects|body|[string]|false|No description
+
+
+> Example responses
+
+```json
+{
+  "success": true,
+  "message": "string",
+  "objects": [
+    {
+      "type": "Boolean",
+      "hash": "hash",
+      "geometryHash": "Type.hash",
+      "applicationId": "GUID",
+      "properties": {}
+    }
+  ]
+}
+```
+```json
+{
+  "success": true,
+  "message": "string"
+}
+```
+```json
+{
+  "success": true,
+  "message": "string"
+}
+```
+### Responses
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Status 200|[ResponseGetObjects](#schemaresponsegetobjects)
+400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Fail whale.|[ResponseBase](#schemaresponsebase)
+401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Unauthorised whale.|[ResponseBase](#schemaresponsebase)
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+apiKey
+</aside>
+
 # Schemas
 
 ## User

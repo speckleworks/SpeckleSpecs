@@ -53,3 +53,5 @@
   $ref: ./objects/ObjectGetUpdateDelete.yaml
 /objects/bulk:
   $ref: ./objects/ObjectsBulk.yaml
+/objects/getbulk:
+  $ref: ./objects/ObjectsGetBulk.yaml
