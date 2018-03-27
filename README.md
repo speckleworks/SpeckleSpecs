@@ -1,24 +1,14 @@
 # [Speckle.Works](http://spekcle.works) OpenApi Documentation
 
-### Generate the spec from all the files:
-Install `multi-file-swagger`:
+# Visualise & Edit
 
-```javascript
-  npm install -g multi-file-swagger
-```
+Open the `SpeckleV1OpenApiSpecs.yaml` file in the [OpenApi editor](https://editor.swagger.io//#/).
 
-Run the command like so:
+# Generate clients
 
-```javascript
-  multi-file-swagger index.yaml > index.json
-```
+Use the `generate client` option from the [OpenApi editor](https://editor.swagger.io//#/).
 
-### Visualise the spec:
+# Build the docs
 
-Head over to [the swagger editor](http://editor.swagger.io) and drop in the generated index.json. 
-
-### Generate code from the spec:
-Either use `swagger-codegen` or simply export from the editor your client of choice.
-
-#### License
-MIT
+1. Run `npm-install`
+2. Run `npm run build-shins`

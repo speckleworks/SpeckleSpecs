@@ -1,6 +1,0 @@
-allOf:
-  - $ref: '#/definitions/ResponseBase'
-  - type: object
-    properties:
-      speckleObject:
-        $ref: '#/definitions/SpeckleObject'
