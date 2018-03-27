@@ -2,9 +2,7 @@ swagger: '2.0'
 info:
   version: 1.0.0-beta
   title: Speckle OpenApi Specs
-  description: |-
-    Documentation & specifications for the Speckle Server & Speckle Objects. Feel free to edit and add information here.
-    https://speckle.works
+  description: Documentation & specifications for the Speckle Server & Speckle Objects.
   contact:
     name: SpeckleWorks
     url: 'https://speckle.works'
@@ -205,7 +203,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Client'
+            $ref: '#/definitions/AppClient'
       responses:
         '200':
           description: All the users's clients.
@@ -231,7 +229,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Client'
+            $ref: '#/definitions/AppClient'
       responses:
         '200':
           description: All the users's clients.
@@ -538,7 +536,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/DataStream'
+            $ref: '#/definitions/SpeckleStream'
       responses:
         '200':
           description: All good!
@@ -560,6 +558,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: query
+          in: query
+          type: string
+          description: Specifiy which fields to retrieve, ie `?fields=layers,baseProperties`.
       responses:
         '200':
           description: All good!
@@ -583,7 +585,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/DataStream'
+            $ref: '#/definitions/SpeckleStream'
       responses:
         '200':
           description: All good!
@@ -612,7 +614,33 @@ paths:
           description: Fail whale.
           schema:
             $ref: '#/definitions/ResponseBase'
-
+  
+  
+  '/streams/{streamId}/objects':
+    get:
+      tags: ["Streams"]
+      summary: StreamGetObjects
+      operationId: StreamGetObjects
+      description: Gets stream objects.
+      parameters:
+        - name: streamId
+          in: path
+          required: true
+          type: string
+        - name: query
+          in: query
+          type: string
+          description: Specifiy which fields to retrieve, filters, limits, etc.
+      responses:
+        '200':
+            description: All good!
+            schema: 
+              $ref: '#/definitions/ResponseObject'
+        '400':
+            description: Fail whale.
+            schema:
+              $ref: '#/definitions/ResponseBase'
+        
   '/streams/{streamId}/clone':
     post:
       tags: ["Streams"]
@@ -660,9 +688,145 @@ paths:
             $ref: '#/definitions/ResponseBase'
 
 
+# OBJECTS
+  
+  /objects:
+    post:
+      tags: ["Objects"]
+      summary: ObjectCreate
+      operationId: ObjectCreate
+      description: Create one or more objects
+      parameters:
+        - name: objects
+          in: body
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: All the users's projects.
+          schema: 
+            $ref: '#/definitions/ResponseObject'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+            
+  '/objects/{objectId}':
+    put:
+      tags: [ "Objects" ]
+      summary: ObjectUpdate
+      operationId: ObjectUpdate
+      description: Update a object
+      parameters: 
+        - name: objectId
+          in: path
+          required: true
+          type: string
+        - name: object
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SpeckleObject'
+      responses:
+        '200':
+          description: All the users's projects.
+          schema: 
+            $ref: '#/definitions/ResponseObject'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    get:
+      tags: [ "Objects" ]
+      summary: ObjectGet
+      operationId: ObjectGet
+      description: Get a object
+      parameters: 
+        - name: objectId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The client.
+          schema: 
+            $ref: '#/definitions/ResponseObject'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    
+    delete:
+      tags: [ "Objects" ]
+      summary: ObjectDelete
+      operationId: ObjectDelete
+      description: Deletes an object
+      parameters: 
+        - name: objectId
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: All good!
+          schema: 
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+
+  '/objects/{objectId}/properties':
+    put:
+      tags: ["Objects"]
+      summary: ObjectUpdateProperties
+      operationId: ObjectUpdateProperties
+      description: Does a merge update of the object's properties.
+      parameters:
+        - name: objectId
+          in: path
+          required: true
+          type: string
+        - name: object
+          in: body
+          description: An object that holds the keys you want to modify or add.
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: All good!
+          schema:
+            $ref: '#/definitions/ResponseBase'
+    
+  '/objects/getbulk':
+    post:
+      tags: ["Objects"]
+      summary: ObjectGetBulk
+      operationId: ObjectGetBulk
+      description: Gets a load of objects
+      parameters: 
+        - name: query
+          in: query
+          required: false
+          type: string
+          description: Specifiy which fields to retrieve, filters, limits, etc. For example, `?fields=type,properties,hash&type=Circle`
+      responses:
+        '200':
+          description: All good!
+          schema: 
+            $ref: '#/definitions/ResponseBase'
+        '400':
+          description: Fail whale.
+          schema:
+            $ref: '#/definitions/ResponseBase'
+
 definitions:
 
   ResourceBase:
+    description: Base class that adds a set of simple properties related to authorisation and commenting to all applicable resources (not users).
     type: object
     properties:
       _id:
@@ -681,6 +845,15 @@ definitions:
         type: array
         items:
           type: string
+      comments:
+        description: An array of comment ids.
+        type: array
+        items:
+          type: string
+      deleted:
+        description: Controls archival status - does not actually delete anything
+        type: boolean
+        default: false
   
   User:
     type: object
@@ -721,9 +894,9 @@ definitions:
           properties:
             date:
               type: string
-          description: it's a timestamp
+          description: it's a timestamp for each login.
   
-  Client:
+  AppClient:
     description: A speckle client.
     allOf:
       - $ref: '#/definitions/ResourceBase'
@@ -740,11 +913,11 @@ definitions:
             type: string
           documentType:
             type: string
+          documentLocation:
+            type: string
           streamId:
             type: string
             description: The streamId that this client is attached to.
-          owner:
-            type: string
           online:
             type: boolean
             description: Is it accessible from the server or not?
@@ -789,8 +962,19 @@ definitions:
             type: array
             items: 
               type: string
+          closed:
+            type: boolean
+          labels:
+            type: array
+            items: 
+              type: string
+          view: 
+            type: object
+          screenshot:
+            type: string
+          
   
-  DataStream:
+  SpeckleStream:
     description: A stream is essentially a collection of objects, with added properties. 
     allOf:
       - $ref: '#/definitions/ResourceBase'
@@ -810,13 +994,16 @@ definitions:
             type: array
             description: An array of speckle layers.
             items:
-              $ref: '#/definitions/SpeckleLayer'
+              $ref: '#/definitions/Layer'
           baseProperties:
             description: Units, tolerances, etc.
             type: object
-          deleted: 
-            description: Whether this stream is archived or not.
+          globalMeasures:
+            description: Any performance measures can go in here.
+            type: object
+          isComputedResult:
             type: boolean
+            default: false
           viewerLayers:
             type: array
             items:
@@ -835,7 +1022,7 @@ definitions:
             items: 
               type: string
   
-  SpeckleLayer:
+  Layer:
     type: object
     properties:
       name:
@@ -857,10 +1044,10 @@ definitions:
         type: string
         description: String describing the nested tree structure (GH centric).
       properties:
-        $ref: '#/definitions/SpeckleLayerProperties'
+        $ref: '#/definitions/LayerProperties'
     description: 'Describes a speckle layer. To assign objects to a speckle layer, you''ll need to start at `objects[ layer.startIndex ]` and finish at `objects[ layer.startIndex + layer.objectCount ]`.'
   
-  SpeckleLayerProperties:
+  LayerProperties:
     type: object
     properties:
       color:
@@ -873,8 +1060,6 @@ definitions:
           hex:
             type: string
             description: hex color value
-            default: '#d4d4d4'
-            example: '#d4d4d4'
       visible:
         type: boolean
         description: toggles layer visibility.
@@ -897,35 +1082,7 @@ definitions:
         type: boolean
         description: i'm bored.
     description: 'Holds stream layer properties, mostly for displaying purposes. This object will be filled up with garbage from threejs and others, but below is a minimal schema.'
-  
-  SpeckleObject:
-    type: object
-    description: Base class that is inherited by all other Speckle objects.
-    required:
-      - type
-      - hash
-    discriminator: type
-    properties:
-      type:
-        type: string
-        description: Object's subtype
-        enum: ['Null', 'Abstract', 'Placeholder', 'Boolean', 'Number', 'String', 'Interval', 'Interval2d', 'Point', 'Vector', 'Plane', 'Line', 'Rectangle', 'Circle', 'Arc', 'Ellipse', 'Polycurve', 'Box', 'Polyline', 'Curve', 'Mesh', 'Brep', 'Annotation', 'Extrusion']
-      hash:
-        type: string
-        description: Object's unique hash.
-        example: hash
-      geometryHash:
-        type: string
-        description: Object's geometry hash
-        example: Type.hash
-      applicationId:
-        type: string
-        example: GUID
-        description: The id/guid that the origin application identifies this object by.
-      properties:
-        type: object
-        description: The extra properties field of a speckle object.
-  
+    
   # the base response class 
   ResponseBase:
     type: object
@@ -963,11 +1120,11 @@ definitions:
       - type: object
         properties:
           resource:
-            $ref: '#/definitions/Client'
+            $ref: '#/definitions/AppClient'
           resources:
             type: array
             items:
-              $ref: '#/definitions/Client'    
+              $ref: '#/definitions/AppClient'    
   
   ResponseProject:
     allOf:
@@ -975,11 +1132,11 @@ definitions:
       - type: object
         properties:
           resource:
-            $ref: '#/definitions/Client'
+            $ref: '#/definitions/Project'
           resources:
             type: array
             items:
-              $ref: '#/definitions/Client'    
+              $ref: '#/definitions/Project'    
   
   ResponseComment:
     allOf:
@@ -987,11 +1144,11 @@ definitions:
       - type: object
         properties:
           resource:
-            $ref: '#/definitions/Client'
+            $ref: '#/definitions/Comment'
           resources:
             type: array
             items:
-              $ref: '#/definitions/Client'    
+              $ref: '#/definitions/Comment'    
   
   ResponseStream:
     allOf:
@@ -999,11 +1156,11 @@ definitions:
       - type: object
         properties:
           resource:
-            $ref: '#/definitions/DataStream'
+            $ref: '#/definitions/SpeckleStream'
           resources:
             type: array
             items:
-              $ref: '#/definitions/DataStream'
+              $ref: '#/definitions/SpeckleStream'
     
   ResponseObject:
     allOf:
@@ -1023,9 +1180,9 @@ definitions:
       - type: object
         properties:
           clone:
-            $ref: '#/definitions/DataStream'
+            $ref: '#/definitions/SpeckleStream'
           parent:
-            $ref: '#/definitions/DataStream'
+            $ref: '#/definitions/SpeckleStream'
   
   ResponseStreamDiff:
     allOf:
@@ -1053,12 +1210,336 @@ definitions:
               common:
                 type: array
                 items:
-                  $ref: '#/definitions/SpeckleLayer'
+                  $ref: '#/definitions/Layer'
               inA:
                 type: array
                 items:
-                  $ref: '#/definitions/SpeckleLayer'
+                  $ref: '#/definitions/Layer'
               inB:
                 type: array
                 items:
-                  $ref: '#/definitions/SpeckleLayer'
+                  $ref: '#/definitions/Layer'
+    
+  SpeckleObject:
+    description: Base class that is inherited by all other Speckle objects.
+    required:
+      - type
+      - hash
+    discriminator: type
+    allOf:
+      - $ref: '#/definitions/ResourceBase'
+      - properties:
+          type:
+            type: string
+            description: Object's subtype
+            enum: ['Null', 'Abstract', 'Placeholder', 'Boolean', 'Number', 'String', 'Interval', 'Interval2d', 'Point', 'Vector', 'Plane', 'Line', 'Rectangle', 'Circle', 'Arc', 'Ellipse', 'Polycurve', 'Box', 'Polyline', 'Curve', 'Mesh', 'Brep', 'Annotation', 'Extrusion']
+          hash:
+            type: string
+            description: Object's unique hash.
+            example: hash
+          geometryHash:
+            type: string
+            description: Object's geometry hash
+            example: Type.hash
+          applicationId:
+            type: string
+            example: GUID
+            description: The id/guid that the origin application identifies this object by.
+          properties:
+            type: object
+            description: The extra properties field of a speckle object.
+          parent:
+            type: string
+            description: If this object is a child, the parent's objectid.
+          children:
+            type: array
+            description: An array of the ids of any children of this object.
+            items:
+              type: string
+          ancestors:
+            description: If resulting from a merge, the objects that this one was born out of.
+            type: array
+            items: 
+              type: string
+  
+  SpeckleAbstract:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Abstract
+        _type:
+          type: string
+          description: the original type of the object
+        assembly:
+          type: string
+          description: the original assembly of this object
+  
+  SpecklePlaceholder:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Abstract
+    
+    
+  SpeckleBoolean:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Boolean
+        value:
+          type: boolean
+          
+  SpeckleNumber:
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Number
+          value:
+            type: number         
+            description: A number. Can be float, double, etc.
+  
+  SpeckleString:
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: String
+          value:
+            type: string
+            description: A string.
+  
+  SpeckleInterval: 
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Interval
+          start:
+            type: number
+          end: 
+            type: number
+            
+  SpeckleInterval2d: 
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          U:
+            $ref: '#/definitions/SpeckleInterval'
+            description: U interval.
+          V:
+            $ref: '#/definitions/SpeckleInterval'
+            description: V interval.
+  
+  SpecklePoint:
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type:
+            default: Point
+          value:
+            description: An array containing the X, Y and Z coords of the point.
+            type: array
+            items:
+              type: number
+  
+  SpeckleVector: 
+    allOf: 
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties:
+          type: 
+            default: Vector
+          value:
+            description: An array containing the X, Y and Z coords of the vector.
+            type: array
+            items: 
+              type: number
+  
+  SpecklePlane:
+    allOf:
+      - $ref: '#/definitions/SpeckleObject'
+      - type: object
+        properties: 
+          type: 
+            default: Plane
+          Origin: 
+            $ref: '#/definitions/SpecklePoint'
+            description: The origin of the plane.
+          Normal:
+            $ref: '#/definitions/SpeckleVector'
+            description: The normal of the plane.
+          Xdir:
+            $ref: '#/definitions/SpeckleVector'
+            description: The X axis of the plane.
+          Ydir:
+            $ref: '#/definitions/SpeckleVector'
+            description: The Y axis of the plane.
+  
+  SpeckleCircle: 
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Circle
+        radius:
+          type: number
+        center:
+          $ref: '#/definitions/SpecklePoint'
+        normal:
+          $ref: '#/definitions/SpeckleVector'
+          
+  SpeckleArc: 
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Arc
+        radius:
+          type: number
+        startAngle:
+          type: number
+        endAngle:
+          type: number
+        angleRadians:
+          type: number
+        plane:
+          $ref: '#/definitions/SpecklePlane'
+  
+  SpeckleEllipse: 
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Ellipse
+        firstRadius: 
+          type: number
+        secondRadius:
+          type: number
+        plane:
+          $ref: '#/definitions/SpecklePlane'
+  
+  SpecklePolycurve: 
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Polycurve
+        segments:
+          type: array
+          items:
+            $ref: '#/definitions/SpeckleObject'
+
+  SpeckleBox:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Box
+        basePlane:
+          $ref: '#/definitions/SpecklePlane'
+        xSize:
+          $ref: '#/definitions/SpeckleInterval'
+        ySize:
+          $ref: '#/definitions/SpeckleInterval'
+        zSize:
+          $ref: '#/definitions/SpeckleInterval'
+          
+  SpecklePolyline:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Polyline
+        value:
+          type: array
+          items: 
+            type: number
+  
+  SpeckleCurve: 
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type:
+          default: Curve
+        degree:
+          type: number
+        periodic:
+          type: number
+        rational:
+          type: number
+        points:
+          type: array
+          items: 
+            type: number
+        weights:
+          type: array
+          items: 
+            type: number
+        knots:
+          type: array
+          items:
+            type: number
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
+        displayValue:
+          $ref: '#/definitions/SpecklePolyline'
+        
+ 
+  SpeckleMesh:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        type: 
+          default: Mesh
+        vertices:
+          type: array
+          items:
+            type: number
+          description: The mesh's vertices array, in a flat array (ie, `x1, y1, z1, x2, y2, ...`)
+        faces:
+          type: array
+          items:
+            type: number
+          description: The faces array.
+        colors:
+          type: array
+          items:
+            type: number
+          description: If any, the colours per vertex.
+
+  SpeckleBrep:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Brep
+        rawData: 
+          type: object
+          description: The brep's raw (serialisation) data.
+        provenance:
+          type: string
+          description: A short prefix of where the base64 comes from.
+        displayValue:
+          $ref: '#/definitions/SpeckleMesh'
+          description: Contains a speckle mesh representation of this brep.
