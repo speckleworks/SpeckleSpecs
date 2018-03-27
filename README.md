@@ -1,11 +1,14 @@
 # [Speckle.Works](http://spekcle.works) OpenApi Documentation
 
-### Visualise the spec:
+# Visualise & Edit
 
-Head over to [the swagger editor](http://editor.swagger.io) and drop in the generated index.json. 
+Open the `SpeckleV1OpenApiSpecs.yaml` file in the [OpenApi editor](https://editor.swagger.io//#/).
 
-### Generate code from the spec:
-Either use `swagger-codegen` or simply export from the editor your client of choice.
+# Generate clients
 
-#### License
-MIT
+Use the `generate client` option from the [OpenApi editor](https://editor.swagger.io//#/).
+
+# Build the docs
+
+1. Run `npm-install`
+2. Run `npm run build-shins`

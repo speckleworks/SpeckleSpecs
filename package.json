@@ -1,20 +1,16 @@
 {
   "name": "SpeckleSpecs",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
+  "author": "Dimitrie A. Stefanescu @idid / UCL The Bartlett School of Architecture / InnoChain",
   "description": "OpenApi specfications for Speckle.",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "dependencies": {
-    "widdershins": "^2.3.0",
-    "multi-file-swagger":"^2.2.0"
+    "widdershins": "^3.0.7"
   },
   "devDependencies": {},
   "scripts": {
-    "build-shins": "widdershins -y index-compiled.yaml -o specs.md",
-    "build-swagger": "multi-file-swagger index.yaml > index.json && multi-file-swagger index.yaml > index-compiled.yaml -o yaml"
-  },
-  "author": "Dimitrie Stefanescu",
-  "license": "MIT"
+    "build-shins": "widdershins SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md"
+  }
 }
