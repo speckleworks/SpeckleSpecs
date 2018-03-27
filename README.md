@@ -1,8 +1,12 @@
-# [Speckle.Works](http://spekcle.works) OpenApi Documentation
+# [Speckle](http://spekcle.works) OpenApi Documentation
+
+> [docs](https://speckleworks.github.io/SpeckleSpecs/)
 
 # Visualise & Edit
 
 Open the `SpeckleV1OpenApiSpecs.yaml` file in the [OpenApi editor](https://editor.swagger.io//#/).
+
+Documentation generated with shins and widdershins is also available [here](https://speckleworks.github.io/SpeckleSpecs/).
 
 # Generate clients
 
