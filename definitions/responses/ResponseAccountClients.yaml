@@ -1,9 +1,0 @@
-allOf:
-  - $ref: '#/definitions/ResponseBase'
-  - type: object
-    properties:
-      clients:
-        type: array
-        items: 
-          $ref: '#/definitions/SpeckleClient'
-          description: The user's streams.

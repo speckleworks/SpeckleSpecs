@@ -1,21 +1,20 @@
 {
-  "name": "speckleoas",
+  "name": "SpeckleSpecs",
   "version": "1.0.0",
-  "description": "### Generate the spec from all the files: Install `multi-file-swagger`:",
+  "description": "OpenApi specfications for Speckle.",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "dependencies": {
-    "swagger-vue": "^1.0.3",
-    "widdershins": "^2.3.0"
+    "widdershins": "^2.3.0",
+    "multi-file-swagger":"^2.2.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build-shins": "widdershins -y index-compiled.yaml -o specs.md",
     "build-swagger": "multi-file-swagger index.yaml > index.json && multi-file-swagger index.yaml > index-compiled.yaml -o yaml"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Dimitrie Stefanescu",
+  "license": "MIT"
 }

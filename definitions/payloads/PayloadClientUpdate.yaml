@@ -1,5 +1,0 @@
-type: object
-properties:
-  client:
-    $ref: '#/definitions/SpeckleClient'
-description: model payload for Client update.
