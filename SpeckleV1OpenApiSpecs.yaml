@@ -2,7 +2,8 @@ swagger: '2.0'
 info:
   version: 1.0.0-beta
   title: Speckle OpenApi Specs
-  description: Documentation & specifications for the Speckle Server & Speckle Objects.
+  description: |-
+    Documentation & specifications for the Speckle Server & Speckle Objects.
   contact:
     name: SpeckleWorks
     url: 'https://speckle.works'
@@ -318,7 +319,7 @@ paths:
           schema:
             $ref: '#/definitions/ResponseBase'
 
-  '/project/{projectId}':
+  '/projects/{projectId}':
     put:
       tags: [ "Projects" ]
       summary: ProjectUpdate
@@ -813,11 +814,19 @@ paths:
           required: false
           type: string
           description: Specifiy which fields to retrieve, filters, limits, etc. For example, `?fields=type,properties,hash&type=Circle`
+        - name: object
+          in: body
+          description: An object that holds the keys you want to modify or add.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: All good!
           schema: 
-            $ref: '#/definitions/ResponseBase'
+            $ref: '#/definitions/ResponseObject'
         '400':
           description: Fail whale.
           schema:
@@ -1261,6 +1270,10 @@ definitions:
             type: array
             items: 
               type: string
+          transform:
+            type: array
+            items: 
+              type: number
   
   SpeckleAbstract:
     allOf:
@@ -1460,6 +1473,18 @@ definitions:
           $ref: '#/definitions/SpeckleInterval'
         zSize:
           $ref: '#/definitions/SpeckleInterval'
+  
+  SpeckleLine:
+    allOf:
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties: 
+        type:
+          default: Line
+        value:
+          type: array
+          items: 
+            type: number
           
   SpecklePolyline:
     allOf:
@@ -1468,6 +1493,8 @@ definitions:
       properties: 
         type:
           default: Polyline
+        closed:
+          type: boolean
         value:
           type: array
           items: 
@@ -1526,6 +1553,11 @@ definitions:
           items:
             type: number
           description: If any, the colours per vertex.
+        textureCoordinates:
+          type: array
+          items:
+            type: number
+          description: The faces array.
 
   SpeckleBrep:
     allOf: 
@@ -1543,3 +1575,53 @@ definitions:
         displayValue:
           $ref: '#/definitions/SpeckleMesh'
           description: Contains a speckle mesh representation of this brep.
+  
+  SpeckleExtrusion:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        capped:
+          type: boolean
+        profile:
+          $ref: '#/definitions/SpeckleObject'
+        pathStart:
+          $ref: '#/definitions/SpecklePoint'
+        pathEnd:
+          $ref: '#/definitions/SpecklePoint'
+        pathCurve:
+          $ref: '#/definitions/SpeckleObject'
+  
+  SpeckleAnnotation:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        text:
+          type: string
+        textHeight:
+          type: number
+        fontName:
+          type: string
+        bold:
+          type: boolean
+        italic:
+          type: boolean
+        location:
+          $ref: '#/definitions/SpecklePoint'
+        plane:
+          $ref: '#/definitions/SpecklePlane'
+          
+  SpeckleBlock:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        objects:
+          type: array
+          items:
+            $ref: '#/definitions/SpeckleObject'
