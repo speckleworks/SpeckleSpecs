@@ -1270,6 +1270,10 @@ definitions:
             type: array
             items: 
               type: string
+          transform:
+            type: array
+            items: 
+              type: number
   
   SpeckleAbstract:
     allOf:
@@ -1607,3 +1611,17 @@ definitions:
           $ref: '#/definitions/SpecklePoint'
         plane:
           $ref: '#/definitions/SpecklePlane'
+          
+  SpeckleBlock:
+    allOf: 
+    - $ref: '#/definitions/SpeckleObject'
+    - type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        objects:
+          type: array
+          items:
+            $ref: '#/definitions/SpeckleObject'
