@@ -300,7 +300,7 @@ paths:
     
     post:
       tags: [ "Projects" ]
-      summary: ProjectCreate
+      summary:  Create
       operationId: ProjectCreate
       description: Create a project
       parameters: 
@@ -939,6 +939,8 @@ definitions:
           _id: 
             type: string
           name:
+            type: string
+          number:
             type: string
           users:
             type: array
