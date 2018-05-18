@@ -1387,16 +1387,16 @@ definitions:
         properties: 
           type: 
             default: Plane
-          Origin: 
+          origin: 
             $ref: '#/definitions/SpecklePoint'
             description: The origin of the plane.
-          Normal:
+          normal:
             $ref: '#/definitions/SpeckleVector'
             description: The normal of the plane.
-          Xdir:
+          xdir:
             $ref: '#/definitions/SpeckleVector'
             description: The X axis of the plane.
-          Ydir:
+          ydir:
             $ref: '#/definitions/SpeckleVector'
             description: The Y axis of the plane.
   
