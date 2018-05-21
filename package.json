@@ -10,6 +10,6 @@
     "widdershins": "^3.0.7"
   },
   "scripts": {
-    "build-shins": "widdershins --maxDepth 1 SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md && echo 'Building html...' && cd shins && node shins --minify ../SpeckleV1OpenApiSpecs.md && echo 'Done building html. Copying in docs folder now.' && rm ../docs/index.html && cp index.html ../docs && echo 'Done. Ready to push.'"
+    "build-shins": "widdershins --maxDepth 1 SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md && echo 'Building html...' && cd shins && node shins ../SpeckleV1OpenApiSpecs.md --minify && echo 'Done building html. Copying in docs folder now.' && rm ../docs/index.html && cp index.html ../docs && echo 'Done. Ready to push.'"
   }
 }
