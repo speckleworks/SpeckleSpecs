@@ -1524,9 +1524,9 @@ definitions:
         degree:
           type: number
         periodic:
-          type: number
+          type: boolean
         rational:
-          type: number
+          type: boolean
         points:
           type: array
           items: 

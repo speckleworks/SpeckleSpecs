@@ -9083,8 +9083,8 @@ JWT_Token_Auth
   "ancestors": [],
   "transform": [],
   "degree": 0,
-  "periodic": 0,
-  "rational": 0,
+  "periodic": true,
+  "rational": true,
   "points": [],
   "weights": [],
   "knots": [],
@@ -9113,8 +9113,8 @@ JWT_Token_Auth
 |*anonymous*|object|false|No description|
 |» type|any|false|No description|
 |» degree|number|false|No description|
-|» periodic|number|false|No description|
-|» rational|number|false|No description|
+|» periodic|boolean|false|No description|
+|» rational|boolean|false|No description|
 |» points|[number]|false|No description|
 |» weights|[number]|false|No description|
 |» knots|[number]|false|No description|
