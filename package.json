@@ -9,8 +9,7 @@
   "dependencies": {
     "widdershins": "^3.0.7"
   },
-  "devDependencies": {},
   "scripts": {
-    "build-shins": "widdershins SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md"
+    "build-shins": "widdershins --maxDepth 1 SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md && echo 'Building html...' && cd shins && node shins ../SpeckleV1OpenApiSpecs.md && echo 'Done building html. Copying in docs folder now.' && rm ../docs/index.html && cp index.html ../docs && echo 'Done. Ready to push.'"
   }
 }
