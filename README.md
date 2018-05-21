@@ -4,15 +4,14 @@
 
 # Visualise & Edit
 
-Open the `SpeckleV1OpenApiSpecs.yaml` file in the [OpenApi editor](https://editor.swagger.io//#/).
-
-Documentation generated with shins and widdershins is also available [here](https://speckleworks.github.io/SpeckleSpecs/).
-
-# Generate clients
-
-Use the `generate client` option from the [OpenApi editor](https://editor.swagger.io//#/).
+Open the `SpeckleV1OpenApiSpecs.yaml` file in the [OpenApi editor](https://editor.swagger.io//#/). You can then edit at your own ease, and suggest changes, etc.
 
 # Build the docs
 
-1. Run `npm-install`
-2. Run `npm run build-shins`
+To save time, please also follow these quick steps to build the documentation:
+
+1. `npm install`
+2. `npm run build-shins` - this will generate the docs (which are published via github from the `docs` folder.
+3. Commit and do a PR.
+
+That's it! 

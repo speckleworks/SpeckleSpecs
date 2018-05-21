@@ -1415,6 +1415,8 @@ definitions:
           $ref: '#/definitions/SpecklePoint'
         normal:
           $ref: '#/definitions/SpeckleVector'
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
           
   SpeckleArc: 
     allOf:
@@ -1433,6 +1435,8 @@ definitions:
           type: number
         plane:
           $ref: '#/definitions/SpecklePlane'
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
   
   SpeckleEllipse: 
     allOf:
@@ -1447,6 +1451,8 @@ definitions:
           type: number
         plane:
           $ref: '#/definitions/SpecklePlane'
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
   
   SpecklePolycurve: 
     allOf:
@@ -1459,6 +1465,8 @@ definitions:
           type: array
           items:
             $ref: '#/definitions/SpeckleObject'
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
 
   SpeckleBox:
     allOf:
@@ -1487,6 +1495,8 @@ definitions:
           type: array
           items: 
             type: number
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
           
   SpecklePolyline:
     allOf:
@@ -1501,6 +1511,8 @@ definitions:
           type: array
           items: 
             type: number
+        domain:
+          $ref: '#/definitions/SpeckleInterval'
   
   SpeckleCurve: 
     allOf:
