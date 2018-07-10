@@ -94,7 +94,7 @@ paths:
       tags:
         - Accounts
       summary: UserSearch
-      description: Search for a user by a (partial) email address.
+      description: Search for a user by substrings of name, surname, and company.
       operationId: UserSearch
       consumes:
         - application/json
@@ -104,6 +104,7 @@ paths:
         - in: body
           name: user
           required: true
+          description: No elements are required. The name, surname, and company are used to constrain the search.
           schema:
             $ref: '#/definitions/User'
       responses:

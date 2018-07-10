@@ -1117,7 +1117,7 @@ System.out.println(response.toString());
 </code></pre>
 <p><code>POST /accounts/search</code></p>
 <p><em>UserSearch</em></p>
-<p>Search for a user by a (partial) email address.</p>
+<p>Search for a user by substrings of name, surname, and company.</p>
 <blockquote>
 <p>Body parameter</p>
 </blockquote>
@@ -1151,7 +1151,7 @@ System.out.println(response.toString());
 <td>body</td>
 <td><a href="#schemauser">User</a></td>
 <td>true</td>
-<td>No description</td>
+<td>No elements are required. The name, surname, and company are used to constrain the search.</td>
 </tr>
 </tbody>
 </table>
