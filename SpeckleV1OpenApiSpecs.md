@@ -658,7 +658,7 @@ System.out.println(response.toString());
 *UserSearch*
 
 
-Search for a user by a (partial) email address.
+Search for a user by substrings of name, surname, and company.
 
 
 > Body parameter
@@ -685,7 +685,7 @@ Search for a user by a (partial) email address.
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[User](#schemauser)|true|No description|
+|body|body|[User](#schemauser)|true|No elements are required. The name, surname, and company are used to constrain the search.|
 
 
 > Example responses
