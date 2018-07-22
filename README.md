@@ -1,4 +1,6 @@
 # [Speckle](http://spekcle.works) OpenApi Documentation
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1319026.svg)](https://doi.org/10.5281/zenodo.1319026)
+
 
 > [docs](https://speckleworks.github.io/SpeckleSpecs/)
 
