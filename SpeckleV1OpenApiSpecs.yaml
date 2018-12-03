@@ -1257,6 +1257,9 @@ definitions:
             type: string
             example: GUID
             description: The id/guid that the origin application identifies this object by.
+          name:
+            type: string
+            description: The name of the object in the origin application. This is the instance or entity name displayed in the "properties" dialog in most applications.       
           properties:
             type: object
             description: The extra properties field of a speckle object.
@@ -1632,8 +1635,9 @@ definitions:
     - $ref: '#/definitions/SpeckleObject'
     - type: object
       properties:
-        name:
+        blockName:
           type: string
+          description: the name of the block definition used to insert this block
         description:
           type: string
         objects:
