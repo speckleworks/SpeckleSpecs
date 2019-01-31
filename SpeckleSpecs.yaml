@@ -1,0 +1,42 @@
+openapi: '3.0.2'
+
+info:
+  title: Speckle
+  description: |-
+    Speckle is an open source design/AEC data communication protocol and platform.
+  contact:
+    name: SpeckleWorks
+    url: 'https://speckle.works'
+    email: 'hello@speckle.works'
+  license:
+    name: MIT
+  version: 1.0.0-beta
+
+servers:
+  - url: 'https://hestia.speckle.works/api'
+    description: A publicly hosted Speckle server
+
+tags:
+  - name: Accounts
+    description: Register, Login and more.
+  - name: Clients
+    description: Create, get and update application clients.
+  - name: Projects
+    description: Create, get and update projects.
+  - name: Comments
+    description: Create, get and update comments.
+  - name: Streams
+    description: Create, get and update streams.
+  - name: Objects
+    description: Create, get and update objects.
+
+components:
+  securitySchemes:
+    JWT:
+      type: apiKey
+      description: A JWT token acquired from the /accounts/TODO endpoint.
+      name: Authorization
+      in: header
+
+security:
+  - JWT: []
