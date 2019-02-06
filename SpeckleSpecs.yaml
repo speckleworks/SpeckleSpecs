@@ -76,7 +76,7 @@ components:
   securitySchemes:
     JWT:
       type: apiKey
-      description: A JWT token acquired from the /accounts/TODO endpoint.
+      description: A JWT token acquired from the /accounts/login endpoint.
       name: Authorization
       in: header
 
