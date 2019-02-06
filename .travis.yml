@@ -7,6 +7,8 @@ install:
 
 script:
   - npm run build
+  - mkdir docs
+  - cp SpeckleSpecs.html docs/index.html
 
 deploy:
   provider: pages
