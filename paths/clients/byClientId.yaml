@@ -6,6 +6,7 @@ put:
     - name: clientId
       in: path
       required: true
+      schema: { type: string }
   requestBody:
     content:
       application/json:
@@ -34,6 +35,7 @@ get:
     - name: clientId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: The client.
@@ -56,6 +58,7 @@ delete:
     - name: clientId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: All good!

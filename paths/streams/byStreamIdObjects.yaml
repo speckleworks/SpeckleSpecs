@@ -6,10 +6,11 @@ get:
     - name: streamId
       in: path
       required: true
+      schema: { type: string }
     - name: query
       in: query
-      type: string
       description: Specifiy which fields to retrieve, filters, limits, etc.
+      schema: { type: string }
   responses:
     '200':
         description: All good!

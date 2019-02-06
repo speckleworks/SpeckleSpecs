@@ -6,7 +6,7 @@ post:
     - name: query
       in: query
       required: false
-      type: string
+      schema: { type: string }
       description: Specifiy which fields to retrieve, filters, limits, etc. For example, `?fields=type,properties,hash&type=Circle`
   requestBody:
     description: An object that holds the keys you want to modify or add.

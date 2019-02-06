@@ -6,9 +6,11 @@ get:
     - name: streamId
       in: path
       required: true
+      schema: { type: string }
     - name: otherStreamId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: All good!

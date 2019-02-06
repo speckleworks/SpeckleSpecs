@@ -6,8 +6,10 @@ get:
     - name: streamId
       in: path
       required: true
+      schema: { type: string }
     - name: query
       in: query
+      schema: { type: string }
       description: Specifiy which fields to retrieve, ie `?fields=layers,baseProperties`.
   responses:
     '200':
@@ -30,6 +32,7 @@ put:
   parameters: 
     - name: streamId
       in: path
+      schema: { type: string }
       required: true
   requestBody:
     content:
@@ -58,6 +61,7 @@ delete:
   parameters: 
     - name: streamId
       in: path
+      schema: { type: string }
       required: true
   responses:
     '200':

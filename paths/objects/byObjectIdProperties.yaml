@@ -6,14 +6,14 @@ put:
     - name: objectId
       in: path
       required: true
-      type: string
+      schema: { type: string }
   requestBody:
-      description: An object that holds the keys you want to modify or add.
-      content:
-        application/json:
-          schema:
-            type: object
-      required: true
+    description: An object that holds the keys you want to modify or add.
+    content:
+      application/json:
+        schema:
+          type: object
+    required: true
   responses:
     '200':
       description: All good!

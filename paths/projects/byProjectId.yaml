@@ -6,6 +6,7 @@ put:
     - name: projectId
       in: path
       required: true
+      schema: { type: string }
   requestBody:
     content:
       application/json:
@@ -33,6 +34,7 @@ get:
     - name: projectId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: The client.
@@ -55,6 +57,7 @@ delete:
     - name: projectId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: All good!

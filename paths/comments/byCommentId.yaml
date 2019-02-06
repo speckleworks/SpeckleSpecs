@@ -6,6 +6,7 @@ get:
     - name: commentId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: All good!
@@ -28,6 +29,7 @@ put:
     - name: commentId
       in: path
       required: true
+      schema: { type: string }
   requestBody:
     content:
       application/json:
@@ -56,6 +58,7 @@ delete:
     - name: commentId
       in: path
       required: true
+      schema: { type: string }
   responses:
     '200':
       description: All good!
