@@ -88,24 +88,24 @@ paths:
   /accounts/login: { $ref: ./paths/accounts/login.yaml }
   /accounts/search: { $ref: ./paths/accounts/search.yaml }
   /accounts: { $ref: ./paths/accounts/index.yaml }
-  /accounts/{userId}: { $ref: ./paths/accounts/byUserId.yaml }
+  /accounts/{userId}: { $ref: './paths/accounts/{userId}.yaml' }
 
   /clients: { $ref: ./paths/clients/index.yaml }
-  /clients/{clientId}: { $ref: ./paths/clients/byClientId.yaml }
+  /clients/{clientId}: { $ref: './paths/clients/{clientId}.yaml' }
 
   /projects: { $ref: ./paths/projects/index.yaml }
-  /projects/{projectId}: { $ref: ./paths/projects/byProjectId.yaml }
+  /projects/{projectId}: { $ref: './paths/projects/{projectId}.yaml' }
 
-  /comments/{resourceType}/{resourceId}: { $ref: ./paths/comments/byResourceTypeByResourceId.yaml }
-  /comments/{commentId}: { $ref: ./paths/comments/byCommentId.yaml }
+  /comments/{resourceType}/{resourceId}: { $ref: './paths/comments/{resourceType}_{resourceId}.yaml' }
+  /comments/{commentId}: { $ref: './paths/comments/{commentId}.yaml' }
 
   /streams: { $ref: ./paths/streams/index.yaml }
-  /streams/{streamId}: { $ref: ./paths/streams/byStreamId.yaml }
-  /streams/{streamId}/objects: { $ref: ./paths/streams/byStreamIdObjects.yaml }
-  /streams/{streamId}/clone: { $ref: ./paths/streams/byStreamIdClone.yaml }
-  /streams/{streamId}/diff/{otherStreamId}: { $ref: ./paths/streams/byStreamIdDiffByOtherStreamId.yaml }
+  /streams/{streamId}: { $ref: './paths/streams/{streamId}.yaml' }
+  /streams/{streamId}/objects: { $ref: './paths/streams/{streamId}_objects.yaml' }
+  /streams/{streamId}/clone: { $ref: './paths/streams/{streamId}_clone.yaml' }
+  /streams/{streamId}/diff/{otherStreamId}: { $ref: './paths/streams/{streamId}_diff_{otherStreamId}.yaml' }
 
   /objects: { $ref: ./paths/objects/index.yaml }
-  /objects/{objectId}: { $ref: ./paths/objects/byObjectId.yaml }
-  /objects/{objectId}/properties: { $ref: ./paths/objects/byObjectIdProperties.yaml }
+  /objects/{objectId}: { $ref: './paths/objects/{objectId}.yaml' }
+  /objects/{objectId}/properties: { $ref: './paths/objects/{objectId}_properties.yaml' }
   /objects/getbulk: { $ref: ./paths/objects/getbulk.yaml }
