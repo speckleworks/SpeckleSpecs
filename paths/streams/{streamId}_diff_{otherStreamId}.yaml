@@ -1,0 +1,26 @@
+get:
+  tags: ["Streams"]
+  summary: Diffs two streams (objects and layers).
+  operationId: StreamDiff
+  parameters:
+    - name: streamId
+      in: path
+      required: true
+      schema: { type: string }
+    - name: otherStreamId
+      in: path
+      required: true
+      schema: { type: string }
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseStreamDiff.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'

@@ -1,0 +1,16 @@
+type: object
+properties:
+  success:
+    type: boolean
+    description: 'Besides the http status code, this tells you whether the call succeeded or not.'
+  message:
+    type: string
+    description: Either an error or a confirmation.
+  resource:
+    type: object
+    description: Returned resource (if querying by id)
+  resources:
+    type: array
+    description: Returned resources array (if it's a bulk query)
+    items:
+      type: object

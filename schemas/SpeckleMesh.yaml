@@ -1,0 +1,26 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type: 
+      default: Mesh
+    vertices:
+      type: array
+      items:
+        type: number
+      description: The mesh's vertices array, in a flat array (ie, `x1, y1, z1, x2, y2, ...`)
+    faces:
+      type: array
+      items:
+        type: number
+      description: The faces array.
+    colors:
+      type: array
+      items:
+        type: number
+      description: If any, the colours per vertex.
+    textureCoordinates:
+      type: array
+      items:
+        type: number
+      description: The faces array.

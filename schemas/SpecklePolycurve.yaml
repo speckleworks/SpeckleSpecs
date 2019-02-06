@@ -1,0 +1,12 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Polycurve
+    segments:
+      type: array
+      items:
+        $ref: './SpeckleObject.yaml'
+    domain:
+      $ref: './SpeckleInterval.yaml'

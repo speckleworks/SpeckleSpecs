@@ -1,0 +1,14 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties: 
+    type:
+      default: Box
+    basePlane:
+      $ref: './SpecklePlane.yaml'
+    xSize:
+      $ref: './SpeckleInterval.yaml'
+    ySize:
+      $ref: './SpeckleInterval.yaml'
+    zSize:
+      $ref: './SpeckleInterval.yaml'

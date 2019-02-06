@@ -1,0 +1,11 @@
+allOf: 
+  - $ref: './SpeckleObject.yaml'
+  - type: object
+    properties:
+      type: 
+        default: Vector
+      value:
+        description: An array containing the X, Y and Z coords of the vector.
+        type: array
+        items: 
+          type: number

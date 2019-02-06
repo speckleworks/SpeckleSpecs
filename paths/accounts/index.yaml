@@ -1,0 +1,42 @@
+get:
+  tags:
+    - Accounts
+  summary: Gets your profile.
+  operationId: UserGet
+  responses:
+    '200':
+      description: New user successfully registered.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseUser.yaml'
+    '400':
+      description: Fail.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+put:
+  tags:
+    - Accounts
+  summary: Updates your profile.
+  operationId: UserUpdateProfile
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/User.yaml'
+    required: true
+  responses:
+    '200':
+      description: Things are looking good yo.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

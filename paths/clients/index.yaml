@@ -1,0 +1,41 @@
+get:
+  tags: [ "Clients" ]
+  summary: Gets a user's profile.
+  operationId: ClientGetAll
+  responses:
+    '200':
+      description: All the users's clients.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseClient.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+post:
+  tags: [ "Clients" ]
+  summary: Create a client
+  operationId: ClientCreate
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/AppClient.yaml'
+    required: true
+  responses:
+    '200':
+      description: All the users's clients.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseClient.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

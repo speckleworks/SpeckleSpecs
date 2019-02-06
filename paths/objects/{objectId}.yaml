@@ -1,0 +1,74 @@
+put:
+  tags: [ "Objects" ]
+  summary: Update a object
+  operationId: ObjectUpdate
+  parameters: 
+    - name: objectId
+      in: path
+      required: true
+      schema: { type: string }
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/SpeckleObject.yaml'
+    required: true
+  responses:
+    '200':
+      description: All the users's projects.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseObject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+get:
+  tags: [ "Objects" ]
+  summary: Get a object
+  operationId: ObjectGet
+  parameters: 
+    - name: objectId
+      in: path
+      required: true
+      schema: { type: string }
+  responses:
+    '200':
+      description: The client.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseObject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+delete:
+  tags: [ "Objects" ]
+  summary: Deletes an object
+  operationId: ObjectDelete
+  parameters: 
+    - name: objectId
+      in: path
+      required: true
+      schema: { type: string }
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

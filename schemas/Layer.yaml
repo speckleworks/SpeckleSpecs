@@ -1,0 +1,23 @@
+  type: object
+  properties:
+    name:
+      type: string
+      description: Layer's name
+    guid:
+      type: string
+      description: Layer's guid (must be unique)
+    orderIndex:
+      type: integer
+      description: Describes this layer's position in the list of layers.
+    startIndex:
+      type: number
+      description: The index of the first object relative to the stream's objects array
+    objectCount:
+      type: number
+      description: How many objects does this layer have.
+    topology:
+      type: string
+      description: String describing the nested tree structure (GH centric).
+    properties:
+      $ref: './LayerProperties.yaml'
+  description: 'Describes a speckle layer. To assign objects to a speckle layer, you''ll need to start at `objects[ layer.startIndex ]` and finish at `objects[ layer.startIndex + layer.objectCount ]`.'

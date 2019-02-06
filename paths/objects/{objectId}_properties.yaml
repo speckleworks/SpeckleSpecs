@@ -1,0 +1,23 @@
+put:
+  tags: ["Objects"]
+  summary: Does a merge update of the object's properties.
+  operationId: ObjectUpdateProperties
+  parameters:
+    - name: objectId
+      in: path
+      required: true
+      schema: { type: string }
+  requestBody:
+    description: An object that holds the keys you want to modify or add.
+    content:
+      application/json:
+        schema:
+          type: object
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

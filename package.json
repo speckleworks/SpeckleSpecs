@@ -7,9 +7,11 @@
     "doc": "docs"
   },
   "dependencies": {
-    "widdershins": "^3.0.7"
+    "widdershins": "^3.0.7",
+    "swagger-cli": "^2.2.1",
+    "shins": "^2.3.2-3"
   },
   "scripts": {
-    "build-shins": "widdershins --maxDepth 1 SpeckleV1OpenApiSpecs.yaml -o SpeckleV1OpenApiSpecs.md && echo 'Building html...' && cd shins && node shins ../SpeckleV1OpenApiSpecs.md --minify && echo 'Done building html. Copying in docs folder now.' && rm -f ../docs/index.html && cp index.html ../docs && echo 'Done. Ready to push.'"
+    "build": "swagger-cli bundle SpeckleSpecs.yaml -o SpeckleSpecs.json && widdershins --maxDepth 1 SpeckleSpecs.json -o SpeckleSpecs.md && shins SpeckleSpecs.md --minify --inline --logo ./logo.png --logo-url https://speckle.works/ -o SpeckleSpecs.html && echo 'Done.'"
   }
 }

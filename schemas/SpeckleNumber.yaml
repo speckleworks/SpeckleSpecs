@@ -1,0 +1,9 @@
+allOf: 
+  - $ref: './SpeckleObject.yaml'
+  - type: object
+    properties:
+      type:
+        default: Number
+      value:
+        type: number         
+        description: A number. Can be float, double, etc.

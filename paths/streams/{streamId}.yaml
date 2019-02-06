@@ -1,0 +1,78 @@
+get:
+  tags: [ "Streams" ]
+  summary: Gets a specific stream.
+  operationId: StreamGet
+  parameters: 
+    - name: streamId
+      in: path
+      required: true
+      schema: { type: string }
+    - name: query
+      in: query
+      schema: { type: string }
+      description: Specifiy which fields to retrieve, ie `?fields=layers,baseProperties`.
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseStream.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+put:
+  tags: [ "Streams" ]
+  summary: Updates a stream.
+  operationId: StreamUpdate
+  parameters: 
+    - name: streamId
+      in: path
+      schema: { type: string }
+      required: true
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/SpeckleStream.yaml'
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+delete:
+  tags: [ "Streams" ]
+  summary: Deletes a specific stream.
+  operationId: StreamDelete
+  parameters: 
+    - name: streamId
+      in: path
+      schema: { type: string }
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

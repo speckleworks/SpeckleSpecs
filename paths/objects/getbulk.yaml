@@ -1,0 +1,32 @@
+post:
+  tags: ["Objects"]
+  summary: Gets a load of objects
+  operationId: ObjectGetBulk
+  parameters: 
+    - name: query
+      in: query
+      required: false
+      schema: { type: string }
+      description: Specifiy which fields to retrieve, filters, limits, etc. For example, `?fields=type,properties,hash&type=Circle`
+  requestBody:
+    description: An object that holds the keys you want to modify or add.
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: string
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseObject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

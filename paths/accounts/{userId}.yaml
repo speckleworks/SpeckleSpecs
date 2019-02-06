@@ -1,0 +1,23 @@
+get:
+  tags:
+   - Accounts
+  summary: Gets a user's profile.
+  operationId: UserGetProfileById
+  parameters: 
+    - name: userId
+      in: path
+      required: true
+      schema: { type: string }
+  responses:
+    '200':
+      description: New user successfully registered.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseUser.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

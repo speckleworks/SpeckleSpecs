@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Accounts
+  summary: Login and get jwt token.
+  operationId: UserLogin
+  requestBody:
+    description: The only required elements are email and password.
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/User.yaml'
+    required: true
+  responses:
+    '200':
+      description: You've logged in.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseUser.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

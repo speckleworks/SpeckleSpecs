@@ -1,0 +1,39 @@
+type: object
+description: Describes a user.
+properties:
+  _id:
+    type: string
+    description: Database uuid.
+  role:
+    type: string
+    description: User's role. Defaults to "user".
+  avatar:
+    type: string
+    description: We will need profile pics at one point.
+  apitoken:
+    type: string
+    description: a signed jwt token that expires in 1 year.
+  token:
+    type: string
+    description: a signed jwt token that expires in 1 day.
+  email:
+    type: string
+    description: user's email
+  name:
+    type: string
+    description: User's given name
+  surname:
+    type: string
+    description: User's family name
+  company:
+    type: string
+    description: Users's company
+  logins:
+    type: array
+    description: an array storing each time the user logged in.
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+      description: it's a timestamp for each login.

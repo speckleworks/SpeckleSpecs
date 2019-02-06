@@ -1,0 +1,8 @@
+allOf: 
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Boolean
+    value:
+      type: boolean

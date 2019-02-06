@@ -1,0 +1,14 @@
+allOf: 
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    capped:
+      type: boolean
+    profile:
+      $ref: './SpeckleObject.yaml'
+    pathStart:
+      $ref: './SpecklePoint.yaml'
+    pathEnd:
+      $ref: './SpecklePoint.yaml'
+    pathCurve:
+      $ref: './SpeckleObject.yaml'

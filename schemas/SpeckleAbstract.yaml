@@ -1,0 +1,12 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Abstract
+    _type:
+      type: string
+      description: the original type of the object
+    assembly:
+      type: string
+      description: the original assembly of this object

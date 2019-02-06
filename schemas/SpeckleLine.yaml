@@ -1,0 +1,12 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties: 
+    type:
+      default: Line
+    value:
+      type: array
+      items: 
+        type: number
+    domain:
+      $ref: './SpeckleInterval.yaml'

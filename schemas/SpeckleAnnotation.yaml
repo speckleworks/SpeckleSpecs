@@ -1,0 +1,18 @@
+allOf: 
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    text:
+      type: string
+    textHeight:
+      type: number
+    fontName:
+      type: string
+    bold:
+      type: boolean
+    italic:
+      type: boolean
+    location:
+      $ref: './SpecklePoint.yaml'
+    plane:
+      $ref: './SpecklePlane.yaml'

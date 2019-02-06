@@ -1,0 +1,28 @@
+description: Base class that adds a set of simple properties related to authorisation and commenting to all applicable resources (not users).
+type: object
+properties:
+  _id:
+    type: string
+  owner:
+    type: string
+  private:
+    type: boolean
+  anonymousComments:
+    type: boolean
+  canRead:
+    type: array
+    items:
+      type: string
+  canWrite:
+    type: array
+    items:
+      type: string
+  comments:
+    description: An array of comment ids.
+    type: array
+    items:
+      type: string
+  deleted:
+    description: Controls archival status - does not actually delete anything
+    type: boolean
+    default: false

@@ -1,0 +1,24 @@
+post:
+  tags: ["Objects"]
+  summary: Create one or more objects
+  operationId: ObjectCreate
+  requestBody:
+    content:
+      application/json:
+        schema: 
+          type: array
+          items:
+            $ref: '../../schemas/SpeckleObject.yaml'
+  responses:
+    '200':
+      description: All the users's projects.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseObject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

@@ -1,0 +1,40 @@
+get:
+  tags: [ "Streams" ]
+  summary: Gets a user's streams.
+  operationId: StreamsGetAll
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseStream.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+post:
+  tags: [ "Streams" ]
+  summary: Create a stream
+  operationId: StreamCreate
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/SpeckleStream.yaml'
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseStream.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

@@ -1,13 +1,14 @@
 language: node_js
 node_js:
-  - "8"
+  - "10"
 
 install:
   - npm install
-  - (cd shins && npm install)
 
 script:
-  - npm run build-shins
+  - npm run build
+  - mkdir docs
+  - cp SpeckleSpecs.html docs/index.html
 
 deploy:
   provider: pages

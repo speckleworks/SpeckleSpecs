@@ -1,0 +1,18 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Arc
+    radius:
+      type: number
+    startAngle:
+      type: number
+    endAngle:
+      type: number
+    angleRadians:
+      type: number
+    plane:
+      $ref: './SpecklePlane.yaml'
+    domain:
+      $ref: './SpeckleInterval.yaml'
