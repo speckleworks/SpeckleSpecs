@@ -1,0 +1,10 @@
+allOf:
+  - $ref: './ResponseBase.yaml'
+  - type: object
+    properties:
+      resource:
+        $ref: './Comment.yaml'
+      resources:
+        type: array
+        items:
+          $ref: './Comment.yaml'    

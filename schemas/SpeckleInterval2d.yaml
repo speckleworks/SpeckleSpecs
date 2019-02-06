@@ -1,0 +1,10 @@
+allOf: 
+  - $ref: './SpeckleObject.yaml'
+  - type: object
+    properties:
+      U:
+        $ref: './SpeckleInterval.yaml'
+        description: U interval.
+      V:
+        $ref: './SpeckleInterval.yaml'
+        description: V interval.

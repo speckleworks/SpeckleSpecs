@@ -1,0 +1,14 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Ellipse
+    firstRadius: 
+      type: number
+    secondRadius:
+      type: number
+    plane:
+      $ref: './SpecklePlane.yaml'
+    domain:
+      $ref: './SpeckleInterval.yaml'

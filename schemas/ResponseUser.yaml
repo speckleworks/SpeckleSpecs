@@ -1,0 +1,10 @@
+allOf:
+  - $ref: '../SpeckleSpecs.yaml#/components/schemas/ResponseBase'
+  - type: object
+    properties:
+      resource:
+        $ref: '../SpeckleSpecs.yaml#/components/schemas/User'
+      resources:
+        type: array
+        items:
+          $ref: '../SpeckleSpecs.yaml#/components/schemas/User'

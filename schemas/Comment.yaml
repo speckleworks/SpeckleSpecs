@@ -1,0 +1,27 @@
+description: A comment/issue.
+allOf:
+  - $ref: './ResourceBase.yaml'
+  - properties:
+      resource:
+        type: object
+        properties:
+          resourceType:
+            type: string
+          resourceId:
+            type: string
+      text:
+        type: string
+      assignedTo:
+        type: array
+        items: 
+          type: string
+      closed:
+        type: boolean
+      labels:
+        type: array
+        items: 
+          type: string
+      view: 
+        type: object
+      screenshot:
+        type: string

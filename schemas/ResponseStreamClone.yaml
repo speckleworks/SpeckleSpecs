@@ -1,0 +1,8 @@
+allOf:
+  - $ref: './ResponseBase.yaml'
+  - type: object
+    properties:
+      clone:
+        $ref: './SpeckleStream.yaml'
+      parent:
+        $ref: './SpeckleStream.yaml'

@@ -1,0 +1,28 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    type:
+      default: Curve
+    degree:
+      type: number
+    periodic:
+      type: boolean
+    rational:
+      type: boolean
+    points:
+      type: array
+      items: 
+        type: number
+    weights:
+      type: array
+      items: 
+        type: number
+    knots:
+      type: array
+      items:
+        type: number
+    domain:
+      $ref: './SpeckleInterval.yaml'
+    displayValue:
+      $ref: './SpecklePolyline.yaml'

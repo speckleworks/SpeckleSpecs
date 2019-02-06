@@ -1,0 +1,25 @@
+get:
+  tags: ["Streams"]
+  summary: Gets stream objects.
+  operationId: StreamGetObjects
+  parameters:
+    - name: streamId
+      in: path
+      required: true
+    - name: query
+      in: query
+      type: string
+      description: Specifiy which fields to retrieve, filters, limits, etc.
+  responses:
+    '200':
+        description: All good!
+        content:
+          application/json:
+            schema: 
+              $ref: '../../schemas/ResponseObject.yaml'
+    '400':
+        description: Fail whale.
+        content:
+          application/json:
+            schema:
+              $ref: '../../schemas/ResponseBase.yaml'

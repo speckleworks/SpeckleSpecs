@@ -1,0 +1,70 @@
+put:
+  tags: [ "Projects" ]
+  summary: Update a project
+  operationId: ProjectUpdate
+  parameters: 
+    - name: projectId
+      in: path
+      required: true
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/Project.yaml'
+    required: true
+  responses:
+    '200':
+      description: All the users's projects.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseProject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+get:
+  tags: [ "Projects" ]
+  summary: Get a project
+  operationId: ProjectGet
+  parameters: 
+    - name: projectId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: The client.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseProject.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+delete:
+  tags: [ "Projects" ]
+  summary: Deletes a project
+  operationId: ProjectDelete
+  parameters: 
+    - name: projectId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

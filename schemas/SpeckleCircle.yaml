@@ -1,0 +1,14 @@
+allOf:
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties: 
+    type:
+      default: Circle
+    radius:
+      type: number
+    center:
+      $ref: './SpecklePoint.yaml'
+    normal:
+      $ref: './SpeckleVector.yaml'
+    domain:
+      $ref: './SpeckleInterval.yaml'

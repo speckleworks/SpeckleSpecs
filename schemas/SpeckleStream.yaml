@@ -1,0 +1,46 @@
+description: A stream is essentially a collection of objects, with added properties. 
+allOf:
+  - $ref: './ResourceBase.yaml'
+  - properties:
+      streamId:
+        type: string
+        description: The stream's short id.
+      name:
+        type: string
+        description: The data stream's name
+      objects:
+        type: array
+        description: An array of SpeckleObject ids.
+        items:
+          $ref: './SpeckleObject.yaml'
+      layers:
+        type: array
+        description: An array of speckle layers.
+        items:
+          $ref: './Layer.yaml'
+      baseProperties:
+        description: Units, tolerances, etc.
+        type: object
+      globalMeasures:
+        description: Any performance measures can go in here.
+        type: object
+      isComputedResult:
+        type: boolean
+        default: false
+      viewerLayers:
+        type: array
+        items:
+          type: object
+      parent:
+        type: string
+        description: If this stream is a child, the parent's streamId.
+      children:
+        type: array
+        description: An array of the streamId of any children of this stream.
+        items:
+          type: string
+      ancestors:
+        description: If resulting from a merge, the streams that this one was born out of.
+        type: array
+        items: 
+          type: string

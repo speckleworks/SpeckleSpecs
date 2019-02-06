@@ -1,0 +1,71 @@
+get:
+  tags: [ "Comments" ]
+  summary: Gets a specific comment.
+  operationId: CommentGet
+  parameters: 
+    - name: commentId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseComment.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+put:
+  tags: [ "Comments" ]
+  summary: Updates a comment.
+  operationId: CommentUpdate
+  parameters: 
+    - name: commentId
+      in: path
+      required: true
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/Comment.yaml'
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+delete:
+  tags: [ "Comments" ]
+  summary: Deletes a specific comment.
+  operationId: CommentDelete
+  parameters: 
+    - name: commentId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

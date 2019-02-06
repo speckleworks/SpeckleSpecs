@@ -1,0 +1,18 @@
+allOf:
+  - $ref: './SpeckleObject.yaml'
+  - type: object
+    properties: 
+      type: 
+        default: Plane
+      origin: 
+        $ref: './SpecklePoint.yaml'
+        description: The origin of the plane.
+      normal:
+        $ref: './SpeckleVector.yaml'
+        description: The normal of the plane.
+      xdir:
+        $ref: './SpeckleVector.yaml'
+        description: The X axis of the plane.
+      ydir:
+        $ref: './SpeckleVector.yaml'
+        description: The Y axis of the plane.

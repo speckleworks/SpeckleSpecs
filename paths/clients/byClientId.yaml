@@ -1,0 +1,71 @@
+put:
+  tags: [ "Clients" ]
+  summary: Update a client
+  operationId: ClientUpdate
+  parameters: 
+    - name: clientId
+      in: path
+      required: true
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/AppClient.yaml'
+    required: true
+  responses:
+    '200':
+      description: All the users's clients.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseClient.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+get:
+  tags: [ "Clients" ]
+  summary: Get a client
+  operationId: ClientGet
+  parameters: 
+    - name: clientId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: The client.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseClient.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+
+delete:
+  tags: [ "Clients" ]
+  summary: Deletes a client
+  operationId: ClientDelete
+  parameters: 
+    - name: clientId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseBase.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'        

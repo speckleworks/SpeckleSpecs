@@ -1,0 +1,13 @@
+allOf: 
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties:
+    blockName:
+      type: string
+      description: the name of the block definition used to insert this block
+    description:
+      type: string
+    objects:
+      type: array
+      items:
+        $ref: './SpeckleObject.yaml'

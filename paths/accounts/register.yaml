@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Accounts
+  summary: Registers a new user.
+  operationId: UserRegister
+  requestBody:
+    description: The user object to register.
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/User.yaml'
+    required: true
+  responses:
+    '200':
+      description: New user successfully registered.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseUser.yaml'
+    '400':
+      description: Failed to register a new user.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

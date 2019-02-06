@@ -1,0 +1,15 @@
+allOf: 
+- $ref: './SpeckleObject.yaml'
+- type: object
+  properties: 
+    type:
+      default: Brep
+    rawData: 
+      type: object
+      description: The brep's raw (serialisation) data.
+    provenance:
+      type: string
+      description: A short prefix of where the base64 comes from.
+    displayValue:
+      $ref: './SpeckleMesh.yaml'
+      description: Contains a speckle mesh representation of this brep.

@@ -1,0 +1,64 @@
+post:
+  tags: [ "Comments" ]
+  summary: Creates a comment on a resource.
+  operationId: CommentCreate
+  parameters: 
+    - name: resourceType
+      description: The resource type you want to comment on.  
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: ["stream",  "object",  "project", "comment" ]
+    - name: resourceId
+      description: The resource id you want to comment on. In the case of streams, it must be a streamId.
+      in: path
+      required: true
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/Comment.yaml'
+    required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseComment.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'
+get:
+  tags: [ "Comments" ]
+  summary: Gets the comments from a resource.
+  operationId: CommentGetFromResource
+  parameters: 
+    - name: resourceType
+      description: The resource type you want to comment on.  
+      in: path
+      required: true
+      schema:
+        type: string
+        enum: ["stream",  "object",  "project", "comment" ]
+    - name: resourceId
+      description: The resource id you want to comment on. In the case of streams, it must be a streamId.
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseComment.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

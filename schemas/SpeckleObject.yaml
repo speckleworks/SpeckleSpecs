@@ -1,0 +1,48 @@
+description: Base class that is inherited by all other Speckle objects.
+required:
+  - type
+  - hash
+discriminator:
+  propertyName: type
+allOf:
+  - $ref: './ResourceBase.yaml'
+  - properties:
+      type:
+        type: string
+        description: Object's subtype
+        enum: ['Null', 'Abstract', 'Placeholder', 'Boolean', 'Number', 'String', 'Interval', 'Interval2d', 'Point', 'Vector', 'Plane', 'Line', 'Rectangle', 'Circle', 'Arc', 'Ellipse', 'Polycurve', 'Box', 'Polyline', 'Curve', 'Mesh', 'Brep', 'Annotation', 'Extrusion']
+      hash:
+        type: string
+        description: Object's unique hash.
+        example: hash
+      geometryHash:
+        type: string
+        description: Object's geometry hash
+        example: Type.hash
+      applicationId:
+        type: string
+        example: GUID
+        description: The id/guid that the origin application identifies this object by.
+      name:
+        type: string
+        description: The name of the object in the origin application. This is the instance or entity name displayed in the "properties" dialog in most applications.       
+      properties:
+        type: object
+        description: The extra properties field of a speckle object.
+      parent:
+        type: string
+        description: If this object is a child, the parent's objectid.
+      children:
+        type: array
+        description: An array of the ids of any children of this object.
+        items:
+          type: string
+      ancestors:
+        description: If resulting from a merge, the objects that this one was born out of.
+        type: array
+        items: 
+          type: string
+      transform:
+        type: array
+        items: 
+          type: number

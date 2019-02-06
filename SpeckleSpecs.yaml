@@ -31,6 +31,48 @@ tags:
     description: Create, get and update objects.
 
 components:
+  schemas:
+    ResourceBase: { $ref: ./schemas/ResourceBase.yaml }
+    User: { $ref: ./schemas/User.yaml }
+    AppClient: { $ref: ./schemas/AppClient.yaml }
+    Project: { $ref: ./schemas/Project.yaml }
+    Comment: { $ref: ./schemas/Comment.yaml }
+    SpeckleStream: { $ref: ./schemas/SpeckleStream.yaml }
+    Layer: { $ref: ./schemas/Layer.yaml }
+    LayerProperties: { $ref: ./schemas/LayerProperties.yaml }
+    ResponseUser: { $ref: ./schemas/ResponseUser.yaml }
+    ResponseBase: { $ref: ./schemas/ResponseBase.yaml }
+    ResponseClient: { $ref: ./schemas/ResponseClient.yaml }
+    ResponseProject: { $ref: ./schemas/ResponseProject.yaml }
+    ResponseComment: { $ref: ./schemas/ResponseComment.yaml }
+    ResponseStream: { $ref: ./schemas/ResponseStream.yaml }
+    ResponseObject: { $ref: ./schemas/ResponseObject.yaml }
+    ResponseStreamClone: { $ref: ./schemas/ResponseStreamClone.yaml }
+    ResponseStreamDiff: { $ref: ./schemas/ResponseStreamDiff.yaml }
+    SpeckleObject: { $ref: ./schemas/SpeckleObject.yaml }
+    SpeckleAbstract: { $ref: ./schemas/SpeckleAbstract.yaml }
+    SpecklePlaceholder: { $ref: ./schemas/SpecklePlaceholder.yaml }
+    SpeckleBoolean: { $ref: ./schemas/SpeckleBoolean.yaml }
+    SpeckleNumber: { $ref: ./schemas/SpeckleNumber.yaml }
+    SpeckleString: { $ref: ./schemas/SpeckleString.yaml }
+    SpeckleInterval: { $ref: ./schemas/SpeckleInterval.yaml }
+    SpeckleInterval2d: { $ref: ./schemas/SpeckleInterval2d.yaml }
+    SpecklePoint: { $ref: ./schemas/SpecklePoint.yaml }
+    SpeckleVector: { $ref: ./schemas/SpeckleVector.yaml }
+    SpecklePlane: { $ref: ./schemas/SpecklePlane.yaml }
+    SpeckleCircle: { $ref: ./schemas/SpeckleCircle.yaml }
+    SpeckleArc: { $ref: ./schemas/SpeckleArc.yaml }
+    SpeckleEllipse: { $ref: ./schemas/SpeckleEllipse.yaml }
+    SpecklePolycurve: { $ref: ./schemas/SpecklePolycurve.yaml }
+    SpeckleBox: { $ref: ./schemas/SpeckleBox.yaml }
+    SpeckleLine: { $ref: ./schemas/SpeckleLine.yaml }
+    SpecklePolyline: { $ref: ./schemas/SpecklePolyline.yaml }
+    SpeckleCurve: { $ref: ./schemas/SpeckleCurve.yaml }
+    SpeckleMesh: { $ref: ./schemas/SpeckleMesh.yaml }
+    SpeckleBrep: { $ref: ./schemas/SpeckleBrep.yaml }
+    SpeckleExtrusion: { $ref: ./schemas/SpeckleExtrusion.yaml }
+    SpeckleAnnotation: { $ref: ./schemas/SpeckleAnnotation.yaml }
+    SpeckleBlock: { $ref: ./schemas/SpeckleBlock.yaml }
   securitySchemes:
     JWT:
       type: apiKey
@@ -40,3 +82,30 @@ components:
 
 security:
   - JWT: []
+
+paths:
+  /accounts/register: { $ref: ./paths/accounts/register.yaml }
+  /accounts/login: { $ref: ./paths/accounts/login.yaml }
+  /accounts/search: { $ref: ./paths/accounts/search.yaml }
+  /accounts: { $ref: ./paths/accounts/index.yaml }
+  /accounts/{userId}: { $ref: ./paths/accounts/byUserId.yaml }
+
+  /clients: { $ref: ./paths/clients/index.yaml }
+  /clients/{clientId}: { $ref: ./paths/clients/byClientId.yaml }
+
+  /projects: { $ref: ./paths/projects/index.yaml }
+  /projects/{projectId}: { $ref: ./paths/projects/byProjectId.yaml }
+
+  /comments/{resourceType}/{resourceId}: { $ref: ./paths/comments/byResourceTypeByResourceId.yaml }
+  /comments/{commentId}: { $ref: ./paths/comments/byCommentId.yaml }
+
+  /streams: { $ref: ./paths/streams/index.yaml }
+  /streams/{streamId}: { $ref: ./paths/streams/byStreamId.yaml }
+  /streams/{streamId}/objects: { $ref: ./paths/streams/byStreamIdObjects.yaml }
+  /streams/{streamId}/clone: { $ref: ./paths/streams/byStreamIdClone.yaml }
+  /streams/{streamId}/diff/{otherStreamId}: { $ref: ./paths/streams/byStreamIdDiffByOtherStreamId.yaml }
+
+  /objects: { $ref: ./paths/objects/index.yaml }
+  /objects/{objectId}: { $ref: ./paths/objects/byObjectId.yaml }
+  /objects/{objectId}/properties: { $ref: ./paths/objects/byObjectIdProperties.yaml }
+  /objects/getbulk: { $ref: ./paths/objects/getbulk.yaml }

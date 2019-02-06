@@ -1,0 +1,21 @@
+post:
+  tags: ["Streams"]
+  summary: Clones a stream.
+  operationId: StreamClone
+  parameters:
+    - name: streamId
+      in: path
+      required: true
+  responses:
+    '200':
+      description: All good!
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseStreamClone.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

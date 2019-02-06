@@ -1,0 +1,25 @@
+post:
+  tags:
+    - Accounts
+  summary: Search for a user by substrings of name, surname, and company.
+  operationId: UserSearch
+  requestBody:
+      description: No elements are required. The name, surname, and company are used to constrain the search.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/User.yaml'
+      required: true
+  responses:
+    '200':
+      description: New user successfully registered.
+      content:
+        application/json:
+          schema: 
+            $ref: '../../schemas/ResponseUser.yaml'
+    '400':
+      description: Fail whale.
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/ResponseBase.yaml'

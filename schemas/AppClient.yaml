@@ -1,0 +1,24 @@
+description: A speckle client.
+allOf:
+  - $ref: './ResourceBase.yaml'
+  - properties:
+      _id:
+        type: string
+        description: Database uuid.
+      role:
+        type: string
+        description: Either Sender, Receiver or anything else you can think of.
+      documentGuid:
+        type: string
+      documentName:
+        type: string
+      documentType:
+        type: string
+      documentLocation:
+        type: string
+      streamId:
+        type: string
+        description: The streamId that this client is attached to.
+      online:
+        type: boolean
+        description: Is it accessible from the server or not?

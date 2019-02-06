@@ -1,0 +1,22 @@
+description: A project contains a group of streams and users.
+allOf:
+  - $ref: './ResourceBase.yaml'
+  - properties:
+      _id: 
+        type: string
+      name:
+        type: string
+      number:
+        type: string
+      users:
+        type: array
+        items: 
+          type: string
+      streams: 
+        type: array
+        items:
+          type: string
+      subProjects:
+        type: array
+        items:
+          type: string
